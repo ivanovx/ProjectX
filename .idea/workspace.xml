@@ -5,29 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20e462e6-e71f-4d77-8724-0a54f2c13ea0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/first-service/src/main/java/com/example/FirstController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/DiscoveryApplication.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/FirstApplication.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/GatewayApplication.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/SecondApplication.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/discovery-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-service/src/main/java/com/example/DiscoveryApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/src/main/java/com/example/DiscoveryApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-service/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-service/target/classes/com/example/DiscoveryApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/target/classes/com/example/DiscoveryApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first-service/src/main/java/com/example/FirstApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/src/main/java/com/example/FirstApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first-service/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first-service/target/classes/com/example/FirstApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/target/classes/com/example/FirstApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/com/example/GatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/com/example/GatewayApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/target/classes/com/example/GatewayApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/target/classes/com/example/GatewayApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second-service/src/main/java/com/example/SecondApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/second-service/src/main/java/com/example/SecondApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/second-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/first-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/first-service/src/main/java/com/example/FirstController.java" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/src/main/java/com/example/FirstController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/first-service/target/classes/com/example/FirstController.class" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/target/classes/com/example/FirstController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/second-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,25 +48,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
-    "spring.configuration.checksum": "a9b1158d5103757041d51178a01d8913",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;a9b1158d5103757041d51178a01d8913&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -134,6 +120,8 @@
       <updated>1680435481222</updated>
       <workItem from="1680435484297" duration="1851000" />
       <workItem from="1680469978851" duration="604000" />
+      <workItem from="1680472153578" duration="608000" />
+      <workItem from="1680474896156" duration="362000" />
     </task>
     <servers />
   </component>
