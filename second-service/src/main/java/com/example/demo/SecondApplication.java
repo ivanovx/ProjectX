@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
-public class FirstApplication {
+public class SecondApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(FirstApplication.class, args);
+		SpringApplication.run(SecondApplication.class, args);
 	}
 
 	@RequestMapping("/")
 	public String index() {
-		return String.format("Hello from '%s'!", "Eureka app");
+		return "Hello from second";
 	}
 
 	@RequestMapping("/greeting")
 	public String greeting() {
-		return String.format("Hello from '%s'!", "Eureka app");
+		return "Greeting from second";
 	}
 }

@@ -13,11 +13,11 @@ public class FirstApplication {
 
 	@RequestMapping("/")
 	public String index() {
-		return String.format("Hello from '%s'!", "Eureka app");
+		return "Hello from first";
 	}
 
 	@RequestMapping("/greeting")
 	public String greeting() {
-		return String.format("Hello from '%s'!", "Eureka app");
+		return "Greeting from first";
 	}
 }

@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>spring-cloud-sample</artifactId>
+    <artifactId>project-fmi</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>gateway</module>
-        <module>eureka-discovery-service</module>
+        <module>gateway-service</module>
+        <module>discovery-service</module>
         <module>first-service</module>
+        <module>second-service</module>
     </modules>
-
 </project>
