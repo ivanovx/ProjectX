@@ -10,6 +10,12 @@ eureka:
 spring:
   application:
     name: gateway
+  cassandra:
+    schema-action: create_if_not_exists
+    keyspace-name: projectFmi
+    local-datacenter: datacenter1
+    contact-points: 127.0.0.1
+    port: 9042
   cloud:
     gateway:
       routes:

@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20e462e6-e71f-4d77-8724-0a54f2c13ea0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first-service/src/main/java/com/example/FirstController.java" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/src/main/java/com/example/FirstController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first-service/target/classes/com/example/FirstController.class" beforeDir="false" afterPath="$PROJECT_DIR$/first-service/target/classes/com/example/FirstController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/second-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,6 +115,7 @@
       <workItem from="1680469978851" duration="604000" />
       <workItem from="1680472153578" duration="608000" />
       <workItem from="1680474896156" duration="362000" />
+      <workItem from="1680511799795" duration="730000" />
     </task>
     <servers />
   </component>
