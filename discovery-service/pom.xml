@@ -4,20 +4,20 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.example</groupId>
+		<groupId>pro.ivanov</groupId>
 		<artifactId>project-fmi</artifactId>
 		<version>1.0.0</version>
 	</parent>
 
-	<groupId>com.example</groupId>
+	<groupId>pro.ivanov</groupId>
 	<artifactId>discovery-service</artifactId>
 	<version>1.0.0</version>
 
 	<name>Eureka Server</name>
-	<description>Eureka Server Discovery Service</description>
+	<description>Eureka discovery service</description>
 
 	<properties>
-		<java.version>19</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>

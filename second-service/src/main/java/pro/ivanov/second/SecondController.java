@@ -1,4 +1,4 @@
-package com.example;
+package pro.ivanov.second;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

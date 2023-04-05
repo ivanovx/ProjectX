@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.example</groupId>
+		<groupId>pro.ivanov</groupId>
 		<artifactId>project-fmi</artifactId>
 		<version>1.0.0</version>
 	</parent>
@@ -13,12 +13,11 @@
 	<artifactId>gateway-service</artifactId>
 	<version>1.0.0</version>
 
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Gateway Service</name>
+	<description>Gateway application service</description>
 
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2022.0.2</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -29,6 +28,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

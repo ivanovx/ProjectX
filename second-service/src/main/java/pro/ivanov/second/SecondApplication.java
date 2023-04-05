@@ -1,4 +1,4 @@
-package com.example;
+package pro.ivanov.second;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
