@@ -1,35 +1,44 @@
 package pro.ivanov.webapp.controller;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.ivanov.webapp.entity.Coordinates;
 import pro.ivanov.webapp.entity.Device;
 import pro.ivanov.webapp.repository.DeviceRepository;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
-
 @RestController
+@RequestMapping("/devices")
 public class DeviceController {
-    @Autowired
-    private DeviceRepository deviceRepository;
+    private final DeviceRepository deviceRepository;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @Autowired
+    public DeviceController(DeviceRepository deviceRepository) {
+        this.deviceRepository = deviceRepository;
+    }
+
+    @GetMapping
     public List<Device> allDevices() {
         return this.deviceRepository.findAll();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Device createDevice() {
-        Device device = new Device();
-
+    @PostMapping
+    public Device createDevice(@RequestBody Device device) {
         device.setId(UUID.randomUUID());
-        device.setTitle("Sample device");
-        device.setCoordinates(new Coordinates(10, 10));
 
         return this.deviceRepository.save(device);
+    }
+    
+    @PostMapping("/{id}")
+    public Device activateDevice(@PathVariable String id) {
+        Device device = this.deviceRepository.findById(UUID.fromString(id)).orElseThrow();
+
+        device.setActive(true);
+
+
+        return device;
+
     }
 }

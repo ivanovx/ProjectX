@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import pro.ivanov.webapp.entity.Device;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
