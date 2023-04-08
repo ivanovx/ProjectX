@@ -16,6 +16,14 @@ spring:
     local-datacenter: datacenter1
     contact-points: 127.0.0.1
     port: 9042
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8000/issuer
+          jwk-set-uri: http://localhost:8000/issuer/set
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     gateway:
       routes:
