@@ -37,7 +37,6 @@ public class DeviceController {
 
         device.setActive(true);
 
-
         return device;
 
     }
