@@ -28,7 +28,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        return http
+                .csrf(c -> c.disable())
+                .cors(c -> c.disable())
+                .authorizeHttpRequests(c -> c.requestMatchers("/auth/**").permitAll().anyRequest().authenticated())
+                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+      /*  http
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
@@ -48,6 +56,6 @@ public class SecurityConfig {
                // .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
         //;
 
-        return http.build();
+        return http.build();*/
     }
 }

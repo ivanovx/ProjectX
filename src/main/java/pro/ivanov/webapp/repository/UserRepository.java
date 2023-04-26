@@ -1,5 +1,6 @@
 package pro.ivanov.webapp.repository;
 
+import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import pro.ivanov.webapp.entity.User;
@@ -9,5 +10,8 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, UUID> {
-    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
+
+    @Query("SELECT * FROM users WHERE email=?0 LIMIT 1")
+    boolean existsByEmail(String email);
 }

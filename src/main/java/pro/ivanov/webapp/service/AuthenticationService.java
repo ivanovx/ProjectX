@@ -1,6 +1,7 @@
 package pro.ivanov.webapp.service;
 
 
+import com.datastax.oss.driver.api.core.servererrors.AlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 
@@ -16,6 +17,7 @@ import pro.ivanov.webapp.repository.TokenRepository;
 import pro.ivanov.webapp.repository.UserRepository;
 
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -32,9 +34,12 @@ public class AuthenticationService {
         user.setId(UUID.randomUUID());
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setUsername(request.getEmail());
         user.setVerified(true);
         user.setPassword(this.passwordEncoder.encode(request.getPassword()));
+
+        if (this.repository.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("User with %s email already exist".formatted(user.getEmail()));
+        }
 
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -52,7 +57,7 @@ public class AuthenticationService {
                 )
         );*/
 
-        var user = repository.findByUsername(request.getEmail()).orElseThrow();
+        var user = repository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
 
