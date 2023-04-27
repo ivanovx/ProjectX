@@ -1,10 +1,10 @@
 spring:
-  cassandra:
-    schema-action: create_if_not_exists
-    keyspace-name: projectFmi
-    local-datacenter: datacenter1
-    contact-points: 127.0.0.1
-    port: 9042
+  data:
+    mongodb:
+      database: projectFmi
+      host: localhost
+      port: 27017
+      auto-index-creation: true
 
 application:
   security:

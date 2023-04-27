@@ -1,29 +1,23 @@
 package pro.ivanov.webapp.service;
 
-
-import com.datastax.oss.driver.api.core.servererrors.AlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pro.ivanov.webapp.entity.Token;
 import pro.ivanov.webapp.entity.User;
 import pro.ivanov.webapp.inputModel.AuthenticationRequest;
 import pro.ivanov.webapp.inputModel.AuthenticationResponse;
 import pro.ivanov.webapp.inputModel.RegisterRequest;
-import pro.ivanov.webapp.repository.TokenRepository;
 import pro.ivanov.webapp.repository.UserRepository;
 
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository repository;
-    private final TokenRepository tokenRepository;
+    //private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -34,7 +28,7 @@ public class AuthenticationService {
         user.setId(UUID.randomUUID());
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setVerified(true);
+        //user.setVerified(true);
         user.setPassword(this.passwordEncoder.encode(request.getPassword()));
 
        /* if (this.repository.existsByEmail(user.getEmail())) {

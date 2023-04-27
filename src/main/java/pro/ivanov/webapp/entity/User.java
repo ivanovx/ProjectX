@@ -1,9 +1,9 @@
 package pro.ivanov.webapp.entity;
 
 import lombok.Data;
-import org.springframework.data.cassandra.core.cql.Ordering;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,19 +11,17 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Data
-@Table
+@Document
 public class User implements UserDetails {
-    @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
+    @Id
     private UUID id;
 
     private String name;
 
-    @PrimaryKeyColumn(type = PrimaryKeyType.CLUSTERED)
+    @Indexed(unique = true)
     private String email;
 
     private String password;
-
-    private boolean isVerified;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
