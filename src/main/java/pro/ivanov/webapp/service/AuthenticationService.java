@@ -37,9 +37,9 @@ public class AuthenticationService {
         user.setVerified(true);
         user.setPassword(this.passwordEncoder.encode(request.getPassword()));
 
-        if (this.repository.existsByEmail(user.getEmail())) {
+       /* if (this.repository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("User with %s email already exist".formatted(user.getEmail()));
-        }
+        }*/
 
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);

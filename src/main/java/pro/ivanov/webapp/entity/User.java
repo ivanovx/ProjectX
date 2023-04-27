@@ -3,10 +3,7 @@ package pro.ivanov.webapp.entity;
 import lombok.Data;
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.Indexed;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,21 +11,18 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Data
-@Table("users")
+@Table
 public class User implements UserDetails {
     @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
     private UUID id;
 
-    @Column
     private String name;
 
-    @Column
+    @PrimaryKeyColumn(type = PrimaryKeyType.CLUSTERED)
     private String email;
 
-    @Column
     private String password;
 
-    @Column
     private boolean isVerified;
 
     @Override

@@ -11,7 +11,4 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends CrudRepository<User, UUID> {
     Optional<User> findByEmail(String email);
-
-    @Query("SELECT * FROM users WHERE email=?0 LIMIT 1")
-    boolean existsByEmail(String email);
 }
