@@ -1,5 +1,8 @@
 package pro.ivanov.webapp.entity;
 
+import lombok.Data;
+
+@Data
 public class Coordinates {
     private double x;
 

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DeviceRepository extends MongoRepository<Device, String> {
-
+    List<Device> findAll();
 }

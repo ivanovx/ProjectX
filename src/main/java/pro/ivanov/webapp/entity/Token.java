@@ -3,7 +3,7 @@ package pro.ivanov.webapp.entity;
 import java.util.UUID;
 
 public class Token {
-    private UUID id;
+    private String id;
 
     private String token;
 

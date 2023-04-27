@@ -36,26 +36,5 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-      /*  http
-                .csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/auth/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-                //.logout()
-                //.logoutUrl("/auth/logout")
-               // .addLogoutHandler(logoutHandler)
-               // .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-        //;
-
-        return http.build();*/
     }
 }

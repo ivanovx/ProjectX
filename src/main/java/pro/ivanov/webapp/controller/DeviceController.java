@@ -16,7 +16,6 @@ public class DeviceController {
     private final DeviceRepository deviceRepository;
     private final UserRepository userRepository;
 
-
     @Autowired
     public DeviceController(DeviceRepository deviceRepository, UserRepository userRepository) {
         this.deviceRepository = deviceRepository;
@@ -28,12 +27,43 @@ public class DeviceController {
         return this.deviceRepository.findAll();
     }
 
-    @PostMapping
+    @GetMapping("/{id}")
+    public Device getDevice(@PathVariable String id) {
+        return this.deviceRepository.findById(id).orElseThrow();
+    }
+
+    @PostMapping("/create")
     public Device createDevice(@RequestBody Device device, Principal principal) {
         User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
 
         device.setUser(user);
 
         return this.deviceRepository.save(device);
+    }
+
+    @PostMapping("/update/{id}")
+    public Device updateDevice(@PathVariable String id, @RequestBody Device updatedDevice, Principal principal) {
+        User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
+        Device device = this.deviceRepository.findById(id).orElseThrow();
+
+        if (device.getUser().getId().compareTo(user.getId()) == 0) {
+            // THROW
+        }
+
+        return updatedDevice;
+    }
+
+    @PostMapping("/delete/{id}")
+    public Device deleteDevice(@PathVariable String id, Principal principal) {
+        User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
+        Device device = this.deviceRepository.findById(id).orElseThrow();
+
+        if (device.getUser().getId().compareTo(user.getId()) == 0) {
+            // THROW
+        }
+
+        this.deviceRepository.deleteById(id);
+
+        return device;
     }
 }
