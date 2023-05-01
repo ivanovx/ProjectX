@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pro.ivanov.webapp.ApiRequestException;
 import pro.ivanov.webapp.entity.User;
 import pro.ivanov.webapp.inputModel.AuthenticationRequest;
 import pro.ivanov.webapp.inputModel.AuthenticationResponse;
@@ -52,7 +53,7 @@ public class AuthenticationService {
                 )
         );
 
-        User user = this.userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user = this.userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new ApiRequestException("User with %s email not found".formatted(request.getEmail())));
         String jwtToken = this.jwtService.generateToken(user);
         String refreshToken = this.jwtService.generateRefreshToken(user);
 
