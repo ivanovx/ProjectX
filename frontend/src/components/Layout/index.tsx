@@ -1,8 +1,16 @@
 import { Tabs, Tab } from '@mui/material';
 import React from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import UserService from '../../modules/user-service';
 
 export default function Layout() {
+    React.useEffect(() => {
+        UserService.signIn({
+            email: "csyntax@outlook.com",
+            password: "test"
+        }).then(console.log).catch(console.log)
+    }, []);
+
     return (
         <div className="layout">
             <nav>
