@@ -1,4 +1,6 @@
-import axios from "axios";
+import HttpService from "./http-service";
+
+import { SIGNUP_URL, SIGNIN_URL } from "./apiConfig";
 
 type UserSignIn = {
     email: string;
@@ -13,19 +15,10 @@ type UserSignUp = {
 
 export default class UserService {
     static async signIn(userDetails: UserSignIn) {
-        return await this.doPost("http://localhost:8080/auth/signin", userDetails);
+        return HttpService.doPost(SIGNUP_URL, userDetails);
     }
 
     static async signUp(userDetails: UserSignUp) {
-       return await this.doPost("http://localhost:8080/auth/signup", userDetails);
-    }
-
-    private static async doPost(url: string, data: any) {
-        return new Promise((resolve, reject) => {
-            axios
-                .post(url, data)
-                .then(res => resolve(res.data))
-                .catch(err => reject(err));
-        });
+        return HttpService.doPost(SIGNIN_URL, userDetails);
     }
 }
