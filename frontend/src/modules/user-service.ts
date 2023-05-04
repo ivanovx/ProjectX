@@ -15,10 +15,10 @@ type UserSignUp = {
 
 export default class UserService {
     static async signIn(userDetails: UserSignIn) {
-        return HttpService.doPost(SIGNUP_URL, userDetails);
+        return HttpService.doPost(SIGNIN_URL, userDetails);
     }
 
     static async signUp(userDetails: UserSignUp) {
-        return HttpService.doPost(SIGNIN_URL, userDetails);
+        return HttpService.doPost(SIGNUP_URL, userDetails);
     }
 }
