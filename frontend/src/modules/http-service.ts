@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default class HttpService {
-    static doGet(url: string, config?: any) {
+    static doGet(url: string, config?: any) : Promise<any> {
         const abortController = new AbortController();
 
         return new Promise((resolve, reject) => {

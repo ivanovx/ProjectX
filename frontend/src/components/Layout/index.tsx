@@ -1,13 +1,13 @@
-import { Tabs, Tab } from '@mui/material';
+import { Tabs, Tab, Container } from '@mui/material';
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Layout() {
     return (
-        <div className="layout">
+        <Container>
             <Navbar />
             <Outlet />
-        </div>
+        </Container>
     );
 }
 

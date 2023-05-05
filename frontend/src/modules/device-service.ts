@@ -1,9 +1,10 @@
 import axios from "axios";
+import HttpService from "./http-service";
 
-export async function getAllDevices() {
-    const homeReq = await axios.get(`http://localhost:8080/home`);
-    const homeData = await homeReq.data;
+import { HOME_URL } from "./apiConfig";
 
-    return homeData;
+export default class DeviceService {
+    static getAllDevices() {
+        return HttpService.doGet(HOME_URL);
+    }
 }
-
