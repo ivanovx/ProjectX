@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>pro.ivanov</groupId>
-    <artifactId>project-fmi</artifactId>
+    <artifactId>project-2023</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
