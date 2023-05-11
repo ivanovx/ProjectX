@@ -1,4 +1,0 @@
-https://stackoverflow.com/questions/31826233/custom-authentication-manager-with-spring-security-and-java-configuration
-https://github.com/spring-projects/spring-authorization-server/tree/main/samples/demo-authorizationserver/src/main/java/sample/jose
-https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-oauth2/2.2.5.RELEASE
-https://www.tutorialspoint.com/spring_security/spring_security_with_oauth2.htm
