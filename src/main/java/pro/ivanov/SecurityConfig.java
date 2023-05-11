@@ -1,4 +1,4 @@
-package com.example.demo;
+package pro.ivanov;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -42,20 +42,18 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 public class SecurityConfig {
     @Bean
     @Order(1)
-    public SecurityFilterChain filterChain(HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
-        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-                .oidc(Customizer.withDefaults());	// Enable OpenID Connect 1.0
+        http
+                .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+                .oidc(Customizer.withDefaults());
 
         http
-                // Redirect to the login page when not authenticated from the
-                // authorization endpoint
-                .exceptionHandling((exceptions) -> exceptions
-                        .authenticationEntryPoint(
-                                new LoginUrlAuthenticationEntryPoint("/login"))
-                )
+                .exceptionHandling((exceptions) ->
+                        exceptions
+                                .authenticationEntryPoint(
+                                        new LoginUrlAuthenticationEntryPoint("/login")))
                 // Accept access tokens for User Info and/or Client Registration
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
@@ -64,14 +62,12 @@ public class SecurityConfig {
     
     @Bean 
 	@Order(2)
-	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
-			throws Exception {
+	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        // Form login handles the redirect to the login page from the
+        // authorization server filter chain
+
 		http
-			.authorizeHttpRequests((authorize) -> authorize
-				.anyRequest().authenticated()
-			)
-			// Form login handles the redirect to the login page from the
-			// authorization server filter chain
+			.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
 			.formLogin(Customizer.withDefaults());
 
 		return http.build();
@@ -91,8 +87,8 @@ public class SecurityConfig {
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("messaging-client")
-                .clientSecret("{noop}secret")
+                .clientId("client1")
+                .clientSecret("secret1")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -108,7 +104,6 @@ public class SecurityConfig {
 
         return new InMemoryRegisteredClientRepository(registeredClient);
     }
-
 
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
