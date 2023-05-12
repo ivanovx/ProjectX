@@ -1,7 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import UserService from "../../modules/user-service";
+//import UserService from "../../modules/user-service";
 import Storage from "../../modules/storage";
+import axios from "axios";
+import { SIGNIN_URL, SIGNUP_URL } from "../../modules/apiConfig";
+import UserService from "../../modules/user-service";
 
 type IProps = {
     children: React.ReactNode;
@@ -40,6 +43,16 @@ export default function Auth({ children }: IProps) {
             .catch((err) => {
                 console.log(err);
             });
+
+       /* axios
+            .post(SIGNUP_URL, userDetails)
+            .then(res => {
+                console.log(res);
+                navigate("/");
+            })
+            .catch(err => {
+                console.log(err);
+            });*/
     };
 
     const signIn = (userDetails: any) => {
@@ -53,10 +66,21 @@ export default function Auth({ children }: IProps) {
             .catch((err) => {
                 console.log(err);
             });
+            
+           /* axios
+                .post(SIGNIN_URL, userDetails)
+                .then(res => {
+                    console.log(res);
+                    setToken(res.data);
+                    navigate("/");
+                })
+                .catch(err => {
+                    console.log(err);
+                });*/
     };
 
-    const signOut = () => {
-
+    const signOut = () => {    
+        alert("Are you sure?");
     };
 
     return <AuthContext.Provider value={{ token, signUp, signIn, signOut }}>{children}</AuthContext.Provider>;

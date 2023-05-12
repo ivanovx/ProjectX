@@ -4,7 +4,7 @@ import { SIGNUP_URL, SIGNIN_URL } from "./apiConfig";
 
 export type UserSignIn = {
     email: string;
-    password: string;    
+    password: string;
 }
 
 export type UserSignUp = {
@@ -14,11 +14,11 @@ export type UserSignUp = {
 };
 
 export default class UserService {
-    static async signIn(userDetails: UserSignIn) {
-        return await HttpService.doPost(SIGNIN_URL, userDetails);
+    static signIn(userDetails: UserSignIn) {
+        return HttpService.doPost(SIGNIN_URL, userDetails);
     }
 
-    static async signUp(userDetails: UserSignUp) {
-        return await HttpService.doPost(SIGNUP_URL, userDetails);
+    static signUp(userDetails: UserSignUp) {
+        return HttpService.doPost(SIGNUP_URL, userDetails);
     }
 }
