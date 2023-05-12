@@ -1,4 +1,3 @@
-import axios from "axios";
 import HttpService from "./http-service";
 
 import { HOME_URL } from "./apiConfig";

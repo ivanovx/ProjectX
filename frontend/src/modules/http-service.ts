@@ -16,17 +16,12 @@ export default class HttpService {
     }
 
     static doPost(url: string, data: any, config?: any) {
-        const abortController = new AbortController();
-
-        return new Promise((resolve, reject) => {
-            axios.post(url, data, {
-                signal: abortController.signal,
-                ...config
-            })
-            .then(res => resolve(res.data))
-            .catch(err => reject(err))
-            .finally(abortController.abort);
-        });
+        return new Promise((resolve, reject) => 
+            axios
+                .post(url, data, config)
+                .then(res => resolve(res.data))
+                .catch(err => reject(err))
+        );
     }
 
     static doPut(url: string, data: any, config?: any) {
