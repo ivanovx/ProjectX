@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      database: projectFmi
+      database: projectWithNoName
       host: localhost
       port: 27017
       auto-index-creation: true

@@ -6,13 +6,14 @@ export default function SignUp() {
     const onSignIn = (e: React.SyntheticEvent) => {
         e.preventDefault();
 
-        UserService.signIn({
+        UserService.signUp({
+            name: "test",
            email: "csyntax@outlook.com",
            password: "test"
         }).then(console.log).catch(console.error);
     }
 
     return (
-        <button onClick={onSignIn}>Sign In</button>
+        <button onClick={onSignIn}>Sign Up</button>
     );
 }

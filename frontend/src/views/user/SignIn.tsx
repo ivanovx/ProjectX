@@ -1,18 +1,17 @@
 import React from "react";
-import UserService from "../../modules/user-service";
+import { useAuth } from "../../components/Auth";
 
 export default function SignIn() {
+    const { signIn } = useAuth();
     
     const onSignIn = (e: React.SyntheticEvent) => {
         e.preventDefault();
 
-        UserService.signIn({
-           email: "csyntax@outlook.com",
-           password: "test"
-        }).then(console.log).catch(console.error);
+        signIn({
+            email: "csyntax@outlook.com",
+           password: "test" 
+        });
     }
 
-    return (
-        <button onClick={onSignIn}>Sign In</button>
-    );
+    return <button onClick={onSignIn}>Sign In</button>;
 }

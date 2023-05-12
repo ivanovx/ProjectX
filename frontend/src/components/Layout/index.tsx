@@ -1,13 +1,16 @@
 import { Tabs, Tab, Container } from '@mui/material';
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import Auth from '../Auth';
 
 export default function Layout() {
     return (
-        <Container>
-            <Navbar />
-            <Outlet />
-        </Container>
+        <Auth>
+             <Container>
+                <Navbar />
+                <Outlet />
+            </Container>
+        </Auth>
     );
 }
 
