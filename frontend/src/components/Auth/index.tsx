@@ -1,17 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-//import UserService from "../../modules/user-service";
 import Storage from "../../modules/storage";
-import axios from "axios";
-import { SIGNIN_URL, SIGNUP_URL } from "../../modules/apiConfig";
 import UserService from "../../modules/user-service";
 
 type IProps = {
     children: React.ReactNode;
 }
 
+type Token = {
+    accessToken: string;
+    refreshToken: string;
+};
+
 type IAuthContext = {
-    token: any;
+    token: Token | null;
     signUp: (user: any) => void;
     signIn:  (user: any) => void;
     signOut: () => void;
@@ -28,7 +30,7 @@ export const useAuth = () => React.useContext(AuthContext);
 
 export default function Auth({ children }: IProps) {
     const navigate = useNavigate();
-    const [token, setToken] = React.useState<any>(Storage.get("token") || null);
+    const [token, setToken] = React.useState(Storage.get("token") || null);
 
     React.useEffect(() => {
         Storage.set("token", token);
@@ -43,16 +45,6 @@ export default function Auth({ children }: IProps) {
             .catch((err) => {
                 console.log(err);
             });
-
-       /* axios
-            .post(SIGNUP_URL, userDetails)
-            .then(res => {
-                console.log(res);
-                navigate("/");
-            })
-            .catch(err => {
-                console.log(err);
-            });*/
     };
 
     const signIn = (userDetails: any) => {
@@ -66,17 +58,6 @@ export default function Auth({ children }: IProps) {
             .catch((err) => {
                 console.log(err);
             });
-            
-           /* axios
-                .post(SIGNIN_URL, userDetails)
-                .then(res => {
-                    console.log(res);
-                    setToken(res.data);
-                    navigate("/");
-                })
-                .catch(err => {
-                    console.log(err);
-                });*/
     };
 
     const signOut = () => {    

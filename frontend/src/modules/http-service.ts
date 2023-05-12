@@ -1,7 +1,11 @@
 import axios from "axios";
 
+export const BEARER_TOKEN_AUTH = (token: string) => {
+    return { 'Authorization' : `Bearer ${token}` };
+}
+
 export default class HttpService {
-    static doGet(url: string, config?: any) : Promise<any> {
+    static doGet(url: string, config?: any) {
         return new Promise((resolve, reject) =>
             axios
                 .get(url, config)
