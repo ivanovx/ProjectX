@@ -3,8 +3,14 @@ Still no name
 
 ## Docs
 
-1. Create cassandra keyspace 
+
+* For Apache Cassandra
+
+1. Need to create Cassandra keyspace 
 
 ``
-CREATE KEYSPACE projectFmi WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
+CREATE KEYSPACE sampleProject WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
 ``
+
+2. TODO
+3. ISSUE Repos
