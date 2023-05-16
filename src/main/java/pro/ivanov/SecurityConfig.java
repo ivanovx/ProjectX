@@ -71,7 +71,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    /*@Bean
     public AuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 
@@ -79,7 +79,7 @@ public class SecurityConfig {
         provider.setUserDetailsService(this.userDetailsService());
 
         return provider;
-    }
+    }*/
     
     @Bean
 	@Order(2)
@@ -87,17 +87,22 @@ public class SecurityConfig {
         // Form login handles the redirect to the login page from the
         // authorization server filter chain
 
-		http
-			.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+        http
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                .anyRequest()
+                                .authenticated()
+                )
+               // .oauth2Login(Customizer.withDefaults())
 			.formLogin(Customizer.withDefaults());
+                //.oauth2Client();
 
 		return http.build();
 	}
     
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User
-                .builder()
+        UserDetails userDetails = User.builder()
                 .username("user")
                 .password(this.passwordEncoder().encode("password"))
                 .roles("USER")
@@ -109,18 +114,20 @@ public class SecurityConfig {
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("client1")
-                .clientSecret("secret1")
+                .clientId("client")
+                .clientSecret(this.passwordEncoder().encode("secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .authorizationGrantType(AuthorizationGrantType.PASSWORD)
                 .redirectUri("http://127.0.0.1:8080/login/oauth2/code/messaging-client-oidc")
                 .redirectUri("http://127.0.0.1:8080/authorized")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .scope("message.read")
                 .scope("message.write")
+                .scope("USER")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
 
