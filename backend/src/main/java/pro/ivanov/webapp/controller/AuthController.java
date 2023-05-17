@@ -1,8 +1,6 @@
 package pro.ivanov.webapp.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,18 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.ivanov.webapp.inputModel.AuthenticationRequest;
 import pro.ivanov.webapp.inputModel.AuthenticationResponse;
 import pro.ivanov.webapp.inputModel.RegisterRequest;
-import pro.ivanov.webapp.service.AuthenticationService;
-
-import java.io.IOException;
+import pro.ivanov.webapp.service.AuthService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthenticationService authService;
+    private final AuthService authService;
 
-    @Autowired
-    public AuthController(AuthenticationService authService) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
     }
 
@@ -41,7 +36,9 @@ public class AuthController {
     }
 
     @PostMapping("/refresh-token")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        this.authService.refreshToken(request, response);
+    public ResponseEntity<AuthenticationResponse> refreshToken(HttpServletRequest request) {
+        AuthenticationResponse response = this.authService.refreshToken(request);
+
+        return ResponseEntity.ok(response);
     }
 }
