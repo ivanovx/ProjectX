@@ -14,7 +14,7 @@ export default function Create() {
                 x: 100,
                 y: 100,
             }
-        }, auth.token).then(console.log).catch(console.log);
+        }, auth.token!.accessToken).then(console.log).catch(console.log);
     };
 
     return (

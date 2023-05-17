@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
-@Document
+@Document("users")
 public class User implements UserDetails {
     @Id
     private String id;

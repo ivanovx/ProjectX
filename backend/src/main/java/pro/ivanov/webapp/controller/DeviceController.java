@@ -1,11 +1,13 @@
 package pro.ivanov.webapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.ivanov.webapp.model.Device;
 import pro.ivanov.webapp.model.User;
 import pro.ivanov.webapp.repository.DeviceRepository;
 import pro.ivanov.webapp.repository.UserRepository;
+import pro.ivanov.webapp.responseModel.DeviceResponse;
 
 import java.security.Principal;
 import java.util.List;
@@ -33,12 +35,16 @@ public class DeviceController {
     }
 
     @PostMapping("/create")
-    public Device createDevice(@RequestBody Device device, Principal principal) {
+    public ResponseEntity<DeviceResponse> createDevice(@RequestBody Device device, Principal principal) {
         User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
 
         device.setUser(user);
 
-        return this.deviceRepository.save(device);
+        Device savedDevice = this.deviceRepository.save(device);
+
+        DeviceResponse response = DeviceResponse.builder().name(savedDevice.getTitle()).coordinates(savedDevice.getCoordinates()).user(savedDevice.getUser().getUsername()).build();
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/update/{id}")
