@@ -40,7 +40,7 @@ export default function Auth({ children }: IProps) {
         UserService
             .signUp(userDetails)
             .then(() => {
-                navigate("/");
+                navigate("/user/signin");
             })
             .catch((err) => {
                 console.log(err);
@@ -60,8 +60,9 @@ export default function Auth({ children }: IProps) {
             });
     };
 
-    const signOut = () => {    
-        alert("Are you sure?");
+    const signOut = () => {
+        setToken(null);
+        navigate("/");
     };
 
     return <AuthContext.Provider value={{ token, signUp, signIn, signOut }}>{children}</AuthContext.Provider>;
