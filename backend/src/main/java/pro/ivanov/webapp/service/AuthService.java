@@ -1,8 +1,6 @@
 package pro.ivanov.webapp.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 
@@ -10,11 +8,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pro.ivanov.webapp.ApiRequestException;
-import pro.ivanov.webapp.entity.User;
-import pro.ivanov.webapp.inputModel.AuthenticationRequest;
-import pro.ivanov.webapp.inputModel.AuthenticationResponse;
-import pro.ivanov.webapp.inputModel.RegisterRequest;
+import pro.ivanov.webapp.model.User;
 import pro.ivanov.webapp.repository.UserRepository;
+import pro.ivanov.webapp.requestModel.AuthRequest;
+import pro.ivanov.webapp.requestModel.CreateUserRequest;
+import pro.ivanov.webapp.responseModel.AuthResponse;
 
 @Service
 public class AuthService {
@@ -30,7 +28,7 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AuthenticationResponse signUp(RegisterRequest request) {
+    public AuthResponse signUp(CreateUserRequest request) {
         User user = new User();
 
         user.setName(request.getName());
@@ -41,20 +39,20 @@ public class AuthService {
         String jwtToken = jwtService.generateToken(savedUser);
         String refreshToken = jwtService.generateRefreshToken(savedUser);
 
-        return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
+        return AuthResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
     }
 
-    public AuthenticationResponse signIn(AuthenticationRequest request) {
+    public AuthResponse signIn(AuthRequest request) {
         this.authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
         User user = this.userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new ApiRequestException("User with %s email not found".formatted(request.getEmail())));
         String jwtToken = this.jwtService.generateToken(user);
         String refreshToken = this.jwtService.generateRefreshToken(user);
 
-        return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
+        return AuthResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
     }
 
-    public AuthenticationResponse refreshToken(HttpServletRequest request) {
+    public AuthResponse refreshToken(HttpServletRequest request) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -71,6 +69,6 @@ public class AuthService {
         User user = this.userRepository.findByEmail(userEmail).orElseThrow();
         String accessToken = this.jwtService.generateToken(user);
 
-        return AuthenticationResponse.builder().accessToken(accessToken).refreshToken(refreshToken).build();
+        return AuthResponse.builder().accessToken(accessToken).refreshToken(refreshToken).build();
     }
 }

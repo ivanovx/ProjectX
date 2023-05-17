@@ -3,7 +3,7 @@ package pro.ivanov.webapp.repository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import pro.ivanov.webapp.entity.User;
+import pro.ivanov.webapp.model.User;
 
 import java.util.Optional;
 

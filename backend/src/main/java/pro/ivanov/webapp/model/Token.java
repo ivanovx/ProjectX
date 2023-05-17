@@ -1,6 +1,4 @@
-package pro.ivanov.webapp.entity;
-
-import java.util.UUID;
+package pro.ivanov.webapp.model;
 
 public class Token {
     private String id;

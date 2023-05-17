@@ -1,11 +1,12 @@
-package pro.ivanov.webapp.inputModel;
+package pro.ivanov.webapp.responseModel;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class AuthenticationResponse {
+public class AuthResponse {
     private String accessToken;
+
     private String refreshToken;
 }

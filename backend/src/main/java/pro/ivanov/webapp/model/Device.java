@@ -1,4 +1,4 @@
-package pro.ivanov.webapp.entity;
+package pro.ivanov.webapp.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

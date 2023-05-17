@@ -2,8 +2,8 @@ package pro.ivanov.webapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pro.ivanov.webapp.entity.Device;
-import pro.ivanov.webapp.entity.User;
+import pro.ivanov.webapp.model.Device;
+import pro.ivanov.webapp.model.User;
 import pro.ivanov.webapp.repository.DeviceRepository;
 import pro.ivanov.webapp.repository.UserRepository;
 
