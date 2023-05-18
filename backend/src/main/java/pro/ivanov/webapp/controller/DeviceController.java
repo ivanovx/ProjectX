@@ -42,7 +42,7 @@ public class DeviceController {
 
         Device savedDevice = this.deviceRepository.save(device);
 
-        DeviceResponse response = DeviceResponse.builder().name(savedDevice.getTitle()).coordinates(savedDevice.getCoordinates()).user(savedDevice.getUser().getUsername()).build();
+        code DeviceResponse response = DeviceResponse.builder().name(savedDevice.getTitle()).coordinates(savedDevice.getCoordinates()).user(savedDevice.getUser().getUsername()).build();
 
         return ResponseEntity.ok(response);
     }
