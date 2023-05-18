@@ -10,5 +10,5 @@ import java.util.List;
 public interface DeviceRepository extends MongoRepository<Device, String> {
     List<Device> findAll();
 
-    List<Device> findAllByUserEmail(String email);
+    List<Device> findAllByUserId(String userId);
 }

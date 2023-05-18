@@ -26,7 +26,8 @@ public class DeviceController {
 
     @GetMapping
     public List<Device> allDevices(Principal principal) {
-        return this.deviceRepository.findAllByUserEmail(principal.getName());
+        User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
+        return this.deviceRepository.findAllByUserId(user.getId());
     }
 
     @GetMapping("/{id}")
