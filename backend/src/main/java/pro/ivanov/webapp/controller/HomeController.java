@@ -1,6 +1,5 @@
 package pro.ivanov.webapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +12,11 @@ import java.util.List;
 @RequestMapping("/home")
 public class HomeController {
 
-    @Autowired
-    private DeviceRepository deviceRepository;
+    private final DeviceRepository deviceRepository;
+
+    public HomeController(DeviceRepository deviceRepository) {
+        this.deviceRepository = deviceRepository;
+    }
 
     @GetMapping
     public List<Device> index() {

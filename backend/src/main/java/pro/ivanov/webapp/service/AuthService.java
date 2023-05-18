@@ -39,17 +39,29 @@ public class AuthService {
         String jwtToken = jwtService.generateToken(savedUser);
         String refreshToken = jwtService.generateRefreshToken(savedUser);
 
-        return AuthResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
+        return AuthResponse
+                .builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     public AuthResponse signIn(AuthRequest request) {
         this.authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-        User user = this.userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new ApiRequestException("User with %s email not found".formatted(request.getEmail())));
+        User user = this.userRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new ApiRequestException("User with %s email not found".formatted(request.getEmail())));
+
         String jwtToken = this.jwtService.generateToken(user);
         String refreshToken = this.jwtService.generateRefreshToken(user);
 
-        return AuthResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
+        return AuthResponse
+                .builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     public AuthResponse refreshToken(HttpServletRequest request) {
@@ -69,6 +81,10 @@ public class AuthService {
         User user = this.userRepository.findByEmail(userEmail).orElseThrow();
         String accessToken = this.jwtService.generateToken(user);
 
-        return AuthResponse.builder().accessToken(accessToken).refreshToken(refreshToken).build();
+        return AuthResponse
+                .builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 }

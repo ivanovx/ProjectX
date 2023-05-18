@@ -25,8 +25,8 @@ public class DeviceController {
     }
 
     @GetMapping
-    public List<Device> allDevices() {
-        return this.deviceRepository.findAll();
+    public List<Device> allDevices(Principal principal) {
+        return this.deviceRepository.findAllByUserEmail(principal.getName());
     }
 
     @GetMapping("/{id}")
@@ -42,9 +42,21 @@ public class DeviceController {
 
         Device savedDevice = this.deviceRepository.save(device);
 
-        code DeviceResponse response = DeviceResponse.builder().name(savedDevice.getTitle()).coordinates(savedDevice.getCoordinates()).user(savedDevice.getUser().getUsername()).build();
+        DeviceResponse response = DeviceResponse.builder().name(savedDevice.getTitle()).coordinates(savedDevice.getCoordinates()).user(savedDevice.getUser().getUsername()).build();
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/activate/{id}")
+    public String activateDevice(@PathVariable String id, Principal principal) {
+        User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
+        Device device = this.deviceRepository.findById(id).orElseThrow();
+
+        if (device.getUser().getId().compareTo(user.getId()) == 0) {
+            // THROW
+        }
+
+        return "OK";
     }
 
     @PostMapping("/update/{id}")
