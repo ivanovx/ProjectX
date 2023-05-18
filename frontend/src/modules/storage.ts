@@ -1,9 +1,9 @@
 export default class Storage {
     static get(key: string) {
-        return JSON.parse(window.sessionStorage.getItem(key)!);
+        return JSON.parse(window.localStorage.getItem(key)!);
     }
 
     static set(key: string, value: any) {
-        window.sessionStorage.setItem(key, JSON.stringify(value));
+        window.localStorage.setItem(key, JSON.stringify(value));
     }
 }

@@ -6,8 +6,10 @@ import DashboardLayout from './components/Layout/Dashboard';
 import Home from './views/Home';
 import SignIn from './views/User/SignIn';
 import SignUp from './views/User/SignUp';
-import Dashboard from './views/Dashboard';
+import DashboardHome from './views/Dashboard';
 import CreateDevice from './views/Dashboard/Devices/Create';
+
+import Devices from "./views/Dashboard/Devices";
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
@@ -27,7 +29,8 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <DashboardLayout />,
         children: [
-            { index: true, element: <Dashboard /> },
+            { index: true, element: <DashboardHome /> },
+            { path: "devices", element: <Devices /> },
             { path: "devices/create", element: <CreateDevice /> }
         ] 
     }

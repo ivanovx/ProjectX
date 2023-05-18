@@ -6,7 +6,6 @@ import { useAuth } from "../../components/Auth";
 
 export default function SignIn() {
     const auth = useAuth();
-
     const formik = useFormik({
         initialValues: {
             email: '',
