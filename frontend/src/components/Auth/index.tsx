@@ -28,9 +28,9 @@ export const AuthContext = React.createContext<IAuthContext>({
 
 export const useAuth = () => React.useContext(AuthContext);
 
-export default function Auth({ children }: IProps) {
+export default function AuthProvider({ children }: IProps) {
     const navigate = useNavigate();
-    const [token, setToken] = React.useState(Storage.get("token") || null);
+    const [token, setToken] = React.useState<Token>(Storage.get("token") || null);
 
     React.useEffect(() => {
         Storage.set("token", token);
@@ -50,8 +50,7 @@ export default function Auth({ children }: IProps) {
     const signIn = (userDetails: any) => {
         UserService
             .signIn(userDetails)
-            .then((token) => {
-                console.log(token);
+            .then((token: Token) => {
                 setToken(token);
                 navigate("/");
             })
