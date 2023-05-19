@@ -51,6 +51,7 @@ public class DeviceController {
         DeviceResponse response = DeviceResponse
                 .builder()
                 .name(savedDevice.getName())
+                .isOutdoor(savedDevice.isOutdoor())
                 .isActivated(savedDevice.isActivated())
                 .createdOn(savedDevice.getCreatedOn())
                 .activatedOn(savedDevice.getActivatedOn())

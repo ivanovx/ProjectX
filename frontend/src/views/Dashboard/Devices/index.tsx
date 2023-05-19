@@ -35,12 +35,12 @@ export default function Devices() {
                 <TableHead>
                     <TableRow>
                         <TableCell>#</TableCell>
-                        <TableCell>Title</TableCell>
+                        <TableCell>Name</TableCell>
                         <TableCell>Activated</TableCell>
-                        <TableCell>Indoor</TableCell>
+                        <TableCell>Outdoor</TableCell>
                         <TableCell>Created on</TableCell>
-                        <TableCell >Activated on</TableCell>
-                        <TableCell  />
+                        <TableCell>Activated on</TableCell>
+                        <TableCell />
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -58,11 +58,11 @@ function Device({ device }) {
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell component="th" scope="row">{device.id}</TableCell>
-                <TableCell component="th" scope="row">{device.title}</TableCell>
-                <TableCell component="th" scope="row">false</TableCell>
-                <TableCell component="th" scope="row">false</TableCell>
-                <TableCell component="th" scope="row">{Date.now()}</TableCell>
-                <TableCell component="th" scope="row">{Date.now()}</TableCell>        
+                <TableCell component="th" scope="row">{device.name}</TableCell>
+                <TableCell component="th" scope="row">{device.activated}</TableCell>
+                <TableCell component="th" scope="row">{device.outdoor}</TableCell>
+                <TableCell component="th" scope="row">{device.createdOn}</TableCell>
+                <TableCell component="th" scope="row">{device.activatedOn}</TableCell>        
                 <TableCell>
                     <IconButton size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

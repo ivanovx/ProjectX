@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import DeviceService from '../../../modules/device-service';
 import { useAuth } from '../../../components/Auth';
-import { Button, TextField } from '@mui/material';
+import { Button, Checkbox, TextField } from '@mui/material';
 
 export default function Create() {
     const [coordinates, setCoordinates] = React.useState({ x: null, y: null });
@@ -10,8 +10,9 @@ export default function Create() {
     const auth = useAuth();
     const formik = useFormik({
         initialValues: {
-            title: '',
-            cordinates: {
+            name: '',
+            isOutdoor: false,
+            coordinates: {
                 x: 0,
                 y: 0,
             },
@@ -41,17 +42,19 @@ export default function Create() {
 
     return (
         <div>
-             <Button onClick={getCurrentLocation}>Get current location</Button>
+            <Button onClick={getCurrentLocation}>Get current location</Button>
             <form onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth
-                    name="title"
-                    label="Title"
-                    value={formik.values.title}
+                    name="name"
+                    label="Name"
+                    value={formik.values.name}
                     onChange={formik.handleChange}
-                    error={formik.touched.title && Boolean(formik.errors.title)}
-                    helperText={formik.touched.title && formik.errors.title}
+                    error={formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name}
                 />
+                <label>Outdoor</label>
+                <Checkbox name="isOutdoor" checked={formik.values.isOutdoor} onChange={formik.handleChange} />
                 <Button color="primary" variant="contained" fullWidth type="submit">Create device</Button>
             </form>
         </div>

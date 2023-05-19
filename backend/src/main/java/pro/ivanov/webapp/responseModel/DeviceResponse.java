@@ -14,6 +14,8 @@ public class DeviceResponse {
 
     private Coordinates coordinates;
 
+    private boolean isOutdoor;
+
     private boolean isActivated;
 
     private LocalDateTime createdOn;

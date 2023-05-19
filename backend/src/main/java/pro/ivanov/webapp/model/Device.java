@@ -17,6 +17,8 @@ public class Device {
 
     private Coordinates coordinates;
 
+    private boolean isOutdoor;
+
     private boolean isActivated;
 
     private LocalDateTime createdOn;
