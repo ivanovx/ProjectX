@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class ExceptionHandlers {
@@ -17,7 +17,7 @@ public class ExceptionHandlers {
         ApiException apiException = new ApiException(
                 e.getMessage(),
                 httpStatus,
-                ZonedDateTime.now()
+                LocalDateTime.now()
         );
 
         return new ResponseEntity(apiException, httpStatus);
@@ -29,7 +29,7 @@ public class ExceptionHandlers {
         ApiException apiException = new ApiException(
                 e.getMessage(),
                 httpStatus,
-                ZonedDateTime.now()
+                LocalDateTime.now()
         );
 
         return new ResponseEntity(apiException, httpStatus);
@@ -41,7 +41,7 @@ public class ExceptionHandlers {
         ApiException apiException = new ApiException(
                 e.getMessage(),
                 httpStatus,
-                ZonedDateTime.now()
+                LocalDateTime.now()
         );
 
         return new ResponseEntity(apiException, httpStatus);

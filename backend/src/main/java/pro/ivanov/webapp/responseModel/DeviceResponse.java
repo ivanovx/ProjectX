@@ -11,6 +11,8 @@ import pro.ivanov.webapp.model.Device;
 @Data
 @Builder
 public class DeviceResponse {
+    private String id;
+
     private String name;
 
     private Coordinates coordinates;
@@ -28,6 +30,7 @@ public class DeviceResponse {
     public static DeviceResponse of(Device device) {
         DeviceResponse response = DeviceResponse
                 .builder()
+                .id(device.getId())
                 .name(device.getName())
                 .isOutdoor(device.isOutdoor())
                 .isActivated(device.isActivated())

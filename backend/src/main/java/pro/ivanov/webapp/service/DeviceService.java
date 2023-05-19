@@ -1,6 +1,11 @@
 package pro.ivanov.webapp.service;
 
+import java.util.List;
+import java.time.LocalDateTime;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import pro.ivanov.webapp.ApiRequestException;
 import pro.ivanov.webapp.model.Device;
@@ -8,11 +13,6 @@ import pro.ivanov.webapp.model.User;
 import pro.ivanov.webapp.repository.DeviceRepository;
 import pro.ivanov.webapp.requestModel.DeviceRequest;
 import pro.ivanov.webapp.responseModel.DeviceResponse;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 @Service
 public class DeviceService {
@@ -22,7 +22,17 @@ public class DeviceService {
         this.deviceRepository = deviceRepository;
     }
 
-    public ResponseEntity<?> getAllActivated() {
+    public ResponseEntity<List<DeviceResponse>> getAll() {
+        List<DeviceResponse> response = this.deviceRepository
+                .findAll()
+                .stream()
+                .map(device -> DeviceResponse.of(device))
+                .toList();
+
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<List<DeviceResponse>> getAllActivated() {
         List<DeviceResponse> response = this.deviceRepository
                 .findAll()
                 .stream()
@@ -33,7 +43,7 @@ public class DeviceService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getAllByUser(String userId) {
+    public ResponseEntity<List<DeviceResponse>> getAllByUserId(String userId) {
         List<DeviceResponse> response = this.deviceRepository
                 .findAllByUserId(userId)
                 .stream()
@@ -43,19 +53,23 @@ public class DeviceService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getById(String id) {
+    public ResponseEntity<List<DeviceResponse>> getAllByUser() {
+        return this.getAllByUserId(this.getCurrentUser().getId());
+    }
+
+    public ResponseEntity<DeviceResponse> getById(String id) {
         Device device = this.findById(id);
         DeviceResponse response = DeviceResponse.of(device);
 
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> create(DeviceRequest request, User user) {
+    public ResponseEntity<DeviceResponse> create(DeviceRequest request) {
         Device device = new Device();
 
         device.setCreatedOn(LocalDateTime.now());
         device.setActivated(false);
-        device.setUser(user);
+        device.setUser(this.getCurrentUser());
 
         device.setOutdoor(request.isOutdoor());
         device.setName(request.getName());
@@ -66,10 +80,10 @@ public class DeviceService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> update(String id, DeviceRequest request, User user) {
+    public ResponseEntity<DeviceResponse> update(String id, DeviceRequest request) {
         Device device = this.findById(id);
 
-        this.checkUser(device, user);
+        this.checkUser(device, this.getCurrentUser());
 
         device.setName(request.getName());
         device.setOutdoor(request.isOutdoor());
@@ -82,18 +96,20 @@ public class DeviceService {
         return ResponseEntity.ok(response);
     }
 
-    public void delete(String id, User user) {
+    public ResponseEntity delete(String id) {
         Device device = this.findById(id);
 
-        this.checkUser(device, user);
+        this.checkUser(device, this.getCurrentUser());
 
         this.deviceRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
-    public ResponseEntity<?> activate(String id, User user) {
+    public ResponseEntity<DeviceResponse> activate(String id) {
         Device device = this.findById(id);
 
-        this.checkUser(device, user);
+        this.checkUser(device, this.getCurrentUser());
 
         device.setActivated(true);
         device.setActivatedOn(LocalDateTime.now());
@@ -103,6 +119,11 @@ public class DeviceService {
         return ResponseEntity.ok(response);
     }
 
+    private User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    // Todo check owner
     private void checkUser(Device device, User user) {
         if (device.getUser().getId().compareTo(user.getId()) != 0) {
             throw new ApiRequestException("Device with is=%s not yours".formatted(device.getId()));
