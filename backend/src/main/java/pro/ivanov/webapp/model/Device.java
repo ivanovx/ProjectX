@@ -23,6 +23,8 @@ public class Device {
 
     private LocalDateTime createdOn;
 
+    private LocalDateTime updatedOn;
+
     private LocalDateTime activatedOn;
 
     @DBRef
