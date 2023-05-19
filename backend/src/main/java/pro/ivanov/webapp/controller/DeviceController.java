@@ -10,6 +10,7 @@ import pro.ivanov.webapp.repository.UserRepository;
 import pro.ivanov.webapp.responseModel.DeviceResponse;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,7 @@ public class DeviceController {
     @GetMapping
     public List<Device> allDevices(Principal principal) {
         User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
+
         return this.deviceRepository.findAllByUserId(user.getId());
     }
 
@@ -40,16 +42,27 @@ public class DeviceController {
         User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
 
         device.setUser(user);
+        device.setCreatedOn(LocalDateTime.now());
+        device.setActivated(false);
+        device.setActivatedOn(null);
 
         Device savedDevice = this.deviceRepository.save(device);
 
-        DeviceResponse response = DeviceResponse.builder().name(savedDevice.getTitle()).coordinates(savedDevice.getCoordinates()).user(savedDevice.getUser().getUsername()).build();
+        DeviceResponse response = DeviceResponse
+                .builder()
+                .name(savedDevice.getName())
+                .isActivated(savedDevice.isActivated())
+                .createdOn(savedDevice.getCreatedOn())
+                .activatedOn(savedDevice.getActivatedOn())
+                .coordinates(savedDevice.getCoordinates())
+                .user(savedDevice.getUser().getUsername())
+                .build();
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/activate/{id}")
-    public String activateDevice(@PathVariable String id, Principal principal) {
+    public ResponseEntity<DeviceResponse> activateDevice(@PathVariable String id, Principal principal) {
         User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
         Device device = this.deviceRepository.findById(id).orElseThrow();
 
@@ -57,7 +70,22 @@ public class DeviceController {
             // THROW
         }
 
-        return "OK";
+        device.setActivated(true);
+        device.setActivatedOn(LocalDateTime.now());
+
+        Device savedDevice = this.deviceRepository.save(device);
+
+        DeviceResponse response = DeviceResponse
+                .builder()
+                .name(savedDevice.getName())
+                .isActivated(savedDevice.isActivated())
+                .createdOn(savedDevice.getCreatedOn())
+                .activatedOn(savedDevice.getActivatedOn())
+                .coordinates(savedDevice.getCoordinates())
+                .user(savedDevice.getUser().getUsername())
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/update/{id}")
