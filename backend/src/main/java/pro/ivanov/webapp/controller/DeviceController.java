@@ -64,12 +64,12 @@ public class DeviceController {
 
     @PostMapping("/activate/{id}")
     public ResponseEntity<DeviceResponse> activateDevice(@PathVariable String id, Principal principal) {
-        User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
+       // User user = this.userRepository.findByEmail(principal.getName()).orElseThrow();
         Device device = this.deviceRepository.findById(id).orElseThrow();
 
-        if (device.getUser().getId().compareTo(user.getId()) == 0) {
+       /* if (device.getUser().getId().compareTo(user.getId()) == 0) {
             // THROW
-        }
+        }*/
 
         device.setActivated(true);
         device.setActivatedOn(LocalDateTime.now());

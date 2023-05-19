@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useAuth } from '../../../components/Auth';
 import DeviceService from '../../../modules/device-service';
+import { Button } from '@mui/material';
 
 export default function Devices() {
     const auth = useAuth();
@@ -44,23 +45,33 @@ export default function Devices() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {devices.map(device => <Device key={device.id} device={device} />)}
+                    {devices.map(device => <Device key={device.id} device={device} token={auth.token.accessToken} />)}
                 </TableBody>
             </Table>
         </TableContainer>
     );
 }
 
-function Device({ device }) {
+function Device({ device, token }) {
     const [open, setOpen] = React.useState(false);
+
+    const onActivate = () => {
+        console.log("activate device")
+        DeviceService.activateDevice(device.id, token).then(console.log).catch(console.log);
+    };
+
+    const onGenereateCredentials = () => {
+        console.log("Generate credentials for device");
+        DeviceService.createToken(device.id, token).then(console.log).catch(console.log);
+    }
 
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell component="th" scope="row">{device.id}</TableCell>
                 <TableCell component="th" scope="row">{device.name}</TableCell>
-                <TableCell component="th" scope="row">{device.activated}</TableCell>
-                <TableCell component="th" scope="row">{device.outdoor}</TableCell>
+                <TableCell component="th" scope="row">{String(device.activated)}</TableCell>
+                <TableCell component="th" scope="row">{String(device.outdoor)}</TableCell>
                 <TableCell component="th" scope="row">{device.createdOn}</TableCell>
                 <TableCell component="th" scope="row">{device.activatedOn}</TableCell>        
                 <TableCell>
@@ -72,6 +83,8 @@ function Device({ device }) {
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Button onClick={onActivate}>Activate</Button>
+                        <Button onClick={onGenereateCredentials}>Credentials</Button>
                         <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
                                 History

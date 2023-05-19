@@ -14,7 +14,7 @@ export default class HttpService {
         );
     }
 
-    static doPost(url: string, data: any, config?: any) {
+    static doPost(url: string, data?: any, config?: any) {
         return new Promise((resolve, reject) => 
             axios
                 .post(url, data, config)

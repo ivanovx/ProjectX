@@ -22,4 +22,20 @@ export default class DeviceService {
             }
         });
     }
+
+    static activateDevice(deviceId: string, token: string) {
+        return HttpService.doPost(`${API_URL}/devices/activate/${deviceId}`, null, {
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            }
+        });
+    }
+
+    static createToken(deviceId: string, token: string) {
+        return HttpService.doPost(`${API_URL}/token/create/${deviceId}`, null, {
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            }
+        });
+    }
 }
