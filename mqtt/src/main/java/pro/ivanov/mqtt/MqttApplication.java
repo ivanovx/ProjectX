@@ -1,4 +1,4 @@
-package com.example.demo;
+package pro.ivanov.mqtt;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,12 +14,15 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
 @SpringBootApplication
-public class DemoApplication {
+public class MqttApplication {
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = new SpringApplicationBuilder()
-                .main(DemoApplication.class)
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(MqttApplication.class)
                 .web(WebApplicationType.NONE)
                 .run(args);
+
+        MyGateway gateway = context.getBean(MyGateway.class);
+
+        gateway.sendToMqtt("Hello, from gateway...");
     }
 
     @Bean
@@ -38,7 +41,7 @@ public class DemoApplication {
     }
 
     @Bean
-    @ServiceActivator(inputChannel = "mqttInputChannel")
+    @ServiceActivator(inputChannel = "mqttChannel")
     public MessageHandler handler() {
         return message -> System.out.println(message.getPayload());
     }
