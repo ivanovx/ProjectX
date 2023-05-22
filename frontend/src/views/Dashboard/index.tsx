@@ -1,8 +1,8 @@
-import { Container, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 export default function Home() {
     return (
-        <Container>
+        <>
             <Typography paragraph>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
@@ -30,6 +30,6 @@ export default function Home() {
                 eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
                 posuere sollicitudin aliquam ultrices sagittis orci a.
             </Typography>
-        </Container>
+        </>
     );
 }

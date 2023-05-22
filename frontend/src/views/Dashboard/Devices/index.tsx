@@ -20,15 +20,24 @@ export default function Devices() {
     const auth = useAuth();
     const [devices, setDevices] = React.useState([]);
     
-    React.useEffect(() => {
+    const token = auth.token.accessToken;
+
+    const getDevices = () => {
         DeviceService
-            .getUserDevices(auth.token.accessToken)
-            .then((devices: any[]) => {
-                setDevices(devices);
-                console.log(devices);
-            })
+            .getUserDevices(token)
+            .then((devices: any[]) => setDevices(devices))
             .catch(console.log);
-    }, []);
+    };
+
+    React.useEffect(getDevices, []);
+    React.useEffect(getDevices, [devices]);
+
+    const onActivate = React.useCallback((id: any) => {
+        DeviceService
+            .activateDevice(id, token)
+            .then(console.log)
+            .catch(console.log);
+    }, [devices]);
 
     return (
         <TableContainer component={Paper}>
@@ -45,25 +54,24 @@ export default function Devices() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {devices.map(device => <Device key={device.id} device={device} token={auth.token.accessToken} />)}
+                    {devices.map(device => <Device key={device.id} device={device} onActivate={() => onActivate(device.id)} />)}
                 </TableBody>
             </Table>
         </TableContainer>
     );
 }
 
-function Device({ device, token }) {
+function Device({ device, onActivate }) {
     const [open, setOpen] = React.useState(false);
 
-    const onActivate = () => {
-        console.log("activate device")
-        DeviceService.activateDevice(device.id, token).then(console.log).catch(console.log);
-    };
+   
 
-    const onGenereateCredentials = () => {
-        console.log("Generate credentials for device");
-        DeviceService.createToken(device.id, token).then(console.log).catch(console.log);
-    }
+    /*const onGenereateCredentials = () => {
+        DeviceService
+            .createToken(device.id, token)
+            .then(console.log)
+            .catch(console.log);
+    }*/
 
     return (
         <React.Fragment>
@@ -84,24 +92,8 @@ function Device({ device, token }) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Button onClick={onActivate}>Activate</Button>
-                        <Button onClick={onGenereateCredentials}>Credentials</Button>
                         <Box sx={{ margin: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
-                                History
-                            </Typography>
-                            <Table size="small" aria-label="purchases">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Date</TableCell>
-                                        <TableCell>Customer</TableCell>
-                                        <TableCell align="right">Amount</TableCell>
-                                        <TableCell align="right">Total price ($)</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                  
-                                </TableBody>
-                            </Table>
+                            <Typography variant="h6" gutterBottom>History</Typography>
                         </Box>
                     </Collapse>
                 </TableCell>

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './components/Layout';
 import DashboardLayout from './components/Layout/Dashboard';
 import Home from './views/Home';
@@ -19,8 +19,6 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
             { index: true,  element: <Home /> },
-            //{ path: "dashboard", element: <Dashboard /> },
-            //{ path: "dashboard/devices/create", element: <CreateDevice /> },
             { path: "user/signin", element: <SignIn /> },
             { path: "user/signup", element: <SignUp /> }
         ]

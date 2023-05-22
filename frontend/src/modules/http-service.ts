@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export const BEARER_TOKEN_AUTH = (token: string) => {
     return { 'Authorization' : `Bearer ${token}` };
 }
 
 export default class HttpService {
-    static doGet(url: string, config?: any) {
+    static doGet(url: string, config?: AxiosRequestConfig) {
         return new Promise((resolve, reject) =>
             axios
                 .get(url, config)
@@ -14,7 +14,7 @@ export default class HttpService {
         );
     }
 
-    static doPost(url: string, data?: any, config?: any) {
+    static doPost(url: string, data: any = undefined, config?: AxiosRequestConfig) {
         return new Promise((resolve, reject) => 
             axios
                 .post(url, data, config)
@@ -23,7 +23,7 @@ export default class HttpService {
         );
     }
 
-    static doPut(url: string, data: any, config?: any) {
+    static doPut(url: string, data: any = undefined, config?: AxiosRequestConfig) {
         return new Promise((resolve, reject) =>
             axios
                 .put(url, data, config)
@@ -32,7 +32,7 @@ export default class HttpService {
         ));
     }
 
-    static doDelete(url: string, config?: any) {
+    static doDelete(url: string, config?: AxiosRequestConfig) {
         return new Promise((resolve, reject) =>
             axios
                 .delete(url, config)
