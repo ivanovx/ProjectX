@@ -1,8 +1,9 @@
-# project-fmi-2023
+# project-2023
 Still no name
 
 ## Docs
 
+* useful -> https://lankydan.dev/2017/10/12/getting-started-with-spring-data-cassandra
 
 * For Apache Cassandra
 
