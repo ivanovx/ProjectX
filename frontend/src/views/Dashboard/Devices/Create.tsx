@@ -1,8 +1,8 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import DeviceService from '../../../modules/device-service';
-import { useAuth } from '../../../components/Auth';
 import { Button, Checkbox, TextField } from '@mui/material';
+import useAuth from '../../../hooks/useAuth';
 
 export default function Create() {
     const [coordinates, setCoordinates] = React.useState({ x: null, y: null });

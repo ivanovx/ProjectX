@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
 import { Button, TextField } from "@mui/material";
+import useAuth from "../../hooks/useAuth";
 
-import { useAuth } from "../../components/Auth";
 
 export default function SignUp() {
     const auth = useAuth();

@@ -12,9 +12,9 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useAuth } from '../../../components/Auth';
 import DeviceService from '../../../modules/device-service';
 import { Button } from '@mui/material';
+import useAuth from '../../../hooks/useAuth';
 
 export default function Devices() {
     const auth = useAuth();
@@ -63,15 +63,6 @@ export default function Devices() {
 
 function Device({ device, onActivate }) {
     const [open, setOpen] = React.useState(false);
-
-   
-
-    /*const onGenereateCredentials = () => {
-        DeviceService
-            .createToken(device.id, token)
-            .then(console.log)
-            .catch(console.log);
-    }*/
 
     return (
         <React.Fragment>
