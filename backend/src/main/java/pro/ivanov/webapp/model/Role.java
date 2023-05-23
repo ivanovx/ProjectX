@@ -3,20 +3,20 @@ package pro.ivanov.webapp.model;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
 
 @Data
-@Document("tokens")
-public class Token {
+@Document("roles")
+public class Role implements GrantedAuthority {
     @Id
     private String id;
 
-    private String accessKey;
+    @Indexed(unique = true)
+    private String name;
 
-    private String secretKey;
-
-    @DBRef
-    @Indexed
-    private Device device;
+    @Override
+    public String getAuthority() {
+        return this.name;
+    }
 }

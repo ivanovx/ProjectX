@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      database: projectWithNoName
+      database: project2023
       host: localhost
       port: 27017
       auto-index-creation: true

@@ -22,7 +22,7 @@ export default function AuthProvider({ children }: Props) {
         UserService
             .signUp(userDetails)
             .then(() => {
-                navigate("/user/signin");
+                navigate("/user/verify");
             })
             .catch((err) => {
                 console.log(err);

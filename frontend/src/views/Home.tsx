@@ -2,9 +2,11 @@ import React from "react";
 import { Card, CardContent, Chip, Stack, Typography } from "@mui/material";
 
 import DeviceService from "../modules/device-service";
+import useUser from "../hooks/useUser";
 
 
 export default function Home() {
+    const { user } = useUser();
     const [devices, setDevices] = React.useState([]);
 
     React.useEffect(() => {
@@ -15,6 +17,8 @@ export default function Home() {
     }, []);
 
     return (
+        <>
+        <h1>Welcome {user.username}</h1>
         <Stack spacing={2}>
             {devices.map(device => (
                 <Card variant="outlined" key={device.id}>
@@ -26,5 +30,6 @@ export default function Home() {
                 </Card>
             ))}
         </Stack>
+        </>
     );
 }

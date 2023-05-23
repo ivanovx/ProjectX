@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Container, Button, Grid } from '@mui/material';
 
 import AuthProvider from '../Auth';
+import useUser from '../../hooks/useUser';
 
 export default function Layout() {
     return (

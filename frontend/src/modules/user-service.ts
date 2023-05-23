@@ -1,14 +1,15 @@
 import HttpService from "./http-service";
 
-import { SIGNUP_URL, SIGNIN_URL } from "./apiConfig";
+import { API_URL, SIGNUP_URL, SIGNIN_URL } from "./apiConfig";
 
 export type UserSignIn = {
-    email: string;
+    username: string;
     password: string;
 }
 
 export type UserSignUp = {
     name: string;
+    username: string;
     email: string;
     password: string;
 };
@@ -20,5 +21,13 @@ export default class UserService {
 
     static signUp(userDetails: UserSignUp) {
         return HttpService.doPost(SIGNUP_URL, userDetails);
+    }
+
+    static me(token: string) {
+        return HttpService.doGet(`${API_URL}/user`,  {
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            }
+        });
     }
 }

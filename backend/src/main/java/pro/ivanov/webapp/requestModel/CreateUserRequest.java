@@ -1,16 +1,19 @@
 package pro.ivanov.webapp.requestModel;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 public class CreateUserRequest {
-    @NonNull
+    @NotNull
     private String name;
 
-    @NonNull
+    @NotNull
     private String email;
 
-    @NonNull
+    @NotNull
+    private String username;
+
+    @NotNull
     private String password;
 }

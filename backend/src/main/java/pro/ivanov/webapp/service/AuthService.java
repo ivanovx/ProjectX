@@ -14,6 +14,8 @@ import pro.ivanov.webapp.requestModel.AuthRequest;
 import pro.ivanov.webapp.requestModel.CreateUserRequest;
 import pro.ivanov.webapp.responseModel.AuthResponse;
 
+import java.time.LocalDateTime;
+
 @Service
 public class AuthService {
     private final JwtService jwtService;
@@ -28,38 +30,44 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // TODO
+    // Roles
     public AuthResponse signUp(CreateUserRequest request) {
         User user = new User();
 
         user.setName(request.getName());
         user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
         user.setPassword(this.passwordEncoder.encode(request.getPassword()));
 
+        user.setCreated(LocalDateTime.now());
+        user.setActive(false);
+        user.setModified(null);
+
         User savedUser = this.userRepository.save(user);
-        String jwtToken = jwtService.generateToken(savedUser);
+        String token = jwtService.generateToken(savedUser);
         String refreshToken = jwtService.generateRefreshToken(savedUser);
 
         return AuthResponse
                 .builder()
-                .accessToken(jwtToken)
+                .accessToken(token)
                 .refreshToken(refreshToken)
                 .build();
     }
 
     public AuthResponse signIn(AuthRequest request) {
-        this.authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        this.authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
         User user = this.userRepository
-                .findByEmail(request.getEmail())
-                .orElseThrow(() ->
-                        new ApiRequestException("User with %s email not found".formatted(request.getEmail())));
+                .findByUsername(request.getUsername())
+                .orElseThrow(() -> new ApiRequestException("User with %s username not found".formatted(request.getUsername())));
 
-        String jwtToken = this.jwtService.generateToken(user);
+        String token = this.jwtService.generateToken(user);
         String refreshToken = this.jwtService.generateRefreshToken(user);
 
         return AuthResponse
                 .builder()
-                .accessToken(jwtToken)
+                .accessToken(token)
                 .refreshToken(refreshToken)
                 .build();
     }
@@ -72,13 +80,13 @@ public class AuthService {
         }
 
         final String refreshToken = authHeader.substring(7);
-        final String userEmail = jwtService.extractUsername(refreshToken);
+        final String username = jwtService.extractUsername(refreshToken);
 
-        if (userEmail == null) {
+        if (username == null) {
             // THROW
         }
 
-        User user = this.userRepository.findByEmail(userEmail).orElseThrow();
+        User user = this.userRepository.findByUsername(username).orElseThrow();
         String accessToken = this.jwtService.generateToken(user);
 
         return AuthResponse

@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from 'formik';
-import { Button, TextField } from "@mui/material";
+import { Button, Container, TextField } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 
 
@@ -8,29 +8,25 @@ export default function SignIn() {
     const auth = useAuth();
     const formik = useFormik({
         initialValues: {
-            email: '',
+            username: '',
             password: '',
         },
-        onSubmit: (values) => {
-            auth.signIn({
-                email: "csyntax@outlook.com",
-                password: "test"
-            });
-        }
+        onSubmit: userData => auth.signIn(userData)
     });
 
     return (
-        <div>
+        <Container maxWidth="sm">
             <form onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth
-                    id="email"
-                    name="email"
-                    label="Email"
-                    value={formik.values.email}
+                    id="username"
+                    name="username"
+                    label="Username"
+                    value={formik.values.username}
                     onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                    error={formik.touched.username && Boolean(formik.errors.username)}
+                    helperText={formik.touched.username && formik.errors.username}
+                    margin="normal"
                 />
                 <TextField
                     fullWidth
@@ -42,9 +38,10 @@ export default function SignIn() {
                     onChange={formik.handleChange}
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}
+                    margin="normal"
                 />
                 <Button color="primary" variant="contained" fullWidth type="submit">Sign In</Button>
             </form>
-        </div>
+        </Container>
     );
 }
