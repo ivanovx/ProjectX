@@ -13,6 +13,7 @@ import pro.ivanov.webapp.repository.UserRepository;
 import pro.ivanov.webapp.requestModel.AuthRequest;
 import pro.ivanov.webapp.requestModel.CreateUserRequest;
 import pro.ivanov.webapp.responseModel.AuthResponse;
+import pro.ivanov.webapp.responseModel.UserResponse;
 
 import java.time.LocalDateTime;
 
@@ -32,7 +33,7 @@ public class AuthService {
 
     // TODO
     // Roles
-    public AuthResponse signUp(CreateUserRequest request) {
+    public UserResponse signUp(CreateUserRequest request) {
         User user = new User();
 
         user.setName(request.getName());
@@ -44,15 +45,7 @@ public class AuthService {
         user.setActive(false);
         user.setModified(null);
 
-        User savedUser = this.userRepository.save(user);
-        String token = jwtService.generateToken(savedUser);
-        String refreshToken = jwtService.generateRefreshToken(savedUser);
-
-        return AuthResponse
-                .builder()
-                .accessToken(token)
-                .refreshToken(refreshToken)
-                .build();
+        return UserResponse.of(this.userRepository.save(user));
     }
 
     public AuthResponse signIn(AuthRequest request) {

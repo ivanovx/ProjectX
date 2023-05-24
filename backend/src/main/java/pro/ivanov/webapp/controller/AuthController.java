@@ -2,6 +2,7 @@ package pro.ivanov.webapp.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.ivanov.webapp.requestModel.AuthRequest;
 import pro.ivanov.webapp.requestModel.CreateUserRequest;
 import pro.ivanov.webapp.responseModel.AuthResponse;
+import pro.ivanov.webapp.responseModel.UserResponse;
 import pro.ivanov.webapp.service.AuthService;
 
 @RestController
@@ -23,10 +25,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> signUp(@RequestBody CreateUserRequest request) {
-        AuthResponse response = this.authService.signUp(request);
+    public ResponseEntity<UserResponse> signUp(@RequestBody CreateUserRequest request) {
+        UserResponse response = this.authService.signUp(request);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")

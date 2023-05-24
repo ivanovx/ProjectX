@@ -17,7 +17,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<UserResponse> me() {
+    public ResponseEntity<UserResponse> index() {
         return this.userService.getAuthUser();
     }
 
