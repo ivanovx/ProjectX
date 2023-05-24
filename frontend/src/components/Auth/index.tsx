@@ -14,6 +14,8 @@ export default function AuthProvider({ children }: Props) {
     const navigate = useNavigate();
     const [token, setToken] = React.useState<Token>(Storage.get("token") || null);
 
+    const [error, setError] = React.useState<any | null>(null);
+
     React.useEffect(() => {
         Storage.set("token", token);
     }, [token]);
@@ -25,6 +27,7 @@ export default function AuthProvider({ children }: Props) {
                 navigate("/user/verify");
             })
             .catch((err) => {
+                setError(err);
                 console.log(err);
             });
     };
@@ -37,6 +40,7 @@ export default function AuthProvider({ children }: Props) {
                 navigate("/");
             })
             .catch((err) => {
+                setError(err);
                 console.log(err);
             });
     };
@@ -46,5 +50,14 @@ export default function AuthProvider({ children }: Props) {
         navigate("/");
     };
 
-    return <AuthContext.Provider value={{ token, signUp, signIn, signOut }}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{ token, signUp, signIn, signOut }}>
+            { error && <ErrorMessage value={error.message} onClick={() => setError(null)} />}
+            {children}
+        </AuthContext.Provider>
+    );
+}
+
+function ErrorMessage({ value, onClick }) {
+    return <span onClick={onClick}>{value}</span>;
 }
