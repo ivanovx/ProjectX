@@ -5,6 +5,7 @@ import Storage from "../../modules/storage";
 
 import UserService, { type UserSignIn, type UserSignUp } from "../../modules/user-service";
 import AuthContext, { type Token } from "../../modules/authContext";
+import { Alert, IconButton } from "@mui/material";
 
 type Props = {
     children: React.ReactNode;
@@ -59,5 +60,21 @@ export default function AuthProvider({ children }: Props) {
 }
 
 function ErrorMessage({ value, onClick }) {
-    return <span onClick={onClick}>{value}</span>;
+    return (
+        <Alert
+        action={
+          <IconButton
+            aria-label="close"
+            color="error"
+            size="small"
+            onClick={onClick}
+          >
+            X
+          </IconButton>
+        }
+        sx={{ mb: 2 }}
+      >
+        {value}
+      </Alert>
+    );
 }
