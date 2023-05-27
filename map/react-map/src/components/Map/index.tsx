@@ -1,9 +1,14 @@
-import React from 'react';
-import { Circle, MapContainer, Pane, TileLayer, useMapEvents } from 'react-leaflet'
+import React, { useState } from 'react';
+import { Circle, MapContainer, Marker, Pane, Popup, TileLayer, useMapEvents } from 'react-leaflet'
 
 import 'leaflet/dist/leaflet.css';
 
 import styles from './Map.module.css';
+import { LatLngExpression } from 'leaflet';
+
+type Props = {
+    children: React.ReactNode;
+};
 
 export default function Map() {
     return (
@@ -12,22 +17,54 @@ export default function Map() {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Pane name='default'>
-                <Circle center={[42.65, 25.4]} radius={500} pathOptions={{ color: 'blue' }} />
-            </Pane>
             <LocalMap />
         </MapContainer>
     );
 }
 
-function LocalMap() {
+// Ready
+function SelectionMap() {
+    const [position, setPosition] = useState<LatLngExpression>({ lat: 0, lng: 0 });
+
     const map = useMapEvents({
         click: (e) => {
             console.log(e)
-            map.locate()
+
+            setPosition(e.latlng);
+
+            map.locate();
+        },
+        dblclick: (e) => {
+            setPosition({ lat: 0, lng: 0 });
         }
     });
 
-    return null;
+    return (
+        <Marker position={position}>
+            <Popup>
+                Use selected position: {JSON.stringify(position)}
+            </Popup>
+      </Marker>
+    );
+}
+
+function LocalMap() {
+    const onSelectCircle = (e: any) => {
+        console.log(e);
+    };
+
+    return (
+        <Pane name='default'>
+            <Circle
+                attribution='device-id'
+                center={[42.65, 25.4]} 
+                radius={500} 
+                pathOptions={{ color: 'blue' }} 
+                eventHandlers={{
+                    click: onSelectCircle
+                }}
+            />
+        </Pane>
+    );
 }
 
