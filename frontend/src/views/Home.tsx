@@ -1,11 +1,13 @@
 import React from "react";
-import { Card, CardContent, Chip, Stack, Typography } from "@mui/material";
+import { Container, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
 
 import DeviceService from "../modules/device-service";
 import useUser from "../hooks/useUser";
 
+import Map, { LocalMap } from "../components/Map";
+import { Circle, Pane } from "react-leaflet";
+
 export default function Home() {
-    const { user } = useUser();
     const [devices, setDevices] = React.useState([]);
 
     React.useEffect(() => {
@@ -15,7 +17,17 @@ export default function Home() {
             .catch(err => console.log(err));
     }, []);
 
-    return (
+    /*const { user } = useUser();
+    const [devices, setDevices] = React.useState([]);
+
+    React.useEffect(() => {
+        DeviceService
+            .getAllDevices()
+            .then((devices: any[]) => setDevices(devices))
+            .catch(err => console.log(err));
+    }, []);*/
+
+    /*return (
         <>
             <h1>Welcome {user.username}</h1>
             <Stack spacing={2}>
@@ -30,5 +42,43 @@ export default function Home() {
                 ))}
             </Stack>
         </>
+    );*/
+
+    const containerSx = {
+        display: "flex",
+    };
+
+    const onSelectCircle = (e) => {
+        console.log(e.sourceTarget.options.attribution);
+    }
+
+    // https://mui.com/material-ui/react-dialog/
+
+    return (
+        <Container sx={containerSx}>
+            <Map>
+                <Pane name='default'>
+                    {devices.map(device => {
+                        let center = {
+                            lat: device.coordinates.x, 
+                            lng: device.coordinates.y
+                        };
+
+                        return (
+                            <Circle
+                                key={device.id}
+                                attribution={device.id}
+                                center={center} 
+                                radius={50} 
+                                pathOptions={{ color: 'blue' }} 
+                                eventHandlers={{
+                                    click: onSelectCircle
+                                }}
+                            />
+                        );
+                    })}
+                </Pane>
+            </Map>
+        </Container>
     );
 }
