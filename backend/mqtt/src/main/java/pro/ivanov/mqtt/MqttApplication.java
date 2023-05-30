@@ -6,15 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
-import org.springframework.integration.core.MessageProducer;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
-import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
-import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
@@ -33,10 +29,9 @@ public class MqttApplication {
     @Bean
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
-        //factory.setServerURIs();
 
         MqttConnectOptions options = new MqttConnectOptions();
-                options.setServerURIs(new String[] {"tcp://localhost:1883"});
+        options.setServerURIs(new String[] { "tcp://localhost:1883" });
 
         factory.setConnectionOptions(options);
 
@@ -44,22 +39,18 @@ public class MqttApplication {
     }
 
     @Bean
-    @ServiceActivator(inputChannel = "mqttOutboundChannel")
+    @ServiceActivator(inputChannel="mqttChannel")
     public MessageHandler mqttOutbound() {
-        MqttPahoMessageHandler messageHandler =
-                new MqttPahoMessageHandler("testClient", mqttClientFactory());
+        MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler("testClient", mqttClientFactory());
+
         messageHandler.setAsync(true);
         messageHandler.setDefaultTopic("testTopic");
+
         return messageHandler;
     }
 
     @Bean
     public MessageChannel mqttOutboundChannel() {
         return new DirectChannel();
-    }
-
-    @MessagingGateway(defaultRequestChannel = "mqttOutboundChannel")
-    public interface MyGateway {
-        void sendToMqtt(String data);
     }
 }
