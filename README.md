@@ -2,6 +2,7 @@
 Still no name
 
 ## Docs
+*   `docker run -p 1883:1883 eclipse-mosquitto mosquitto -c /mosquitto-no-auth.conf`
 
 * useful -> https://lankydan.dev/2017/10/12/getting-started-with-spring-data-cassandra
 
