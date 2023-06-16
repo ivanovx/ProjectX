@@ -1,4 +1,4 @@
-# project-2023
+# Project 2023
 Still no name
 
 ## Docs
