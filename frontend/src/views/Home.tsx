@@ -1,6 +1,19 @@
 import React from "react";
-import { Container, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
+import { Container, Card, CardContent, Chip, Stack, Typography, Box } from "@mui/material";
 
+import Map, { LocalMap } from "../components/Map";
+
+export default function Home() {
+    return  (
+        <Box sx={{ display: 'flex', maxHeight: '750px' }}>
+            <Map>
+                <LocalMap />
+            </Map>
+        </Box>
+    );
+}
+
+/*
 import DeviceService from "../modules/device-service";
 import useUser from "../hooks/useUser";
 
@@ -43,7 +56,7 @@ export default function Home() {
             </Stack>
         </>
     );*/
-
+/*
     const containerSx = {
         display: "flex",
     };
@@ -81,4 +94,4 @@ export default function Home() {
             </Map>
         </Container>
     );
-}
+}*/
