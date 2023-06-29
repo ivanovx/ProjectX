@@ -58,6 +58,5 @@ export default function Create() {
                 <Button color="primary" variant="contained" fullWidth type="submit">Create device</Button>
             </form>
         </div>
-       
     );
 }

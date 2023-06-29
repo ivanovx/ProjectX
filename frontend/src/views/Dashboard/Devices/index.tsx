@@ -40,24 +40,27 @@ export default function Devices() {
     }, [devices]);
 
     return (
-        <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>#</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Activated</TableCell>
-                        <TableCell>Outdoor</TableCell>
-                        <TableCell>Created on</TableCell>
-                        <TableCell>Activated on</TableCell>
-                        <TableCell />
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {devices.map(device => <Device key={device.id} device={device} onActivate={() => onActivate(device.id)} />)}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <>
+            <Button href="/dashboard/devices/create">Create</Button>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>#</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Activated</TableCell>
+                            <TableCell>Outdoor</TableCell>
+                            <TableCell>Created on</TableCell>
+                            <TableCell>Activated on</TableCell>
+                            <TableCell />
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {devices.map(device => <Device key={device.id} device={device} onActivate={() => onActivate(device.id)} />)}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
     );
 }
 
