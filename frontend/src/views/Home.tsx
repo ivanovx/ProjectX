@@ -1,17 +1,29 @@
 import React from "react";
-import { Container, Card, CardContent, Chip, Stack, Typography, Box } from "@mui/material";
+import { Container, Card, CardContent, Chip, Stack, Typography, Box, Paper } from "@mui/material";
 
 import Map, { LocalMap } from "../components/Map";
 
 export default function Home() {
     return  (
-        <Box sx={{ display: 'flex', maxHeight: '750px' }}>
-            <Map>
-                <LocalMap />
-            </Map>
-        </Box>
+        <>
+            <Box sx={{ display: 'flex', marginX: 'auto', maxWidth: '90%', }}>
+                <Map >
+                    <LocalMap />
+                </Map>
+            </Box>
+            <section>
+                <h3>
+                Sensor.Community is a contributors driven global sensor network that creates Open Environmental Data.
+                </h3>
+                <h4>
+                Our mission is to inspire and enrich people’s lives by offering a platform for the collective curiosity in nature that is genuine, joyful and positive.
+                </h4>
+                <a>Explore project on GitHub</a>
+            </section>
+        </>
     );
 }
+  
 
 /*
 import DeviceService from "../modules/device-service";

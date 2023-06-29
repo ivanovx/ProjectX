@@ -10,6 +10,7 @@ import DashboardHome from './views/Dashboard';
 import CreateDevice from './views/Dashboard/Devices/Create';
 
 import Devices from "./views/Dashboard/Devices";
+import Stats from './views/Stats';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
             { index: true,  element: <Home /> },
+            { path: "stats", element: <Stats /> }, 
             { path: "user/signin", element: <SignIn /> },
             { path: "user/signup", element: <SignUp /> }
         ]
