@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,8 +20,7 @@ import RequireAuth from '../Auth/RequireAuth';
 import { Outlet } from 'react-router-dom';
 import AuthProvider from '../Auth';
 
-const drawerWidth = 240;
-
+const drawerWidth = 250;
 
 export default function ResponsiveDrawer() {
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -29,14 +29,31 @@ export default function ResponsiveDrawer() {
         setMobileOpen(!mobileOpen);
     };
 
+    //
+
     const drawer = (
         <>
             <Toolbar />
             <Divider />
             <List>
                 <ListItem disablePadding>
+                    <ListItemButton href='/'>
+                        <ListItemText primary="Home" secondary="Go site home." />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
                     <ListItemButton href='/dashboard/devices'>
-                        <ListItemText primary="Devices" secondary="Explore my devices" />
+                        <ListItemText primary="Devices" secondary="Explore my devices." />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton href='/dashboard/measurements'>
+                        <ListItemText primary="Measurements" secondary="Explore my devices." />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton href='/dashboard/profile'>
+                        <ListItemText primary="Profile" secondary="Manage my profile." />
                     </ListItemButton>
                 </ListItem>
             </List>
@@ -63,7 +80,7 @@ export default function ResponsiveDrawer() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" noWrap>Dashboard</Typography>
+                        <Typography variant="h5" noWrap>Dashboard</Typography>
                     </Toolbar>
                 </AppBar>
                 <Box sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
