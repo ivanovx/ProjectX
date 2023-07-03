@@ -4,6 +4,7 @@ import { Container, Button, Grid, Typography, Stack, Divider } from '@mui/materi
 
 import AuthProvider from '../Auth';
 import useUser from '../../hooks/useUser';
+import Link from '../Link';
 
 export default function Layout() {
     return (
@@ -21,9 +22,9 @@ function Header() {
     const AppNav = () => {
         return (
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2, md: 4 }}>
-                <Button href="/" variant="text">Home</Button>
-                <Button href="/stats" variant="text">Stats</Button>
-                <Button href="/dashboard" variant="text">Dashboard</Button>
+                <Link href="/" label="Home" />
+                <Link href="/stats" label="Stats" />
+                <Link href="/dashboard" label="Dashboard" />
             </Stack>
         );
     };

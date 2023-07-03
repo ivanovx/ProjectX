@@ -22,39 +22,35 @@ export default function Home() {
     return  (
         <>
             <Box sx={{ display: 'flex', marginX: 'auto', maxWidth: '90%', }}>
-            <Map>
-                <Pane name='default'>
-                    {devices.map(device => {
-                        let center = {
-                            lat: device.coordinates.x, 
-                            lng: device.coordinates.y
-                        };
+                <Map>
+                    <Pane name='default'>
+                        {devices.map(device => {
+                            let center = {
+                                lat: device.coordinates.x, 
+                                lng: device.coordinates.y
+                            };
 
-                        return (
-                            <Circle
-                                key={device.id}
-                                attribution={device.id}
-                                center={center} 
-                                radius={50} 
-                                pathOptions={{ color: 'blue' }} 
-                                eventHandlers={{
-                                    click: onSelectCircle
-                                }}
-                            />
-                        );
-                    })}
-                </Pane>
-            </Map>
+                            return (
+                                <Circle
+                                    key={device.id}
+                                    attribution={device.id}
+                                    center={center} 
+                                    radius={50} 
+                                    pathOptions={{ color: 'blue' }} 
+                                    eventHandlers={{
+                                        click: onSelectCircle
+                                    }}
+                                />
+                            );
+                        })}
+                    </Pane>
+                </Map>
             </Box>
-            <section>
-                <h3>
-                    Sensor.Community is a contributors driven global sensor network that creates Open Environmental Data.
-                </h3>
-                <h4>
-                    Our mission is to inspire and enrich people’s lives by offering a platform for the collective curiosity in nature that is genuine, joyful and positive.
-                </h4>
-                <a>Explore project on GitHub</a>
-            </section>
+            <Box>
+                <Typography variant="h3">ProjectX is a global sensor network that creates Open Enviromental Data.</Typography>
+                <Typography variant="h4">Our idea is to inspire open source projects...</Typography>
+                <a href="https://github.com/projectx">Explore project on GitHub</a>
+            </Box>
         </>
     );
 }
