@@ -1,10 +1,10 @@
 spring:
   data:
     mongodb:
-      database: project2023
+      auto-index-creation: true
+      database: projectX
       host: localhost
       port: 27017
-      auto-index-creation: true
 
 application:
   security:

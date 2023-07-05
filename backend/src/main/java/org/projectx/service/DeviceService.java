@@ -66,7 +66,7 @@ public class DeviceService {
     public ResponseEntity<DeviceResponse> create(DeviceRequest request) {
         Device device = new Device();
 
-        device.setCreatedOn(LocalDateTime.now());
+        device.setCreated(LocalDateTime.now());
         device.setActivated(false);
         device.setUser(this.getCurrentUser());
 
@@ -88,7 +88,7 @@ public class DeviceService {
         device.setOutdoor(request.isOutdoor());
         device.setCoordinates(request.getCoordinates());
 
-        device.setUpdatedOn(LocalDateTime.now());
+        device.setModified(LocalDateTime.now());
 
         DeviceResponse response = DeviceResponse.of(this.deviceRepository.save(device));
 
@@ -111,7 +111,7 @@ public class DeviceService {
         this.checkUser(device, this.getCurrentUser());
 
         device.setActivated(true);
-        device.setActivatedOn(LocalDateTime.now());
+        //device.setActivated(LocalDateTime.now());
 
         DeviceResponse response = DeviceResponse.of(this.deviceRepository.save(device));
 

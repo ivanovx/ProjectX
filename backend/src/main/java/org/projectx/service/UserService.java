@@ -27,11 +27,11 @@ public class UserService {
 
         checkUser(user, currentUser);
 
-        if (user.isActive()) {
+        /*if (user.isActive()) {
             throw new ApiRequestException("User with %s is verified.".formatted(username));
         }
 
-        user.setActive(true);
+        user.setActive(true);*/
 
         UserResponse response = UserResponse.of(this.userRepository.save(user));
 

@@ -21,9 +21,11 @@ public class DeviceResponse {
 
     private boolean isActivated;
 
-    private LocalDateTime createdOn;
+    private LocalDateTime created;
 
-    private LocalDateTime activatedOn;
+    private LocalDateTime modified;
+
+    private LocalDateTime activated;
 
     private String user;
 
@@ -34,8 +36,8 @@ public class DeviceResponse {
                 .name(device.getName())
                 .isOutdoor(device.isOutdoor())
                 .isActivated(device.isActivated())
-                .createdOn(device.getCreatedOn())
-                .activatedOn(device.getActivatedOn())
+                .created(device.getCreated())
+                .activated(device.getActivated())
                 .coordinates(device.getCoordinates())
                 .user(device.getUser().getUsername())
                 .build();

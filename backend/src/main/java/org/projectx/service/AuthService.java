@@ -42,7 +42,6 @@ public class AuthService {
         user.setPassword(this.passwordEncoder.encode(request.getPassword()));
 
         user.setCreated(LocalDateTime.now());
-        user.setActive(false);
         user.setModified(null);
 
         return UserResponse.of(this.userRepository.save(user));
