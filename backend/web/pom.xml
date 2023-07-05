@@ -13,12 +13,15 @@
 		<relativePath />
 	</parent>
 
-	<groupId>pro.ivanov</groupId>
-	<artifactId>project-2023</artifactId>
-	<version>0.0.1</version>
+	<groupId>org.projectx</groupId>
+	<artifactId>projectx</artifactId>
+	<version>1.0.0</version>
 
 	<properties>
 		<java.version>17</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
@@ -42,7 +45,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
