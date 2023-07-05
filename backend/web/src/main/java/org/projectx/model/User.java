@@ -1,10 +1,11 @@
 package org.projectx.model;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Set;
+import java.util.Collection;
+import java.time.LocalDateTime;
 
 import lombok.Data;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -24,14 +25,12 @@ public class User implements UserDetails {
     private String name;
 
     @Indexed(unique = true)
-    private String username;
-
-    @Indexed(unique = true)
     private String email;
 
-    private String password;
+    @Indexed(unique = true)
+    private String username;
 
-    private boolean active;
+    private String password;
 
     @DBRef
     private Set<Role> roles;

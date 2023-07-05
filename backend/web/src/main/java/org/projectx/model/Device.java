@@ -1,11 +1,12 @@
 package org.projectx.model;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDateTime;
 
 @Data
 @Document("devices")
@@ -21,11 +22,11 @@ public class Device {
 
     private boolean isActivated;
 
-    private LocalDateTime createdOn;
+    private LocalDateTime created;
 
-    private LocalDateTime updatedOn;
+    private LocalDateTime modified;
 
-    private LocalDateTime activatedOn;
+    private LocalDateTime activated;
 
     @DBRef
     private User user;
