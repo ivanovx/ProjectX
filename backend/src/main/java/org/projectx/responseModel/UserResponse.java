@@ -22,7 +22,6 @@ public class UserResponse {
     public static UserResponse of(final User user) {
         return UserResponse
                 .builder()
-                .name(user.getName())
                 .email(user.getEmail())
                 .created(user.getCreated())
                 .modified(user.getModified())

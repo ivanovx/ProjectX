@@ -69,6 +69,7 @@ export default function ResponsiveDrawer() {
 
     return (
         <AuthProvider>
+            <RequireAuth>
             <Box sx={{ display: 'flex' }}>
                 <AppBar position="fixed" sx={appbarSx}>
                     <Toolbar>
@@ -115,6 +116,7 @@ export default function ResponsiveDrawer() {
                     <Outlet />
                 </Box>
             </Box>
+            </RequireAuth>
         </AuthProvider>
     );
 }

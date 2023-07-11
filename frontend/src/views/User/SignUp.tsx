@@ -8,7 +8,6 @@ export default function SignUp() {
     const auth = useAuth();
     const formik = useFormik({
         initialValues: {
-            name: '',
             email: '',
             username: '',
             password: '',
@@ -19,17 +18,6 @@ export default function SignUp() {
     return (
         <Container maxWidth="sm">
             <form onSubmit={formik.handleSubmit}>
-                <TextField
-                    fullWidth
-                    id="name"
-                    name="name"
-                    label="Name"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    error={formik.touched.name && Boolean(formik.errors.name)}
-                    helperText={formik.touched.name && formik.errors.name}
-                    margin="normal"
-                />
                 <TextField
                     fullWidth
                     id="username"

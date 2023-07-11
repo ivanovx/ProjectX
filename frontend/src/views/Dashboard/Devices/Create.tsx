@@ -5,7 +5,7 @@ import { Button, Checkbox, TextField } from '@mui/material';
 import useAuth from '../../../hooks/useAuth';
 
 export default function Create() {
-    const [coordinates, setCoordinates] = React.useState({ x: null, y: null });
+    const [coordinates, setCoordinates] = React.useState({ latitude: null, longitude: null });
 
     const auth = useAuth();
     const formik = useFormik({
@@ -30,15 +30,18 @@ export default function Create() {
         }
     });
 
-    const getCurrentLocation = () => {
+    const getCurrentLocation = React.useCallback(() => {
         navigator.geolocation.getCurrentPosition(position => {
+            const { coords : { latitude, longitude }} = position;
+
             console.log(position);
+
             setCoordinates({
-                x: position.coords.latitude,
-                y: position.coords.longitude
+                latitude,
+                longitude,
             });
         });
-    };
+    }, []);
 
     return (
         <div>

@@ -26,8 +26,8 @@ export default function Home() {
                     <Pane name='default'>
                         {devices.map(device => {
                             let center = {
-                                lat: device.coordinates.x, 
-                                lng: device.coordinates.y
+                                lat: device.coordinates.latitude, 
+                                lng: device.coordinates.longitude
                             };
 
                             return (

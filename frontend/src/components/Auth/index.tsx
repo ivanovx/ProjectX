@@ -25,7 +25,7 @@ export default function AuthProvider({ children }: Props) {
         UserService
             .signUp(userDetails)
             .then(() => {
-                navigate("/user/verify");
+                navigate("/user/signin");
             })
             .catch((err) => {
                 setError(err);
