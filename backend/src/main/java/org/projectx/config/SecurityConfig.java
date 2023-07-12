@@ -31,7 +31,7 @@ public class SecurityConfig {
         return http
                 .cors(c -> this.corsConfigurationSource())
                 .csrf(c -> c.disable())
-                .authorizeHttpRequests(c -> c.requestMatchers("/auth/**", "/home/**").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(c -> c.requestMatchers("/auth/**", "/home/**", "/measurements/**").permitAll().anyRequest().authenticated())
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(this.authenticationProvider)
                 .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
