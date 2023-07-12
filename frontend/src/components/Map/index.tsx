@@ -1,7 +1,7 @@
 import React from 'react';
-import { Circle, MapContainer, Marker, Pane, Popup, TileLayer, useMapEvents } from 'react-leaflet'
+import {Circle, MapContainer, Marker, Pane, Popup, TileLayer, useMap, useMapEvents} from 'react-leaflet'
 
-import 'leaflet/dist/leaflet.css';
+//import 'leaflet/dist/leaflet.css';
 
 import styles from './Map.module.css';
 import { LatLngExpression } from 'leaflet';

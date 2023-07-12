@@ -13,6 +13,8 @@ import Devices from "./views/Dashboard/Devices";
 import Stats from './views/Stats';
 import Test from './views/Test';
 
+import 'leaflet/dist/leaflet.css';
+
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
 const router = createBrowserRouter([

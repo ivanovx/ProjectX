@@ -1,10 +1,11 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { Circle, Pane } from "react-leaflet";
+import {Circle, MapContainer, Pane, TileLayer, useMap} from "react-leaflet";
 
-import Map  from "../components/Map";
+//import Map  from "../components/Map";
 import Search from "../components/Search";
 import DeviceService from "../modules/device-service";
+import styles from "../components/Map/Map.module.css";
 
 export default function Home() {
     const [devices, setDevices] = React.useState([]);
@@ -23,16 +24,26 @@ export default function Home() {
 
         alert(deviceId);
     }
-    
-    return  (
+
+    const onSelectLocation = (event, value) => {
+        event.preventDefault();
+
+        console.log(value);
+    };
+
+    return (
         <>
-            <Search />
-            <Box sx={{ display: 'flex', marginX: 'auto', maxWidth: '90%', }}>
-                <Map>
+            <Search onSelectValue={onSelectLocation} sx={ {margin: '1rem'}} />
+            <Box sx={{ display: 'flex', marginX: 'auto', maxWidth: '90%' }}>
+                <MapContainer center={[42.65, 25.4]} zoom={7} className={styles.Map}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
                     <Pane name='default'>
                         {devices.map(device => {
                             let center = {
-                                lat: device.coordinates.latitude, 
+                                lat: device.coordinates.latitude,
                                 lng: device.coordinates.longitude
                             };
 
@@ -40,9 +51,9 @@ export default function Home() {
                                 <Circle
                                     key={device.id}
                                     attribution={device.id}
-                                    center={center} 
-                                    radius={50} 
-                                    pathOptions={{ color: 'blue' }} 
+                                    center={center}
+                                    radius={50}
+                                    pathOptions={{ color: 'blue' }}
                                     eventHandlers={{
                                         click: onSelectCircle
                                     }}
@@ -50,7 +61,7 @@ export default function Home() {
                             );
                         })}
                     </Pane>
-                </Map>
+                </MapContainer>
             </Box>
         </>
     );

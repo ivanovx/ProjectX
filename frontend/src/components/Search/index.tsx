@@ -6,7 +6,7 @@ import {OpenStreetMapProvider} from "leaflet-geosearch";
 https://github.com/smeijer/leaflet-geosearch
 https://stackoverflow.com/questions/48290555/react-leaflet-search-box-implementation
  */
-export default function Search() {
+export default function Search({ onSelectValue, ...props }) {
     const [options, setOptions] = React.useState<any[] | null>([]);
 
     const provider = new OpenStreetMapProvider();
@@ -23,11 +23,12 @@ export default function Search() {
 
     return (
         <Autocomplete
+            {...props}
             freeSolo
             disableClearable
             options={options}
-            onChange={console.log}
-            renderInput={(params) => <TextField {...params}  InputProps={{
+            onChange={onSelectValue}
+            renderInput={params => <TextField {...params}  InputProps={{
                 ...params.InputProps,
                 type: 'search',
             }} onChange={onTextTyping} label="Search" />}
