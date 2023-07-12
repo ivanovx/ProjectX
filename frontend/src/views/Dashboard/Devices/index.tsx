@@ -74,8 +74,8 @@ function Device({ device, onActivate }) {
                 <TableCell component="th" scope="row">{device.name}</TableCell>
                 <TableCell component="th" scope="row">{String(device.activated)}</TableCell>
                 <TableCell component="th" scope="row">{String(device.outdoor)}</TableCell>
-                <TableCell component="th" scope="row">{device.createdOn}</TableCell>
-                <TableCell component="th" scope="row">{device.activatedOn}</TableCell>        
+                <TableCell component="th" scope="row">{device.created}</TableCell>
+                <TableCell component="th" scope="row">{device.activated}</TableCell>        
                 <TableCell>
                     <IconButton size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

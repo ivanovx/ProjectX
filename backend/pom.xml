@@ -13,16 +13,16 @@
 		<relativePath />
 	</parent>
 
-	<groupId>org.projectx</groupId>
-	<artifactId>projectx</artifactId>
-	<version>1.0.0</version>
-
 	<properties>
 		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<groupId>org.projectx</groupId>
+	<artifactId>projectx</artifactId>
+	<version>1.0.0</version>
 
 	<dependencies>
 		<dependency>
@@ -40,6 +40,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-docker-compose</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
