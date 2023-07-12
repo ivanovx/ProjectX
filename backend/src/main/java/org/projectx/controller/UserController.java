@@ -1,6 +1,6 @@
 package org.projectx.controller;
 
-import org.projectx.responseModel.UserResponse;
+import org.projectx.response.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.projectx.service.UserService;

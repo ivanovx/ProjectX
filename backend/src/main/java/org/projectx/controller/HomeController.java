@@ -1,6 +1,6 @@
 package org.projectx.controller;
 
-import org.projectx.responseModel.DeviceResponse;
+import org.projectx.response.DeviceResponse;
 import org.projectx.service.DeviceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

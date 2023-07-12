@@ -1,7 +1,7 @@
 package org.projectx.controller;
 
-import org.projectx.requestModel.DeviceRequest;
-import org.projectx.responseModel.DeviceResponse;
+import org.projectx.request.DeviceRequest;
+import org.projectx.response.DeviceResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.projectx.service.DeviceService;

@@ -1,10 +1,10 @@
 package org.projectx.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.projectx.requestModel.AuthRequest;
-import org.projectx.requestModel.CreateUserRequest;
-import org.projectx.responseModel.AuthResponse;
-import org.projectx.responseModel.UserResponse;
+import org.projectx.request.AuthRequest;
+import org.projectx.request.CreateUserRequest;
+import org.projectx.response.AuthResponse;
+import org.projectx.response.UserResponse;
 import org.projectx.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

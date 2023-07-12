@@ -1,4 +1,4 @@
-package org.projectx.responseModel;
+package org.projectx.response;
 
 import lombok.Builder;
 import lombok.Data;

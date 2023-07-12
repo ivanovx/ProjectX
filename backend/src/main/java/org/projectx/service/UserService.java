@@ -1,7 +1,7 @@
 package org.projectx.service;
 
 import org.projectx.repository.UserRepository;
-import org.projectx.responseModel.UserResponse;
+import org.projectx.response.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

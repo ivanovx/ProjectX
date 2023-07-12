@@ -1,4 +1,4 @@
-package org.projectx.requestModel;
+package org.projectx.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -7,13 +7,7 @@ import lombok.Data;
 
 @Data
 @Valid
-public class CreateUserRequest {
-    @NotBlank
-    private String name;
-
-    @NotBlank
-    private String email;
-
+public class AuthRequest {
     @NotBlank
     private String username;
 

@@ -1,4 +1,4 @@
-package org.projectx.requestModel;
+package org.projectx.request;
 
 import lombok.Data;
 
