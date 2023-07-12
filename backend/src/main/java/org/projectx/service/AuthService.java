@@ -19,13 +19,11 @@ import java.time.LocalDateTime;
 
 @Service
 public class AuthService {
-    private final JwtService jwtService;
     private final AuthenticationManager authManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthService(JwtService jwtService, AuthenticationManager authManager, UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.jwtService = jwtService;
+    public AuthService(AuthenticationManager authManager, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.authManager = authManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -53,8 +51,8 @@ public class AuthService {
                 .findByUsername(request.getUsername())
                 .orElseThrow(() -> new ApiRequestException("User with %s username not found".formatted(request.getUsername())));
 
-        String token = this.jwtService.generateToken(user);
-        String refreshToken = this.jwtService.generateRefreshToken(user);
+        String token = JwtService.generateToken(user);
+        String refreshToken = JwtService.generateRefreshToken(user);
 
         return AuthResponse
                 .builder()
@@ -64,21 +62,21 @@ public class AuthService {
     }
 
     public AuthResponse refreshToken(HttpServletRequest request) {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            // THROW
+            throw new ApiRequestException("Need to send auth token.");
         }
 
-        final String refreshToken = authHeader.substring(7);
-        final String username = jwtService.extractUsername(refreshToken);
+        String refreshToken = authHeader.substring(7);
+        String username = JwtService.extractUsername(refreshToken);
 
         if (username == null) {
-            // THROW
+            throw new ApiRequestException("Need send username.");
         }
 
         User user = this.userRepository.findByUsername(username).orElseThrow();
-        String accessToken = this.jwtService.generateToken(user);
+        String accessToken = JwtService.generateToken(user);
 
         return AuthResponse
                 .builder()

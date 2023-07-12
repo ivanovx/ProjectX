@@ -20,9 +20,4 @@ public class UserController {
     public ResponseEntity<UserResponse> index() {
         return this.userService.getAuthUser();
     }
-
-    @PostMapping("/verify/{username}")
-    public ResponseEntity<UserResponse> verify(@PathVariable String username) {
-        return this.userService.verifyUser(username);
-    }
 }

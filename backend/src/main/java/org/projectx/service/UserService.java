@@ -17,26 +17,7 @@ public class UserService {
     }
 
     // TODO
-    // Here email service to verify
-    public ResponseEntity<UserResponse> verifyUser(String username) {
-        User user = this.userRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new ApiRequestException("User with %s username not found".formatted(username)));
-
-        User currentUser = this.getCurrentUser();
-
-        checkUser(user, currentUser);
-
-        /*if (user.isActive()) {
-            throw new ApiRequestException("User with %s is verified.".formatted(username));
-        }
-
-        user.setActive(true);*/
-
-        UserResponse response = UserResponse.of(this.userRepository.save(user));
-
-        return ResponseEntity.ok(response);
-    }
+    // Verify user
 
     // Todo
     // check verified first
