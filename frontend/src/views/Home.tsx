@@ -1,12 +1,10 @@
 import React from "react";
-
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
-
-import { Box, TextField } from "@mui/material";
-
-import Map, { LocalMap } from "../components/Map";
-import DeviceService from "../modules/device-service";
+import { Box } from "@mui/material";
 import { Circle, Pane } from "react-leaflet";
+
+import Map  from "../components/Map";
+import Search from "../components/Search";
+import DeviceService from "../modules/device-service";
 
 export default function Home() {
     const [devices, setDevices] = React.useState([]);
@@ -28,7 +26,7 @@ export default function Home() {
     
     return  (
         <>
-            <SearchBox />
+            <Search />
             <Box sx={{ display: 'flex', marginX: 'auto', maxWidth: '90%', }}>
                 <Map>
                     <Pane name='default'>
@@ -68,23 +66,6 @@ export default function Home() {
 
  */
 
-// https://stackoverflow.com/questions/48290555/react-leaflet-search-box-implementation
-// https://github.com/smeijer/leaflet-geosearch
-function SearchBox() {
-    const provider = new OpenStreetMapProvider();
-
-    const onTextTyping = async (e) => {
-        const { value } = e.target;
-
-        const results = await provider.search({ query: value });
-
-        console.log(results);
-    }
-
-    return (
-        <TextField onChange={onTextTyping} />
-    );
-}
   
 
 /*

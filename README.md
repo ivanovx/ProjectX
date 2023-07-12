@@ -17,5 +17,5 @@ Make open data from community sensors.
 CREATE KEYSPACE sampleProject WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
 ``
 
-2. TODO
+2. Use docker for start
 3. ISSUE Repos
