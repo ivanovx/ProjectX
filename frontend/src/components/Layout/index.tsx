@@ -42,11 +42,11 @@ function Header() {
     return (
         <>
             <Grid container spacing={2} margin="1rem auto">
-                <Grid item xs={12} md={2}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h5' align='center'>ProjectX</Typography>
-                    <Typography variant='body2' align='center'>Some slogan</Typography>
+                    <Typography variant='body2' align='center'>Make open data from community sensors.</Typography>
                 </Grid>
-                <Grid item xs={6} md={6}>
+                <Grid item xs={6} md={5}>
                     <AppNav />               
                 </Grid>
                 <Grid item xs={6} md={4}>

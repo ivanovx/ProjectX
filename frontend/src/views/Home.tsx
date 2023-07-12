@@ -1,5 +1,8 @@
 import React from "react";
-import { Container, Card, CardContent, Chip, Stack, Typography, Box, Paper } from "@mui/material";
+
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+
+import { Box, TextField } from "@mui/material";
 
 import Map, { LocalMap } from "../components/Map";
 import DeviceService from "../modules/device-service";
@@ -7,6 +10,8 @@ import { Circle, Pane } from "react-leaflet";
 
 export default function Home() {
     const [devices, setDevices] = React.useState([]);
+
+    const [device, setDevice] = React.useState(null);
 
     React.useEffect(() => {
         DeviceService
@@ -16,11 +21,14 @@ export default function Home() {
     }, []);
 
     const onSelectCircle = (e) => {
-        console.log(e.sourceTarget.options.attribution);
+        const deviceId = e.sourceTarget.options.attribution;
+
+        alert(deviceId);
     }
     
     return  (
         <>
+            <SearchBox />
             <Box sx={{ display: 'flex', marginX: 'auto', maxWidth: '90%', }}>
                 <Map>
                     <Pane name='default'>
@@ -46,12 +54,35 @@ export default function Home() {
                     </Pane>
                 </Map>
             </Box>
-            <Box>
+        </>
+    );
+}
+
+/*
+
+ <Box>
                 <Typography variant="h3">ProjectX is a global sensor network that creates Open Enviromental Data.</Typography>
                 <Typography variant="h4">Our idea is to inspire open source projects...</Typography>
                 <a href="https://github.com/projectx">Explore project on GitHub</a>
             </Box>
-        </>
+
+ */
+
+// https://stackoverflow.com/questions/48290555/react-leaflet-search-box-implementation
+// https://github.com/smeijer/leaflet-geosearch
+function SearchBox() {
+    const provider = new OpenStreetMapProvider();
+
+    const onTextTyping = async (e) => {
+        const { value } = e.target;
+
+        const results = await provider.search({ query: value });
+
+        console.log(results);
+    }
+
+    return (
+        <TextField onChange={onTextTyping} />
     );
 }
   
