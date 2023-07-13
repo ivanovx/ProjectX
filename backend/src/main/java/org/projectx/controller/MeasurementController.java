@@ -6,6 +6,8 @@ import org.projectx.repository.DeviceRepository;
 import org.projectx.repository.MeasurementRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/measurements")
 public class MeasurementController {
@@ -31,6 +33,9 @@ public class MeasurementController {
 
         // TODO
         // check token
+
+        measurement.setDeviceId(deviceId);
+        measurement.setTimestamp(LocalDateTime.now());
 
         return this.measurementRepository.save(measurement);
     }

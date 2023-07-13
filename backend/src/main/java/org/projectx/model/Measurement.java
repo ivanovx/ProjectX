@@ -5,11 +5,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Data
 @Document
 public class Measurement {
-
     @Id
     private String id;
 
@@ -19,5 +19,5 @@ public class Measurement {
 
     //private MeasurementType type;
 
-    private String value;
+    private Map<String, String> values;
 }
