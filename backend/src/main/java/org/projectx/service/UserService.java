@@ -2,9 +2,11 @@ package org.projectx.service;
 
 import org.projectx.repository.UserRepository;
 import org.projectx.response.UserResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import org.projectx.ApiRequestException;
 import org.projectx.model.User;
 

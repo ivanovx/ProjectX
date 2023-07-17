@@ -6,9 +6,11 @@ import java.time.LocalDateTime;
 import org.projectx.repository.DeviceRepository;
 import org.projectx.request.DeviceRequest;
 import org.projectx.response.DeviceResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import org.projectx.ApiRequestException;
 import org.projectx.model.Device;
 import org.projectx.model.User;

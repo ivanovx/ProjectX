@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class UserResponse {
-    private String name;
-
     private String username;
 
     private String email;
