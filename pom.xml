@@ -8,7 +8,7 @@
 
     <groupId>org.projectx</groupId>
     <artifactId>projectx</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
 
     <modules>
