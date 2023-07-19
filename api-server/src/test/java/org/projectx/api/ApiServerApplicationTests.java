@@ -1,4 +1,4 @@
-package org.ivanovx.projectx.api;
+package org.projectx.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
