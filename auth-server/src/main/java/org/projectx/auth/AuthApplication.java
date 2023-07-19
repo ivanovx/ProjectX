@@ -1,4 +1,4 @@
-package org.ivanovx.projectx.auth;
+package org.projectx.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
