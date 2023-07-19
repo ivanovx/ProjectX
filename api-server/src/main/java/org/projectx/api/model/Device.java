@@ -1,11 +1,10 @@
 package org.projectx.api.model;
 
-import java.time.LocalDateTime;
-
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -14,20 +13,17 @@ public class Device {
     @Id
     private String id;
 
+    private String user;
+
     private String name;
 
-    private Coordinates coordinates;
+    private String description;
 
-    private boolean isOutdoor;
+    private LocalDateTime createdOn;
 
-    private boolean isActivated;
+    private LocalDateTime updatedOn;
 
-    private LocalDateTime created;
+    private LocalDateTime activatedOn;
 
-    private LocalDateTime modified;
-
-    private LocalDateTime activated;
-
-    @DBRef
-    private User user;
+    private boolean activated;
 }
