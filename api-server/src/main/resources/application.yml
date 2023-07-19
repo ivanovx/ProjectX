@@ -1,9 +1,19 @@
-server:
-  port: 9000
-
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+  data:
+    mongodb:
+      auto-index-creation: true
+      database: projectX
+      host: localhost
+      port: 27017
+      username: root
+      password: root
+
+application:
   security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8000
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
