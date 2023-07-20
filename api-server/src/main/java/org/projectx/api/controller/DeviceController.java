@@ -20,12 +20,12 @@ public class DeviceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DeviceResponse>> allDevices() {
+    public List<Device> allDevices() {
         return this.deviceService.getAllByUser();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DeviceResponse> getDevice(@PathVariable String id) {
+    public Device getDevice(@PathVariable String id) {
         return this.deviceService.getById(id);
     }
 
@@ -35,12 +35,12 @@ public class DeviceController {
     }
 
     @PostMapping("/activate/{id}")
-    public ResponseEntity<DeviceResponse> activateDevice(@PathVariable String id) {
+    public Device activateDevice(@PathVariable String id) {
         return this.deviceService.activate(id);
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<DeviceResponse> updateDevice(@PathVariable String id, @RequestBody DeviceRequest request) {
+    public Device updateDevice(@PathVariable String id, @RequestBody DeviceRequest request) {
         return this.deviceService.update(id, request);
     }
 

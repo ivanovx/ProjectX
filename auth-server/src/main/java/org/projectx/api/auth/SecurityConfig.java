@@ -52,6 +52,7 @@ public class SecurityConfig {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults());
+
         http
                 .exceptionHandling(exceptions -> exceptions
                         .defaultAuthenticationEntryPointFor(
@@ -59,7 +60,7 @@ public class SecurityConfig {
                                 new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                         )
                 )
-                .oauth2ResourceServer((resourceServer) -> resourceServer.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(resourceServer -> resourceServer.jwt(Customizer.withDefaults()));
 
         return http.build();
     }
@@ -89,8 +90,8 @@ public class SecurityConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://test")
-                //.postLogoutRedirectUri("http://127.0.0.1:8080/")
+                .redirectUri("http://127.0.0.1:3000")
+                .postLogoutRedirectUri("http://127.0.0.1:3000")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
@@ -125,14 +126,15 @@ public class SecurityConfig {
 
     private static KeyPair generateRsaKey() {
         KeyPair keyPair;
+
         try {
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             keyPairGenerator.initialize(2048);
             keyPair = keyPairGenerator.generateKeyPair();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new IllegalStateException(ex);
         }
+
         return keyPair;
     }
 }

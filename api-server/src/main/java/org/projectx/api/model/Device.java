@@ -17,8 +17,6 @@ public class Device {
 
     private String name;
 
-  //  private String description;
-
     private boolean activated;
 
     private LocalDateTime createdOn;

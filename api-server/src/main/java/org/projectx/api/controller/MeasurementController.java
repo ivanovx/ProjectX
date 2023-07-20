@@ -25,22 +25,19 @@ public class MeasurementController {
         return this.measurementRepository.findAllByDevice(deviceId);
     }
 
-   /* @PutMapping("/{deviceId}")
+    @PutMapping("/{deviceId}")
     public Measurement putMeasurement(@PathVariable String deviceId, @RequestBody Measurement measurement, @RequestHeader("X-API-KEY") String apiToken) {
         if (!this.deviceRepository.existsById(deviceId)){
-            throw new ApiRequestException("Device with id=%s dont exist".formatted(deviceId));
+            throw new RuntimeException("Device with id=%s dont exist".formatted(deviceId));
         }
 
-        if (apiToken != ApiKeyGenerator.generate()) {
-            throw new ApiRequestException("Api key is not valid");
+        if (apiToken != "fake-api-key") {
+            throw new RuntimeException("API key is not valid");
         }
 
-        // TODO
-        // check token
-
-        measurement.setDeviceId(deviceId);
+        measurement.setDevice(deviceId);
         measurement.setTimestamp(LocalDateTime.now());
 
         return this.measurementRepository.save(measurement);
-    }*/
+    }
 }
