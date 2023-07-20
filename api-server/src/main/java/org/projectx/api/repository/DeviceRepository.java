@@ -15,5 +15,5 @@ public interface DeviceRepository extends MongoRepository<Device, String> {
 
     Page<Device> findAll(Pageable pageable);
 
-    List<Device> findAllByUserId(String userId);
+    List<Device> findAllByUser(String user);
 }

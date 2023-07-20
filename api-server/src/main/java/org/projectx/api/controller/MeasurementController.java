@@ -22,10 +22,10 @@ public class MeasurementController {
 
     @GetMapping("/{deviceId}")
     public List<Measurement> getMeasurements(@PathVariable String deviceId) {
-        return this.measurementRepository.findAllByDeviceId(deviceId);
+        return this.measurementRepository.findAllByDevice(deviceId);
     }
 
-    @PutMapping("/{deviceId}")
+   /* @PutMapping("/{deviceId}")
     public Measurement putMeasurement(@PathVariable String deviceId, @RequestBody Measurement measurement, @RequestHeader("X-API-KEY") String apiToken) {
         if (!this.deviceRepository.existsById(deviceId)){
             throw new ApiRequestException("Device with id=%s dont exist".formatted(deviceId));
@@ -42,5 +42,5 @@ public class MeasurementController {
         measurement.setTimestamp(LocalDateTime.now());
 
         return this.measurementRepository.save(measurement);
-    }
+    }*/
 }

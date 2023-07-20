@@ -17,7 +17,9 @@ public class Device {
 
     private String name;
 
-    private String description;
+  //  private String description;
+
+    private boolean activated;
 
     private LocalDateTime createdOn;
 
@@ -25,5 +27,5 @@ public class Device {
 
     private LocalDateTime activatedOn;
 
-    private boolean activated;
+    private Coordinates coordinates;
 }

@@ -1,5 +1,6 @@
 package org.projectx.api.controller;
 
+import org.projectx.api.model.Device;
 import org.projectx.api.request.DeviceRequest;
 import org.projectx.api.response.DeviceResponse;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class DeviceController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<DeviceResponse> createDevice(@RequestBody DeviceRequest request) {
+    public Device createDevice(@RequestBody DeviceRequest request) {
         return this.deviceService.create(request);
     }
 
