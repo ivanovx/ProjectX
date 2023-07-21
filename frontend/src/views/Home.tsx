@@ -25,15 +25,19 @@ export default function Home() {
         alert(deviceId);
     }
 
-    const onSelectLocation = (event, value) => {
+    /*const onSelectLocation = (event, value) => {
         event.preventDefault();
 
         console.log(value);
-    };
+    };*/
+
+    const onSelectValue = (value) => {
+        console.log(value);
+    }
 
     return (
         <>
-            <Search onSelectValue={onSelectLocation} sx={ {margin: '1rem'}} />
+            <Search onSelectValue={onSelectValue} />
             <Box sx={{ display: 'flex', marginX: 'auto', maxWidth: '90%' }}>
                 <MapContainer center={[42.65, 25.4]} zoom={7} className={styles.Map}>
                     <TileLayer

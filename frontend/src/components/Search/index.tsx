@@ -39,23 +39,24 @@ export default function Search({ onSelectValue }: any) {
     const onSearch = React.useCallback(async () => {
         const results = await provider.search({ query: value });
 
-        console.log(results);
-
         setOptions(results);
     }, [value]);
 
+    const onSelect = (e: any) => {
+        const value = JSON.parse(e.target.value);
+
+        onSelectValue(value);
+    };
+
     return (
         <div className="my-2">
-            
-        <div className="flex my-2">
-            <TextInput className="flex-1 mx-2" type="text" placeholder="Search address" onChange={e => setValue(e.target.value)} />
-            <Button className="flex-none" onClick={onSearch}>Seach</Button>
+            <div className="flex my-2">
+                <TextInput className="flex-1 mx-2" type="text" placeholder="Search address" onChange={e => setValue(e.target.value)} />
+                <Button className="flex-none" onClick={onSearch}>Seach</Button>
+            </div>
+            <Select className="mx-2" onChange={onSelect}>
+                {options?.map(option => <option key={option.label} value={JSON.stringify(option)}>{option.label}</option>)}
+            </Select>
         </div>
-        
-        <Select required className="mx-2" onSelect={e => console.log(e)}>
-            {options?.map(option => <option>{option.label}</option>)}
-        </Select>
-        </div>
-
     );
 }
