@@ -1,10 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Container, Button, Grid, Typography, Stack, Divider } from '@mui/material';
+import { Container, Grid, Typography, Stack, Divider } from '@mui/material';
 
 import AuthProvider from '../Auth';
 import useUser from '../../hooks/useUser';
 import Link from '../Link';
+
+import { Button, Navbar } from 'flowbite-react';
 
 export default function Layout() {
     return (
@@ -39,7 +41,7 @@ function Header() {
         );
     };
 
-    return (
+    /*return (
         <>
             <Grid container spacing={2} margin="1rem auto">
                 <Grid item xs={12} md={3}>
@@ -55,9 +57,48 @@ function Header() {
             </Grid>
             <Divider variant='fullWidth' sx={{ marginBottom: '0.75rem' }} />
         </>
-    );
+    );*/
+
+    return (
+        <Navbar
+            fluid
+            rounded
+        >
+            <Navbar.Brand href="https://flowbite-react.com">
+                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                    ProjectX
+                </span>
+            </Navbar.Brand>
+            <div className="flex md:order-2">
+                <Button>Login</Button>
+                <Navbar.Toggle />
+            </div>
+            <Navbar.Collapse>
+                <Navbar.Link
+                    active
+                    href="#"
+                >
+                    <p>
+                        Home
+                    </p>
+                </Navbar.Link>
+                <Navbar.Link href="#">
+                    About
+                </Navbar.Link>
+                <Navbar.Link href="#">
+                    Services
+                </Navbar.Link>
+                <Navbar.Link href="#">
+                    Pricing
+                </Navbar.Link>
+                <Navbar.Link href="#">
+                    Contact
+                </Navbar.Link>
+            </Navbar.Collapse>
+        </Navbar>
+    )
 }
 
-function Footer (){
+function Footer() {
     return <div />
 }
