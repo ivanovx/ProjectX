@@ -1,6 +1,6 @@
 package org.projectx.model;
 
-import java.util.Set;
+import java.util.List;
 import java.util.Collection;
 import java.time.LocalDateTime;
 
@@ -8,14 +8,10 @@ import lombok.Data;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-// TODO FIX VALIDATIONS
-// ISSUE ABOUT VALIDATION
-// NEED FAST FIX
 @Data
 @Document("users")
 public class User implements UserDetails {
@@ -30,16 +26,13 @@ public class User implements UserDetails {
 
     private String password;
 
-    @DBRef
-    private Set<Role> roles;
-
     private LocalDateTime created;
 
     private LocalDateTime modified;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.getRoles();
+        return List.of((GrantedAuthority) () -> "USER");
     }
 
     @Override

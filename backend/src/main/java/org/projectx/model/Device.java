@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -16,11 +15,13 @@ public class Device {
 
     private String name;
 
-    private Coordinates coordinates;
+    private String user;
 
-    private boolean isOutdoor;
+    private String controller;
 
-    private boolean isActivated;
+    private String[] sensors;
+
+    private boolean outdoor;
 
     private LocalDateTime created;
 
@@ -28,6 +29,5 @@ public class Device {
 
     private LocalDateTime activated;
 
-    @DBRef
-    private User user;
+    private Coordinates coordinates;
 }

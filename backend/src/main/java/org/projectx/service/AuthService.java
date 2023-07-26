@@ -32,8 +32,6 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // TODO
-    // Roles
     public UserResponse signUp(CreateUserRequest request) {
         User user = new User();
 

@@ -23,60 +23,68 @@ public class DeviceService {
         this.deviceRepository = deviceRepository;
     }
 
-    public ResponseEntity<List<DeviceResponse>> getAll() {
-        List<DeviceResponse> response = this.deviceRepository
+    public ResponseEntity<List<Device>> getAll() {
+        List<Device> response = this.deviceRepository.findAll();
+
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<List<Device>> getAllActivated() {
+        List<Device> response = this.deviceRepository
                 .findAll()
                 .stream()
-                .map(device -> DeviceResponse.of(device))
+                .filter(device -> device.getActivated() != null)
                 .toList();
 
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<List<DeviceResponse>> getAllActivated() {
-        List<DeviceResponse> response = this.deviceRepository
-                .findAll()
-                .stream()
-                .filter(device -> device.isActivated())
-                .map(device -> DeviceResponse.of(device))
-                .toList();
+    public ResponseEntity<List<Device>> getAllByUser(String user) {
+        List<Device> response = this.deviceRepository.findAllByUser(user);
 
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<List<DeviceResponse>> getAllByUserId(String userId) {
-        List<DeviceResponse> response = this.deviceRepository
-                .findAllByUserId(userId)
-                .stream()
-                .map(device -> DeviceResponse.of(device))
-                .toList();
+    public ResponseEntity<List<Device>> getAllByUser() {
+        String user = this.getCurrentUser().getId();
+
+        return this.getAllByUser(user);
+    }
+
+    public ResponseEntity<Device> getById(String id) {
+        Device response = this.findById(id);
 
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<List<DeviceResponse>> getAllByUser() {
-        return this.getAllByUserId(this.getCurrentUser().getId());
-    }
-
-    public ResponseEntity<DeviceResponse> getById(String id) {
-        Device device = this.findById(id);
-        DeviceResponse response = DeviceResponse.of(device);
-
-        return ResponseEntity.ok(response);
-    }
-
-    public ResponseEntity<DeviceResponse> create(DeviceRequest request) {
+    public ResponseEntity<Device> create(DeviceRequest request) {
         Device device = new Device();
 
-        device.setCreated(LocalDateTime.now());
-        device.setActivated(false);
-        device.setUser(this.getCurrentUser());
-
-        device.setOutdoor(request.isOutdoor());
         device.setName(request.getName());
+        device.setOutdoor(request.isOutdoor());
         device.setCoordinates(request.getCoordinates());
 
-        DeviceResponse response = DeviceResponse.of(this.deviceRepository.save(device));
+        device.setModified(null);
+        device.setActivated(null);
+        device.setCreated(LocalDateTime.now());
+
+        device.setSensors(request.getSensors());
+        device.setController(request.getController());
+        device.setUser(this.getCurrentUser().getId());
+
+        Device response = this.deviceRepository.save(device);
+
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<Device> activate(String id) {
+        Device device = this.findById(id);
+
+        this.checkUser(device, this.getCurrentUser());
+
+        device.setActivated(LocalDateTime.now());
+
+        Device response = this.deviceRepository.save(device);
 
         return ResponseEntity.ok(response);
     }
@@ -107,26 +115,12 @@ public class DeviceService {
         return ResponseEntity.noContent().build();
     }
 
-    public ResponseEntity<DeviceResponse> activate(String id) {
-        Device device = this.findById(id);
-
-        this.checkUser(device, this.getCurrentUser());
-
-        device.setActivated(true);
-        //device.setActivated(LocalDateTime.now());
-
-        DeviceResponse response = DeviceResponse.of(this.deviceRepository.save(device));
-
-        return ResponseEntity.ok(response);
-    }
-
     private User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    // Todo check owner
     private void checkUser(Device device, User user) {
-        if (device.getUser().getId().compareTo(user.getId()) != 0) {
+        if (device.getUser().compareTo(user.getId()) != 0) {
             throw new ApiRequestException("Device with is=%s not yours".formatted(device.getId()));
         }
     }

@@ -8,7 +8,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -25,7 +24,10 @@ export default function Devices() {
     const getDevices = () => {
         DeviceService
             .getUserDevices(token)
-            .then((devices: any[]) => setDevices(devices))
+            .then((devices: any[]) => {
+                console.log(devices)
+                 setDevices(devices)
+            })
             .catch(console.log);
     };
 
@@ -48,10 +50,12 @@ export default function Devices() {
                         <TableRow>
                             <TableCell>#</TableCell>
                             <TableCell>Name</TableCell>
-                            <TableCell>Activated</TableCell>
+                            <TableCell>Controller</TableCell>
+                            <TableCell>Sensors</TableCell>
                             <TableCell>Outdoor</TableCell>
-                            <TableCell>Created on</TableCell>
-                            <TableCell>Activated on</TableCell>
+                            <TableCell>Created</TableCell>
+                            <TableCell>Activated</TableCell>
+                            <TableCell>Modified</TableCell>
                             <TableCell />
                         </TableRow>
                     </TableHead>
@@ -72,10 +76,12 @@ function Device({ device, onActivate }) {
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell component="th" scope="row">{device.id}</TableCell>
                 <TableCell component="th" scope="row">{device.name}</TableCell>
-                <TableCell component="th" scope="row">{String(device.activated)}</TableCell>
+                <TableCell component="th" scope="row">{device.controller}</TableCell>
+                <TableCell component="th" scope="row">{device.sensors.join(', ')}</TableCell>
                 <TableCell component="th" scope="row">{String(device.outdoor)}</TableCell>
                 <TableCell component="th" scope="row">{device.created}</TableCell>
-                <TableCell component="th" scope="row">{device.activated}</TableCell>        
+                <TableCell component="th" scope="row">{device.activated}</TableCell> 
+                <TableCell component="th" scope="row">{device.modified}</TableCell>
                 <TableCell>
                     <IconButton size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -86,9 +92,6 @@ function Device({ device, onActivate }) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Button onClick={onActivate}>Activate</Button>
-                        <Box sx={{ margin: 1 }}>
-                            <Typography variant="h6" gutterBottom>History</Typography>
-                        </Box>
                     </Collapse>
                 </TableCell>
             </TableRow>

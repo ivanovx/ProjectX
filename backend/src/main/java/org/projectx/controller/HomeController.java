@@ -1,6 +1,6 @@
 package org.projectx.controller;
 
-import org.projectx.response.DeviceResponse;
+import org.projectx.model.Device;
 import org.projectx.service.DeviceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class HomeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DeviceResponse>> index() {
+    public ResponseEntity<List<Device>> index() {
         return this.deviceService.getAllActivated();
     }
 }

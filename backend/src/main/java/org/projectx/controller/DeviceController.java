@@ -1,5 +1,6 @@
 package org.projectx.controller;
 
+import org.projectx.model.Device;
 import org.projectx.request.DeviceRequest;
 import org.projectx.response.DeviceResponse;
 import org.springframework.http.ResponseEntity;
@@ -19,22 +20,22 @@ public class DeviceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DeviceResponse>> allDevices() {
+    public ResponseEntity<List<Device>> allDevices() {
         return this.deviceService.getAllByUser();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DeviceResponse> getDevice(@PathVariable String id) {
+    public ResponseEntity<Device> getDevice(@PathVariable String id) {
         return this.deviceService.getById(id);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<DeviceResponse> createDevice(@RequestBody DeviceRequest request) {
+    public ResponseEntity<Device> createDevice(@RequestBody DeviceRequest request) {
         return this.deviceService.create(request);
     }
 
     @PostMapping("/activate/{id}")
-    public ResponseEntity<DeviceResponse> activateDevice(@PathVariable String id) {
+    public ResponseEntity<Device> activateDevice(@PathVariable String id) {
         return this.deviceService.activate(id);
     }
 

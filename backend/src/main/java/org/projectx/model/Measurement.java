@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @Data
-@Document
+@Document("measurements")
 public class Measurement {
     @Id
     private String id;
 
-    private String deviceId;
+    private String device;
 
     private LocalDateTime timestamp;
 

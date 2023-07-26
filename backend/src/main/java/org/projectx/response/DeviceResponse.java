@@ -35,11 +35,11 @@ public class DeviceResponse {
                 .id(device.getId())
                 .name(device.getName())
                 .isOutdoor(device.isOutdoor())
-                .isActivated(device.isActivated())
+               // .isActivated(device.isActivated())
                 .created(device.getCreated())
                 .activated(device.getActivated())
                 .coordinates(device.getCoordinates())
-                .user(device.getUser().getUsername())
+                //.user(device.getUser().getUsername())
                 .build();
 
         return response;

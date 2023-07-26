@@ -13,7 +13,5 @@ import org.projectx.model.Device;
 public interface DeviceRepository extends MongoRepository<Device, String> {
     List<Device> findAll();
 
-    Page<Device> findAll(Pageable pageable);
-
-    List<Device> findAllByUserId(String userId);
+    List<Device> findAllByUser(String user);
 }
