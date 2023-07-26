@@ -11,9 +11,8 @@ import CreateDevice from './views/Dashboard/Devices/Create';
 
 import Devices from "./views/Dashboard/Devices";
 import Stats from './views/Stats';
-import Test from './views/Test';
 
-import './index.css'
+import './index.css';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -26,7 +25,6 @@ const router = createBrowserRouter([
         children: [
             { index: true,  element: <Home /> },
             { path: "stats", element: <Stats /> }, 
-            { path: "test", element: <Test /> },
             { path: "user/signin", element: <SignIn /> },
             { path: "user/signup", element: <SignUp /> }
         ]
