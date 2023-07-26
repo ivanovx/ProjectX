@@ -8,7 +8,6 @@ export type UserSignIn = {
 }
 
 export type UserSignUp = {
-    name: string;
     username: string;
     email: string;
     password: string;
