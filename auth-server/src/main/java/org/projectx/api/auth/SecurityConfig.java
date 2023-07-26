@@ -66,7 +66,7 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer(resourceServer -> resourceServer.jwt(Customizer.withDefaults()));
 
-        return http.build();
+        return http.cors(cors -> this.corsConfigurationSource()).build();
     }
 
     @Bean
@@ -92,7 +92,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults());
 
-        return http.build();
+        return http.cors(cors -> this.corsConfigurationSource()).build();
     }
 
     @Bean
@@ -110,7 +110,7 @@ public class SecurityConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://127.0.0.1:3000")
+                .redirectUri("http://localhost:3000")
                 //.postLogoutRedirectUri("http://127.0.0.1:3000")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
