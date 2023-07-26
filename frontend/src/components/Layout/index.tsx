@@ -1,48 +1,54 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Container, Grid, Typography, Stack, Divider } from '@mui/material';
+import { Button, Navbar,Footer } from 'flowbite-react';
 
-import AuthProvider from '../Auth';
-import useUser from '../../hooks/useUser';
-import Link from '../Link';
+//import AuthProvider from '../Auth';
+//import useUser from '../../hooks/useUser';
+//import Link from '../Link';
 
-import { Button, Navbar } from 'flowbite-react';
-import { Footer } from 'flowbite-react';
+import RootLayout from './Root';
 
 export default function Layout() {
     return (
-        <AuthProvider>
-            <Container>
-                <Header />
+        <RootLayout requireAuth={false}>
+            <div className="mx-auto max-w-7xl">
+                <Navbar fluid rounded>
+                    <Navbar.Brand href="/">
+                        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                            ProjectX
+                        </span>
+                    </Navbar.Brand>
+                    <div className="flex md:order-2">
+                        <Button>Login</Button>
+                        <Navbar.Toggle />
+                    </div>
+                    <Navbar.Collapse>
+                        <Navbar.Link href="/">Home</Navbar.Link>
+                        <Navbar.Link href="/stats">Stats</Navbar.Link>
+                        <Navbar.Link href="/dashboard">Dashboard</Navbar.Link>
+                    </Navbar.Collapse>
+                </Navbar>
                 <Outlet />
                 <Footer container className="my-3">
-      <Footer.Copyright
-        by="Flowbite™"
-        href="#"
-        year={2022}
-      />
-      <Footer.LinkGroup>
-        <Footer.Link href="#">
-          About
-        </Footer.Link>
-        <Footer.Link href="#">
-          Privacy Policy
-        </Footer.Link>
-        <Footer.Link href="#">
-          Licensing
-        </Footer.Link>
-        <Footer.Link href="#">
-          Contact
-        </Footer.Link>
-      </Footer.LinkGroup>
-    </Footer>
-            </Container>
-        </AuthProvider>
+                    <Footer.Copyright
+                        by="ProjectX"
+                        href="/"
+                        year={2023}
+                    />
+                    <Footer.LinkGroup>
+                        <Footer.Link href="#">About</Footer.Link>
+                        <Footer.Link href="#">Policy</Footer.Link>
+                        <Footer.Link href="#">Contact</Footer.Link>
+                        <Footer.Link href="#">Documentation</Footer.Link>
+                    </Footer.LinkGroup>
+                </Footer>
+            </div>
+        </RootLayout>
     );
 }
 
-function Header() {
-    const AppNav = () => {
+//function Header() {
+   /* const AppNav = () => {
         return (
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2, md: 4 }}>
                 <Link href="/" label="Home" />
@@ -60,7 +66,7 @@ function Header() {
                 <Button variant="text">Sign Out</Button>
             </Stack>
         );
-    };
+    };*/
 
     /*return (
         <>
@@ -80,42 +86,7 @@ function Header() {
         </>
     );*/
 
-    return (
-        <Navbar
-            fluid
-            rounded
-        >
-            <Navbar.Brand href="https://flowbite-react.com">
-                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-                    ProjectX
-                </span>
-            </Navbar.Brand>
-            <div className="flex md:order-2">
-                <Button>Login</Button>
-                <Navbar.Toggle />
-            </div>
-            <Navbar.Collapse>
-                <Navbar.Link
-                    active
-                    href="#"
-                >
-                    <p>
-                        Home
-                    </p>
-                </Navbar.Link>
-                <Navbar.Link href="#">
-                    About
-                </Navbar.Link>
-                <Navbar.Link href="#">
-                    Services
-                </Navbar.Link>
-                <Navbar.Link href="#">
-                    Pricing
-                </Navbar.Link>
-                <Navbar.Link href="#">
-                    Contact
-                </Navbar.Link>
-            </Navbar.Collapse>
-        </Navbar>
-    )
-}
+  //  return (
+        
+  //  )
+//}
