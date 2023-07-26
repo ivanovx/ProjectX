@@ -4,8 +4,12 @@ import DeviceService from '../../../modules/device-service';
 import useAuth from '../../../hooks/useAuth';
 import { Button, Label, TextInput } from 'flowbite-react';
 import Search from '../../../components/Search';
+import { useNavigate } from 'react-router-dom';
 
 export default function Create() {
+    const navigate = useNavigate();
+    const { token } = useAuth();
+    
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -16,17 +20,12 @@ export default function Create() {
             },
         },
         onSubmit: (values) => {
-            /*const device = {
-                ...values,
-                coordinates
-            };*/
-
-            // DeviceService
-            //    .createDevice(device, auth.token!.accessToken)
-            //    .then(console.log)
-            //    .catch(console.log);
-
             console.log(values);
+
+            DeviceService.createDevice(values, token!.accessToken).then(res => {
+                console.log(res);
+                navigate("/dashboard/devices");
+            }).catch(err => console.log(err));
         }
     });
 
@@ -34,9 +33,9 @@ export default function Create() {
         console.log(value);
 
         const coordinates = {
-            latitude: value.x,
-            longitude: value.y,
-        }
+            latitude: value.y,
+            longitude: value.x,
+        };
 
         formik.setValues({
             ...formik.values,
@@ -63,8 +62,6 @@ export default function Create() {
                 placeholder="Enter device name"
                 value={formik.values.name}
                 onChange={formik.handleChange}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
             />
 
             <Search onSelectValue={onSelectValue} />

@@ -31,6 +31,7 @@ export default function Search({ onSelectValue }: any) {
                 <Button className="flex-none" onClick={onSearch}>Search</Button>
             </div>
             <Select className="mx-2" onChange={onSelect}>
+                <option>Please select location</option>
                 {options?.map(option => <option key={option.label} value={JSON.stringify(option)}>{option.label}</option>)}
             </Select>
         </div>
