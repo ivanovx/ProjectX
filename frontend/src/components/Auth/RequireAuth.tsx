@@ -2,7 +2,11 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
-export default function RequireAuth({ children }) {
+type Props = {
+    children: React.ReactNode;
+}
+
+export default function RequireAuth({ children } : Props) {
     const auth = useAuth();
 
     if (auth.token == null) {

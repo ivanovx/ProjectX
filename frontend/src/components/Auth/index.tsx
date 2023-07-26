@@ -1,11 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Alert, IconButton } from "@mui/material";
 
 import Storage from "../../modules/storage";
-
-import UserService, { type UserSignIn, type UserSignUp } from "../../modules/user-service";
 import AuthContext, { type Token } from "../../modules/authContext";
-import { Alert, IconButton } from "@mui/material";
+import UserService, { type UserSignIn, type UserSignUp } from "../../modules/user-service";
 
 type Props = {
     children: React.ReactNode;
