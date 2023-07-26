@@ -1,7 +1,6 @@
 import { AuthProvider } from "oidc-react";
 
 export default function App() {
-
     const oidcConfig = {
         onSignIn: () => {
           alert('ok')
@@ -9,13 +8,13 @@ export default function App() {
         authority: 'http://localhost:8000',
         clientId: 'client',
         clientSecret: 'secret',
-        scopes: ['openid'],
+        scopes: ['openid', 'profile'],
         redirectUri: 'http://localhost:3000',
       };
 
     return (
         <AuthProvider {...oidcConfig}>
-            <h1>Welcome!</h1>
+            <h1>Welcome</h1>
         </AuthProvider>
     )
 }
