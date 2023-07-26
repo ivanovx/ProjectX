@@ -5,20 +5,17 @@ import UserService from "../modules/user-service";
 export default function useUser() {
     const { token } = useAuth();
 
-    const [user, setUser] = React.useState<any>({});
+    const [user, setUser] = React.useState<any | null>(null);
 
     React.useEffect(() => {
-        if (token === null) {
-            setUser(null);
+        if (token != null) {
+            UserService
+                .me(token!.accessToken)
+                .then(u => {
+                    console.log(u)
+                    setUser(u);
+                }).catch(console.log);
         }
-
-        UserService
-            .me(token.accessToken)
-            .then(u => {
-                console.log(u)
-                setUser(u);
-            })
-            .catch(console.log);
     }, [token]);
 
     return {

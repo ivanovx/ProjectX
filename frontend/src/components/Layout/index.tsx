@@ -2,10 +2,8 @@ import { Outlet } from 'react-router-dom';
 import { Button, Navbar,Footer } from 'flowbite-react';
 
 import RootLayout from './Root';
-import useUser from '../../hooks/useUser';
 
 export default function Layout() {
-    const user = useUser();
 
     return (
         <RootLayout requireAuth={false}>
