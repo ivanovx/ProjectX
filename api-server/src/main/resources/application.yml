@@ -1,6 +1,9 @@
 server:
   port: 9000
+
 spring:
+  application:
+    name: ApiServer
   kafka:
     bootstrap-servers: localhost:9092
   data:

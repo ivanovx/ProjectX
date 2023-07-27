@@ -1,4 +1,4 @@
-package org.projectx.api.auth;
+package org.projectx.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
