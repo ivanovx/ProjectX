@@ -1,18 +1,33 @@
-"use client";
+import DeviceService from '@/modules/device-service';
+import { withPageAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
 
-import Map from "@/components/Map";
-import Search from "@/components/Search";
+export default withPageAuthRequired(async function Devices() {
+    const { accessToken } = await getAccessToken();
 
-export default function Home() {
-    const onSelectValue = (value: any) => {
-        console.log(value);
-    };
+    const devices = await getData(accessToken!);
 
     return (
         <>
-            <Search onSelectValue={onSelectValue} />
-            <Map />
+            <h1>Devices</h1>
+            <button>Create device</button>
+            {devices.map(device => JSON.stringify(device))}
         </>
-        
     );
+});
+
+
+async function getData(token: string): Promise<any[]> {
+    const res:  any = await DeviceService.getUserDevices(token);
+    
+    return res;
+}
+
+
+
+async function sendData(token: string): Promise<any[]> {
+    const res:  any = await DeviceService.createDevice({
+        name: "test"
+    }, token);
+    
+    return res;
 }

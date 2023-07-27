@@ -17,7 +17,7 @@ export default function Header() {
             </Navbar.Brand>
             <div className="flex md:order-2">
                 {!user && <Button href="/api/auth/login">Login</Button>}
-                {user && <span>Welcome {JSON.stringify(user)}! <Button href="/api/auth/logout">Logout</Button></span>}
+                {user && <span>Welcome {user.sub}! <Button href="/api/auth/logout">Logout</Button></span>}
                 <Navbar.Toggle />
             </div>
             <Navbar.Collapse>

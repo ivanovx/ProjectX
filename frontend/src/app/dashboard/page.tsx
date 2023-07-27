@@ -1,4 +1,4 @@
-import { withPageAuthRequired, getSession, getAccessToken } from '@auth0/nextjs-auth0';
+import { withPageAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
 
 export default  withPageAuthRequired(async function Dashboard() {
     const { accessToken } = await getAccessToken();
