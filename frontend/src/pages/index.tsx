@@ -1,25 +1,23 @@
-import { signIn, signOut, useSession } from 'next-auth/react'
 import React from 'react'
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function Home() {
-  const { data: session } = useSession()
+    const { user, error, isLoading } = useUser();
 
-  React.useEffect(() => {
-    console.log(session);
-  }, [session]);
 
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user?.name} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
-  }
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  )
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error.message}</div>;
+
+
+    if (user) {
+      return (
+        <div>
+          <p>{JSON.stringify(user)}</p>
+          Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
+        </div>
+      );
+    }
+  
+    return <a href="/api/auth/login">Login</a>;
 }
