@@ -1,18 +1,6 @@
-"use client";
+import { withPageAuthRequired, getSession, getAccessToken } from '@auth0/nextjs-auth0';
 
-import Map from "@/components/Map";
-import Search from "@/components/Search";
-
-export default function Home() {
-    const onSelectValue = (value: any) => {
-        console.log(value);
-    };
-
-    return (
-        <>
-            <Search onSelectValue={onSelectValue} />
-            <Map />
-        </>
-        
-    );
-}
+export default  withPageAuthRequired(async function Dashboard() {
+    const { accessToken } = await getAccessToken();
+    return <div>{accessToken}</div>;
+});
