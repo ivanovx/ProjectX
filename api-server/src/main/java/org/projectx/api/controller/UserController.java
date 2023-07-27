@@ -22,7 +22,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/users/create")
+    @PostMapping("/user/create")
     public ResponseEntity create(@RequestBody CreateUserRequest request) {
         User user = new User();
 
