@@ -1,12 +1,17 @@
-import Image from 'next/image'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import React from 'react'
 
 export default function Home() {
   const { data: session } = useSession()
+
+  React.useEffect(() => {
+    console.log(session);
+  }, [session]);
+
   if (session) {
     return (
       <>
-        Signed in as {session.user.email} <br />
+        Signed in as {session.user?.name} <br />
         <button onClick={() => signOut()}>Sign out</button>
       </>
     )
