@@ -34,6 +34,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -105,9 +106,19 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> this.userRepository
+        RestTemplate restTemplate = new RestTemplate();
+
+        //String url = "http://localhost:9000/user/" + username;
+
+        /*return username -> this.userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with %s username is not found".formatted(username)));
+                .orElseThrow(() -> new UsernameNotFoundException("User with %s username is not found".formatted(username)));*/
+
+        return username -> {
+            String url = "http://localhost:9000/user/" + username;
+
+            return restTemplate.getForEntity(url, UserDetails.class).getBody();
+        };
     }
 
     @Bean

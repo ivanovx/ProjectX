@@ -5,6 +5,7 @@ import org.projectx.api.repository.UserRepository;
 import org.projectx.api.request.CreateUserRequest;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,13 @@ public class UserController {
     public UserController(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+    }
+
+    @GetMapping("/user/{username}")
+    public User user(@PathVariable String username) {
+        return this.userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with %s username is not found".formatted(username)));
     }
 
     @PostMapping("/user/create")
