@@ -1,6 +1,7 @@
 services:
   kafka:
-    image: 'bitnami/kafka:latest'
+    image: bitnami/kafka:latest
+    restart: always
     ports:
       - '9092:9092'
     environment:
@@ -11,5 +12,5 @@ services:
     ports:
       - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
