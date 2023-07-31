@@ -16,7 +16,7 @@ export default function Header() {
                 </span>
             </Navbar.Brand>
             <div className="flex md:order-2">
-                {!user && <Button href="/api/auth/login">Login</Button>}
+                {!user && <Button href="/login">Login</Button>}
                 {user && <span>Welcome {user.sub}! <Button href="/api/auth/logout">Logout</Button></span>}
                 <Navbar.Toggle />
             </div>
@@ -28,3 +28,9 @@ export default function Header() {
         </Navbar>
     );
 }
+
+/*
+  {!user && <Button href="/api/auth/login">Login</Button>}
+                {user && <span>Welcome {user.sub}! <Button href="/api/auth/logout">Logout</Button></span>}
+
+*/
