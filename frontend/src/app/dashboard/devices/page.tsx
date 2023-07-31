@@ -1,5 +1,6 @@
 import DeviceService from '@/modules/services/device-service';
 import CreateDevice from '@/modules/views/CreateDevice';
+import ListDevices from '@/modules/views/ListDevices';
 import { withPageAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
 
 export default withPageAuthRequired(async function Devices() {
@@ -8,11 +9,7 @@ export default withPageAuthRequired(async function Devices() {
     const devices = await getData(accessToken!);
  
     return (
-        <>
-            <h1>Devices</h1>
-            {devices.map(device => JSON.stringify(device))}
-            <CreateDevice token={accessToken!} />
-        </>
+        <ListDevices devices={devices} token={accessToken!} />
     );
 });
 
@@ -20,5 +17,7 @@ export default withPageAuthRequired(async function Devices() {
 async function getData(token: string): Promise<any[]> {
     const res:  any = await DeviceService.getUserDevices(token);
     
+    console.log(res)
+
     return res;
 }

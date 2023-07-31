@@ -2,12 +2,8 @@
 import React from 'react';
 import { Circle, MapContainer, Pane, TileLayer } from 'react-leaflet'
 
-export default function Map() {
-    const [devices, setDevices] = React.useState([]);
-    
-    React.useEffect(() => {
-
-    }, []);
+export default function Map({ devices }: any) {
+    const onSelectCircle = () => {};
 
     return (
         <MapContainer center={[42.65, 25.4]} zoom={7} className="w-full h-screen">
@@ -17,7 +13,7 @@ export default function Map() {
             />
             <Pane name='default'>
                 {devices.map(device => {
-                    let center = {
+                    const center = {
                         lat: device.coordinates.latitude,
                         lng: device.coordinates.longitude
                     };

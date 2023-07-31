@@ -1,18 +1,19 @@
-"use client";
+import DeviceService from "@/modules/services/device-service";
+import Home from "@/modules/views/Home";
 
-import Map from "@/components/Map";
-import Search from "@/components/Search";
 
-export default function Home() {
-    const onSelectValue = (value: any) => {
-        console.log(value);
-    };
+export default async function Index() {
+   
+
+    const devices: any= await getDevices();
 
     return (
-        <>
-            <Search onSelectValue={onSelectValue} />
-            <Map />
-        </>
-        
+       <Home devices={devices} />        
     );
 }
+
+const getDevices = async () => {
+    const devices = await DeviceService.getAllDevices();
+
+    return devices;
+};
