@@ -3,7 +3,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { Button } from 'flowbite-react';
-import DeviceService from '../device-service';
+import DeviceService from '../services/device-service';
 import { CONTROLLERS, SENSORS } from '../mock';
 import Search from '@/components/Search';
 import { Check, Input, SelectList } from '@/components/Forms';

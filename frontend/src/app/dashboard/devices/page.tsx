@@ -1,4 +1,4 @@
-import DeviceService from '@/modules/device-service';
+import DeviceService from '@/modules/services/device-service';
 import CreateDevice from '@/modules/views/CreateDevice';
 import { withPageAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
 
