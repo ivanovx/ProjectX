@@ -9,22 +9,20 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
-        /*http
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> this.corsConfigurationSource())
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/home/**", "/user/**").permitAll().anyRequest().authenticated())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
-
-        return http.build();*/
-
         return http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> this.corsConfigurationSource())
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/home/**", "/user/**")
                         .permitAll()
@@ -39,8 +37,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    /*@Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    @Bean
+    public CorsWebFilter corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
 
         corsConfig.setAllowedOrigins(List.of("*"));
@@ -51,6 +49,6 @@ public class SecurityConfig {
 
         source.registerCorsConfiguration("/**", corsConfig);
 
-        return source;
-    }*/
+        return new CorsWebFilter(source);
+    }
 }
