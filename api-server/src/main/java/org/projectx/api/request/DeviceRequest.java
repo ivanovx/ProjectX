@@ -8,5 +8,6 @@ import org.projectx.api.model.Coordinates;
 public class DeviceRequest {
     private String name;
 
+
     private Coordinates coordinates;
 }

@@ -12,13 +12,9 @@ public class Token {
     @Id
     private String id;
 
-    private String deviceId;
+    private String device;
 
     private String value;
 
-    private LocalDateTime createdOn;
-
-    private LocalDateTime expiredOn;
-
-    private boolean expired;
+    private LocalDateTime expiration;
 }

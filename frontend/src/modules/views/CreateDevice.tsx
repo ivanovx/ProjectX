@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useFormik } from 'formik';
-import { Button } from 'flowbite-react';
+import { Button, Modal } from 'flowbite-react';
 import DeviceService from '../services/device-service';
 import { CONTROLLERS, SENSORS } from '../mock';
 import Search from '@/components/Search';
@@ -13,6 +13,9 @@ type Props = {
 }
 
 export default function CreateDevice({ token }: Props) {
+
+    const [openModal, setOpenModal] = React.useState<string | undefined>();
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -34,7 +37,7 @@ export default function CreateDevice({ token }: Props) {
         }
     });
 
-    const onSelectValue = React.useCallback((value: any) => {
+    const onSelectValue = (value: any) => {
         console.log(value);
 
         const coordinates = {
@@ -46,27 +49,35 @@ export default function CreateDevice({ token }: Props) {
             ...formik.values,
             coordinates
         });
-    }, []);
+    };
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <Input
-                name="name"
-                label="Device name"
-                placeholder="Enter device name"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-            />
-
-            <Search onSelectValue={onSelectValue} />
-
-            <Check name="outdoor" label="Outdoor" value={formik.values.outdoor} onChange={formik.handleChange} />
-            
-            <SelectList multiple name="sensors" label="Sensors" values={SENSORS} value={formik.values.sensors} onChange={formik.handleChange} />
-
-            <SelectList name="controller" label="Controller" values={CONTROLLERS} value={formik.values.controller} onChange={formik.handleChange} />
-
-            <Button type="submit">Create Device</Button>
-        </form>
+        <>
+            <Button onClick={() => setOpenModal('default')}>Create device</Button>
+            <Modal show={openModal === 'default'} onClose={() => setOpenModal(undefined)}>
+                <Modal.Header>Create device</Modal.Header>
+                <Modal.Body>
+                    <form onSubmit={formik.handleSubmit}>
+                        <Input
+                            name="name"
+                            label="Device name"
+                            placeholder="Enter device name"
+                            value={formik.values.name}
+                            onChange={formik.handleChange}
+                        />
+                        <Search onSelectValue={onSelectValue} />
+                        <Check name="outdoor" label="Outdoor" value={formik.values.outdoor} onChange={formik.handleChange} />
+                        <SelectList multiple name="sensors" label="Sensors" values={SENSORS} value={formik.values.sensors} onChange={formik.handleChange} />
+                        <SelectList name="controller" label="Controller" values={CONTROLLERS} value={formik.values.controller} onChange={formik.handleChange} />
+                        <Button type="submit">Create Device</Button>
+                    </form>
+                </Modal.Body>
+            </Modal>
+        </>
     );
 }
+
+/*
+
+
+*/

@@ -1,16 +1,15 @@
 package org.projectx.api.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
-import java.io.Serializable;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Coordinates implements Serializable {
+public class Coordinates {
     private double latitude;
 
     private double longitude;
+
+    public Coordinates(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }

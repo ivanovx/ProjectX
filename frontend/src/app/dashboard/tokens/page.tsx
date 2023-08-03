@@ -1,11 +1,9 @@
 import { withPageAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
 
-import React from 'react';
-
-export default withPageAuthRequired(async function Dashboard() {
+export default withPageAuthRequired(async function Tokens() {
     const { accessToken } = await getAccessToken();
 
     return (
-      <h1>Dashboard</h1>   
+        <h1>Pesonal tokens</h1>
     );
 });

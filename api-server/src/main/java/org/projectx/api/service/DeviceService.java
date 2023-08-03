@@ -1,13 +1,16 @@
 package org.projectx.api.service;
 
+import java.security.Principal;
 import java.util.List;
 import java.time.LocalDateTime;
 
 import org.projectx.api.repository.DeviceRepository;
 import org.projectx.api.request.DeviceRequest;
-import org.projectx.api.response.DeviceResponse;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -31,11 +34,12 @@ public class DeviceService {
         return response;
     }
 
+    // todo
     public List<Device> getAllActivated() {
         List<Device> response = this.deviceRepository
                 .findAll()
                 .stream()
-                .filter(device -> device.isActivated())
+               // .filter(device -> device.isActivated())
                 //.map(device -> DeviceResponse.of(device))
                 .toList();
 
@@ -52,8 +56,8 @@ public class DeviceService {
         return response;
     }
 
-    public List<Device> getAllByUser() {
-        return this.getAllByUser(this.getCurrentUser().getSubject());
+    public List<Device> getAllByUser(Principal principal) {
+        return this.getAllByUser(principal.getName());
     }
 
     public Device getById(String id) {
@@ -69,10 +73,13 @@ public class DeviceService {
         Device device = new Device();
 
         device.setName(request.getName());
-        device.setActivated(false);
-        device.setActivatedOn(null);
-        device.setUpdatedOn(null);
-        device.setCreatedOn(LocalDateTime.now());
+        device.setCreated(LocalDateTime.now());
+        device.setModified(null);
+        device.setActivated(null);
+        //device.setActivated(false);
+        //device.setActivatedOn(null);
+       // device.setUpdatedOn(null);
+        //device.setCreatedOn(LocalDateTime.now());
         device.setCoordinates(request.getCoordinates());
         device.setUser(this.getCurrentUser().getSubject());
 
@@ -84,7 +91,8 @@ public class DeviceService {
 
         device.setName(request.getName());
         device.setCoordinates(request.getCoordinates());
-        device.setUpdatedOn(LocalDateTime.now());
+        device.setModified(LocalDateTime.now());
+       // device.setUpdatedOn(LocalDateTime.now());
 
         //this.checkUser(device, this.getCurrentUser());
 
@@ -113,10 +121,12 @@ public class DeviceService {
     public Device activate(String id) {
         Device device = this.findById(id);
 
+        device.setActivated(LocalDateTime.now());
+
        // this.checkUser(device, this.getCurrentUser());
 
-        device.setActivated(true);
-        device.setActivatedOn(LocalDateTime.now());
+        //device.setActivated(true);
+        //device.setActivatedOn(LocalDateTime.now());
         //device.setActivated(LocalDateTime.now());
 
         //DeviceResponse response = DeviceResponse.of(this.deviceRepository.save(device));
@@ -125,8 +135,8 @@ public class DeviceService {
     }
 
     private Jwt getCurrentUser() {
-        return (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
+       return (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+   }
 
     // Todo check owner
    /* private void checkUser(Device device, User user) {

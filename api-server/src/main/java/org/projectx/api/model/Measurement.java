@@ -17,5 +17,7 @@ public class Measurement {
 
     private LocalDateTime timestamp;
 
+    //private MeasurementType type;
+
     private Map<String, String> values;
 }

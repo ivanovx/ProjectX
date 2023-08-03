@@ -1,10 +1,10 @@
 package org.projectx.api.model;
 
-import lombok.Data;
-
 import java.util.List;
 import java.util.Collection;
 import java.time.LocalDateTime;
+
+import lombok.Data;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

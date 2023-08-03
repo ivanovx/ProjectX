@@ -2,11 +2,11 @@ package org.projectx.api.controller;
 
 import org.projectx.api.model.Device;
 import org.projectx.api.request.DeviceRequest;
-import org.projectx.api.response.DeviceResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.projectx.api.service.DeviceService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -20,8 +20,8 @@ public class DeviceController {
     }
 
     @GetMapping
-    public List<Device> allDevices() {
-        return this.deviceService.getAllByUser();
+    public List<Device> allDevices(Principal principal) {
+        return this.deviceService.getAllByUser(principal);
     }
 
     @GetMapping("/{id}")
