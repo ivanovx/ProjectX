@@ -13,19 +13,16 @@ export const Check = ({ label, value, ...props }: any) => {
 }
 
 export const Input = ({ label, value, ...props }: any) => {
-    const id = React.useId();
-
     return (
         <>
             <div className="mb-2 block">
                 <Label
-                    htmlFor={id}
+                    htmlFor={label}
                     value={label}
-                    {...props}
                 />
             </div>
             <TextInput
-                id={id}
+                id={label}
                 type="text"
                 value={value}
                 {...props}
