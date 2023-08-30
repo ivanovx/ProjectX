@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -49,6 +50,9 @@ public class SecurityConfig {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Bean
     @Order(1)
@@ -101,9 +105,13 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> this.userRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with %s username is not found".formatted(username)));
+        return username -> {
+            this.kafkaTemplate.send("user", username);
+
+            return this.userRepository
+                    .findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User with %s username is not found".formatted(username)));
+        };
     }
 
     @Bean
