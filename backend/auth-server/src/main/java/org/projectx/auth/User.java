@@ -1,34 +1,22 @@
 package org.projectx.auth;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 import java.util.Collection;
-import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
-@Document("users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User implements UserDetails {
-    @Id
-    private String id;
-
-    @Indexed(unique = true)
-    private String email;
-
-    @Indexed(unique = true)
     private String username;
 
     private String password;
-
-    private LocalDateTime created;
-
-    private LocalDateTime modified;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

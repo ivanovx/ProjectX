@@ -4,13 +4,3 @@ server:
 spring:
   application:
     name: AuthServer
-  kafka:
-    bootstrap-servers: localhost:9092
-  data:
-    mongodb:
-      auto-index-creation: true
-      database: projectX
-      host: localhost
-      port: 27017
-      username: root
-      password: root
