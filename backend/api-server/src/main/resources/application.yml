@@ -4,8 +4,6 @@ server:
 spring:
   application:
     name: ApiServer
-  kafka:
-    bootstrap-servers: localhost:9092
   data:
     mongodb:
       auto-index-creation: true
