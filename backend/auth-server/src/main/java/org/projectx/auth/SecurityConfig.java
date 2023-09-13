@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,6 +40,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -99,7 +101,51 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return  username ->  userClient.getUser(username); // null; // this.userRepository.findByUsername(username).orElseThrow();
+        return  username -> {
+            User user = userClient.getUser(username); // null; // this.userRepository.findByUsername(username).orElseThrow();
+
+            return new UserDetails() {
+                @Override
+                public Collection<? extends GrantedAuthority> getAuthorities() {
+                    return user.getRoles().stream().map(role -> new GrantedAuthority() {
+                        @Override
+                        public String getAuthority() {
+                            return role;
+                        }
+                    }).toList();
+                }
+
+                @Override
+                public String getPassword() {
+                    return user.getPassword();
+                }
+
+                @Override
+                public String getUsername() {
+                    return user.getUsername();
+                }
+
+                @Override
+                public boolean isAccountNonExpired() {
+                    return true;
+                }
+
+                @Override
+                public boolean isAccountNonLocked() {
+                    return true;
+                }
+
+                @Override
+                public boolean isCredentialsNonExpired() {
+                    return true;
+                }
+
+                @Override
+                public boolean isEnabled() {
+                    return true;
+                }
+            };
+        };
     }
 
     @Bean

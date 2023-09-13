@@ -16,66 +16,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
-    private String id;
-
-    private String email;
-
+public class User {
     private String username;
 
     private String password;
 
-    private LocalDateTime created;
+    private String email;
 
-    private LocalDateTime modified;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-
-    // @Override
-    //public Collection<? extends GrantedAuthority> getAuthorities() {
-        //return List.of((GrantedAuthority) () -> "USER");
-  //  }
-
-   // @Override
-  //  public boolean isAccountNonExpired() {
-  //      return true;
-   // }
-
-   // @Override
-   // public boolean isAccountNonLocked() {
-  //      return true;
-  //  }
-
-  /*  @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }*/
+    private List<String> roles;
 }

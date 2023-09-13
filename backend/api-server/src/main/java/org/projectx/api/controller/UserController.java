@@ -1,5 +1,6 @@
 package org.projectx.api.controller;
 
+import lombok.Data;
 import org.projectx.api.model.User;
 import org.projectx.api.repository.UserRepository;
 import org.projectx.api.request.CreateUserRequest;
@@ -24,10 +25,19 @@ public class UserController {
     }
 
     @GetMapping("/user/{username}")
-    public User user(@PathVariable String username) {
-        return this.userRepository
+    public UserResponse user(@PathVariable String username) {
+        User user = this.userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with %s username is not found".formatted(username)));
+
+        UserResponse response = new UserResponse();
+
+        response.setEmail(user.getEmail());
+        response.setUsername(user.getUsername());
+        response.setPassword(user.getPassword());
+        response.setRoles(user.getAuthorities().stream().map(role -> role.getAuthority()).toList());
+
+        return response;
     }
 
     @PostMapping("/user/create")
@@ -40,5 +50,16 @@ public class UserController {
         user.setCreated(LocalDateTime.now());
 
        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(this.userRepository.save(user));
+    }
+
+    @Data
+    public class UserResponse {
+        private String username;
+
+        private String password;
+
+        private String email;
+
+        private List<String> roles;
     }
 }
