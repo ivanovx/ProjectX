@@ -1,4 +1,4 @@
-package org.projectx.api.request;
+package org.projectx.user;
 
 import lombok.Data;
 

@@ -10,7 +10,7 @@
         <relativePath />
     </parent>
 
-    <groupId>pro.ivanov</groupId>
+    <groupId>org.projectx</groupId>
     <artifactId>discovery-service</artifactId>
     <version>1.0.0</version>
 

@@ -1,0 +1,14 @@
+package org.projectx.api.service;
+
+import org.projectx.api.model.User;
+
+import org.projectx.api.request.CreateUserRequest;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+@FeignClient(name = "user-service")
+public interface UserClient {
+    @PostMapping(value = "/user/create")
+    User createUser(@RequestBody CreateUserRequest request);
+}

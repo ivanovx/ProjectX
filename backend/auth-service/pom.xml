@@ -14,7 +14,7 @@
     </parent>
 
     <groupId>org.projectx</groupId>
-    <artifactId>auth-server</artifactId>
+    <artifactId>auth-service</artifactId>
     <version>1.0.1</version>
 
     <properties>
