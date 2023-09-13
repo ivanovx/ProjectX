@@ -1,11 +1,4 @@
 services:
-  kafka:
-    image: bitnami/kafka:latest
-    restart: always
-    ports:
-      - '9092:9092'
-    environment:
-      - ALLOW_PLAINTEXT_LISTENER=yes
   mongo:
     image: mongo:latest
     restart: always
