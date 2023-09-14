@@ -15,7 +15,7 @@
 
     <groupId>org.projectx</groupId>
     <artifactId>auth-service</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.0</version>
 
     <properties>
         <java.version>17</java.version>
