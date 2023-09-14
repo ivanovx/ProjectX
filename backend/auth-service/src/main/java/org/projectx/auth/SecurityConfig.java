@@ -5,7 +5,9 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.projectx.auth.domain.User;
+import org.projectx.auth.domain.UserClient;
+import org.projectx.auth.request.LoginRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -13,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,15 +40,18 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Collection;
+
 import java.util.List;
 import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private UserClient userClient;
+    private final UserClient userClient;
+
+    public SecurityConfig(UserClient userClient) {
+        this.userClient = userClient;
+    }
 
     @Bean
     @Order(1)
@@ -101,50 +104,11 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return  username -> {
-            User user = userClient.getUser(username); // null; // this.userRepository.findByUsername(username).orElseThrow();
+        return username -> {
+            LoginRequest request = new LoginRequest(username);
+            User user = userClient.getUser(request);
 
-            return new UserDetails() {
-                @Override
-                public Collection<? extends GrantedAuthority> getAuthorities() {
-                    return user.getRoles().stream().map(role -> new GrantedAuthority() {
-                        @Override
-                        public String getAuthority() {
-                            return role;
-                        }
-                    }).toList();
-                }
-
-                @Override
-                public String getPassword() {
-                    return user.getPassword();
-                }
-
-                @Override
-                public String getUsername() {
-                    return user.getUsername();
-                }
-
-                @Override
-                public boolean isAccountNonExpired() {
-                    return true;
-                }
-
-                @Override
-                public boolean isAccountNonLocked() {
-                    return true;
-                }
-
-                @Override
-                public boolean isCredentialsNonExpired() {
-                    return true;
-                }
-
-                @Override
-                public boolean isEnabled() {
-                    return true;
-                }
-            };
+            return AuthUser.of(user);
         };
     }
 
