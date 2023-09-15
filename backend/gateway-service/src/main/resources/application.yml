@@ -16,6 +16,14 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user/**
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/oauth2/**
+        - id: device-service
+          uri: lb://DEVICE-SERVICE
+          predicates:
+            - Path=/devices/**
 
 eureka:
   client:
