@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -26,9 +23,9 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity loginUser(@RequestBody UserLoginRequest request) {
-        User user = this.userRepository.findByUsername(request.getUsername()).orElseThrow();
+    @PostMapping("/{username}")
+    public ResponseEntity loginUser(@PathVariable String username) {
+        User user = this.userRepository.findByUsername(username).orElseThrow();
 
         return ResponseEntity.status(200).body(user);
     }

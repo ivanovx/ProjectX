@@ -105,8 +105,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            LoginRequest request = new LoginRequest(username);
-            User user = userClient.getUser(request);
+            User user = userClient.getUser(username);
 
             return AuthUser.of(user);
         };
