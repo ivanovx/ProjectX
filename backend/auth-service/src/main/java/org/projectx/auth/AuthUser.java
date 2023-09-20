@@ -3,10 +3,11 @@ package org.projectx.auth;
 import java.util.List;
 import java.util.Collection;
 
-import org.projectx.auth.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import org.projectx.auth.domain.User;
 
 public class AuthUser implements UserDetails {
     private final String username;
@@ -29,8 +30,8 @@ public class AuthUser implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role)).toList();
+    public String getUsername() {
+        return username;
     }
 
     @Override
@@ -39,8 +40,8 @@ public class AuthUser implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role)).toList();
     }
 
     @Override
