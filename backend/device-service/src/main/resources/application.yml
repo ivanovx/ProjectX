@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: device-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8002
   data:
     mongodb:
       auto-index-creation: true

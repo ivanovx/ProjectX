@@ -1,11 +1,11 @@
 package org.projectx.auth.domain;
 
-import java.util.List;
-
 import lombok.Data;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
