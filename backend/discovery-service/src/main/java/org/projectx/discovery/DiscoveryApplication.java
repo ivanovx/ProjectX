@@ -1,4 +1,4 @@
-package pro.ivanov.discovery;
+package org.projectx.discovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

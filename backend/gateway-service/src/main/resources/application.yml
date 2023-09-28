@@ -24,6 +24,12 @@ spring:
           uri: lb://DEVICE-SERVICE
           predicates:
             - Path=/devices/**
+          filters:
+            - TokenRelay=
+        - id: measurements-service
+          uri: lb://MEASUREMENT-SERVICE
+          predicates:
+            - Path=/measurements/**
 
 eureka:
   client:

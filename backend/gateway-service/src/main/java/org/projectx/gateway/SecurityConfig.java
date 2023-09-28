@@ -1,4 +1,4 @@
-package pro.ivanov.gateway;
+package org.projectx.gateway;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeExchange(exchanges -> exchanges.pathMatchers("/oauth2/**","/user/**").permitAll().anyExchange().authenticated())
+                .authorizeExchange(exchanges -> exchanges.pathMatchers("/oauth2/**","/user/**", "/measurements/**").permitAll().anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return http.build();
