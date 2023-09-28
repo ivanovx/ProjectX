@@ -1,10 +1,8 @@
 package org.projectx.measurement.domain;
 
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,27 +10,38 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/measurements")
 public class MeasurementController {
-    private final MeasurementRepository measurementRepository;
+    private StreamBridge streamBridge;
+
+    public MeasurementController(StreamBridge streamBridge) {
+        this.streamBridge = streamBridge;
+    }
+
+
+   /* private final MeasurementRepository measurementRepository;
 
     public MeasurementController(MeasurementRepository measurementRepository) {
         this.measurementRepository = measurementRepository;
-    }
+    }*/
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity index() {
-        List<Measurement> measurements = this.measurementRepository.findAll();
+        List<Measurement> measurements = this.measurementRepository.findByKeyDevice("sample-device");
 
         return ResponseEntity.status(200).body(measurements);
-    }
+    }*/
 
     @PostMapping
-    public ResponseEntity create() {
-        Measurement measurement = new Measurement();
+    public ResponseEntity putMeasurement(@RequestBody MeasurementRequest request) {
+       // Measurement measurement = new Measurement();
+      //  MeasurementKey key = new MeasurementKey(UUID.randomUUID(),"sample-device");
 
-        measurement.setId(UUID.randomUUID());
-        measurement.setDevice("sample-device");
-        measurement.setValue("10*C");
+       // measurement.setKey(key);
+       // measurement.setValue("10*C");
 
-        return ResponseEntity.status(201).body(measurementRepository.save(measurement));
+        //return ResponseEntity.status(201).body(measurementRepository.save(measurement));
+
+        boolean isSend = streamBridge.send("measurements-topic", request.getDevice());
+
+        return ResponseEntity.status(201).body(isSend);
     }
 }
