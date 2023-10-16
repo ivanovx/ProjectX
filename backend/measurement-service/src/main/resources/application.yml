@@ -8,9 +8,8 @@ spring:
     keyspace-name: projectx
     local-datacenter: datacenter1
     schema-action: create_if_not_exists
-  spring:
-    kafka:
-      bootstrap-servers: todo
+  kafka:
+    bootstrap-servers: localhost:9092
 
 eureka:
   client:

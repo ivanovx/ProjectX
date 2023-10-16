@@ -1,6 +1,5 @@
 package org.projectx.measurement.domain;
 
-import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +9,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/measurements")
 public class MeasurementController {
-    private StreamBridge streamBridge;
-
-    public MeasurementController(StreamBridge streamBridge) {
-        this.streamBridge = streamBridge;
-    }
 
 
    /* private final MeasurementRepository measurementRepository;
@@ -40,8 +34,8 @@ public class MeasurementController {
 
         //return ResponseEntity.status(201).body(measurementRepository.save(measurement));
 
-        boolean isSend = streamBridge.send("measurements-topic", request.getDevice());
+       // boolean isSend = streamBridge.send("measurements-topic", request.getDevice());
 
-        return ResponseEntity.status(201).body(isSend);
+        return ResponseEntity.status(201).build(); //.body(isSend);
     }
 }
