@@ -8,7 +8,6 @@ import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
-
 @Configuration
 @EnableCassandraRepositories("org.projectx.measurement.domain")
 public class CassandraConfig extends AbstractCassandraConfiguration {

@@ -8,15 +8,9 @@ spring:
     keyspace-name: projectx
     local-datacenter: datacenter1
     schema-action: create_if_not_exists
-
-  cloud:
-    stream:
-      bindings:
-        convertToUppercase-in-0:
-          destination: measurements-topic
-          group: processor
-        convertToUppercase-out-0:
-          destination: measurements-out-topic
+  spring:
+    kafka:
+      bootstrap-servers: todo
 
 eureka:
   client:
