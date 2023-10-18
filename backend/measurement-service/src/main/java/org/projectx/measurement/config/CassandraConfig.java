@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.SchemaAction;
-import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
+import org.springframework.data.cassandra.core.cql.keyspace.KeyspaceOption;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
-import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
+import org.springframework.data.cassandra.config.AbstractReactiveCassandraConfiguration;
+import org.springframework.data.cassandra.repository.config.EnableReactiveCassandraRepositories;
+
 @Configuration
-@EnableCassandraRepositories("org.projectx.measurement.domain")
-public class CassandraConfig extends AbstractCassandraConfiguration {
+@EnableReactiveCassandraRepositories("org.projectx.measurement.domain")
+public class CassandraConfig extends AbstractReactiveCassandraConfiguration {
     @Value("${spring.cassandra.keyspace-name}")
     private String keyspace;
 
@@ -29,7 +31,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
         CreateKeyspaceSpecification specification = CreateKeyspaceSpecification
                 .createKeyspace(keyspace)
                 .ifNotExists()
-                //.with(KeyspaceOption.DURABLE_WRITES, true)
+                .with(KeyspaceOption.DURABLE_WRITES, true)
                 .withSimpleReplication(1);
 
         return List.of(specification);

@@ -1,12 +1,9 @@
 package org.projectx.measurement.domain;
 
-import org.springframework.data.cassandra.repository.CassandraRepository;
-import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 
-import java.util.List;
-import java.util.UUID;
+import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 
-@Repository
-public interface MeasurementRepository extends CassandraRepository<Measurement, MeasurementKey> {
-    List<Measurement> findByKeyDevice(String device);
+public interface MeasurementRepository extends ReactiveCassandraRepository<Measurement, MeasurementKey> {
+    Flux<Measurement> findByKeyDeviceId(String deviceId);
 }

@@ -23,5 +23,5 @@ public class MeasurementKey implements Serializable {
     private UUID id;
 
     @PrimaryKeyColumn(type = PARTITIONED)
-    private String device;
+    private String deviceId;
 }

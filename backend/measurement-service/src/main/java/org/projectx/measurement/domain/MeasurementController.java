@@ -1,41 +1,41 @@
 package org.projectx.measurement.domain;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.UUID;
+import java.time.LocalDateTime;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/measurements")
 public class MeasurementController {
-
-
-   /* private final MeasurementRepository measurementRepository;
+    private final MeasurementRepository measurementRepository;
 
     public MeasurementController(MeasurementRepository measurementRepository) {
         this.measurementRepository = measurementRepository;
-    }*/
+    }
 
-    /*@GetMapping
-    public ResponseEntity index() {
-        List<Measurement> measurements = this.measurementRepository.findByKeyDevice("sample-device");
+    @GetMapping("/{deviceId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<Measurement> getMeasurements(@PathVariable String deviceId) {
+        return this.measurementRepository.findByKeyDeviceId(deviceId);
+    }
 
-        return ResponseEntity.status(200).body(measurements);
-    }*/
+    @PutMapping("/{deviceId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<Measurement> putMeasurement(@PathVariable String deviceId) {
+        Measurement measurement = new Measurement();
+        MeasurementKey key = new MeasurementKey(UUID.randomUUID(),deviceId);
 
-    @PostMapping
-    public ResponseEntity putMeasurement(@RequestBody MeasurementRequest request) {
-       // Measurement measurement = new Measurement();
-      //  MeasurementKey key = new MeasurementKey(UUID.randomUUID(),"sample-device");
+        MeasurementValue value = MeasurementValue.builder().temperature("10.00").airQuality("10.00").build();
 
-       // measurement.setKey(key);
-       // measurement.setValue("10*C");
+        measurement.setKey(key);
+        measurement.setValue(value);
+        measurement.setTimestamp(LocalDateTime.now());
 
-        //return ResponseEntity.status(201).body(measurementRepository.save(measurement));
-
-       // boolean isSend = streamBridge.send("measurements-topic", request.getDevice());
-
-        return ResponseEntity.status(201).build(); //.body(isSend);
+        return this.measurementRepository.save(measurement);
     }
 }
