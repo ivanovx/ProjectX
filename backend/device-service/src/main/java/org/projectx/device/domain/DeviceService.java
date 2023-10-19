@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 import java.time.LocalDateTime;
 
+import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +16,18 @@ public class DeviceService {
         this.deviceRepository = deviceRepository;
     }
 
-    public List<Device> getAll() {
+
+    /*public List<Device> getAll() {
         List<Device> response = this.deviceRepository.findAll();
                 //.stream()
                 //.map(device -> DeviceResponse.of(device))
                 //.toList();
 
         return response;
-    }
+    }*/
 
     // todo
-    public List<Device> getAllActivated() {
+    /*public List<Device> getAllActivated() {
         List<Device> response = this.deviceRepository
                 .findAll()
                 .stream()
@@ -34,17 +36,17 @@ public class DeviceService {
                 .toList();
 
         return response;
-    }
+    }*/
 
-    public List<Device> getAllByUser(String user) {
-        List<Device> response = this.deviceRepository
-                .findAllByUser(user);
+   /* public List<Device> getAllByUser(String user) {
+        List<Device> response = (List<Device>) this.deviceRepository.findAll();
+               // .findAllByUser(user);
                 //.stream()
                 //.map(device -> DeviceResponse.of(device))
                 //.toList();
 
         return response;
-    }
+    }*//*
 
     public List<Device> getAllByUser(Principal principal) {
         return this.getAllByUser(principal.getName());
@@ -73,9 +75,9 @@ public class DeviceService {
         //device.setUser(this.getCurrentUser().getSubject());
 
         return this.deviceRepository.save(device);
-    }
+    }*/
 
-    public Device update(String id, DeviceRequest request) {
+  /*  public Device update(String id, DeviceRequest request) {
         Device device = this.findById(id);
 
         device.setName(request.getName());
@@ -134,9 +136,9 @@ public class DeviceService {
         }
     }*/
 
-    private Device findById(String id) {
+   /* private Device findById(String id) {
         return this.deviceRepository
                 .findById(id)
-                .orElseThrow(/*() -> new ApiRequestException("Device with id=%s not found".formatted(id))*/);
-    }
+                .orElseThrow(/*() -> new ApiRequestException("Device with id=%s not found".formatted(id))*/ /*);
+    }*/
 }

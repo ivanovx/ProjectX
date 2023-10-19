@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import lombok.Data;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,11 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("devices")
 public class Device {
     @Id
-    private String id;
+    private ObjectId id;
 
     private String name;
 
-    private String user;
+    private ObjectId user;
 
     private String controller;
 
