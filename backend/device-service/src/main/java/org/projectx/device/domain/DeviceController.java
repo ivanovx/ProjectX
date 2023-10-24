@@ -1,19 +1,73 @@
 package org.projectx.device.domain;
 
-import org.bson.types.ObjectId;
+import org.projectx.device.request.DeviceRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-import java.security.Principal;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/devices")
 public class DeviceController {
     private final DeviceRepository deviceRepository;
+
+    public DeviceController(DeviceRepository deviceRepository) {
+        this.deviceRepository = deviceRepository;
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<Device> getAllDevices() {
+        return this.deviceRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Device> getDevice(@PathVariable String id) {
+        return this.deviceRepository.findById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<Device> createDevice(@RequestBody DeviceRequest request) {
+        Device device = new Device();
+
+        device.setName(request.name());
+        device.setOutdoor(request.outdoor());
+        device.setSensors(request.sensors());
+        device.setController(request.controller());
+        device.setCoordinates(request.coordinates());
+
+        return this.deviceRepository.save(device);
+    }
+
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Device> updateDevice(@PathVariable String id, @RequestBody DeviceRequest request) {
+        Mono<Device> device = this.deviceRepository.findById(id);
+
+        return device;
+    }
+
+    @PostMapping("/activate/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Device> updateDevice(@PathVariable String id) {
+        Mono<Device> device = this.deviceRepository.findById(id);
+
+        return device;
+    }
+
+    @PostMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Device> deleteDevice(@PathVariable String id) {
+        Mono<Device> device = this.deviceRepository.findById(id);
+
+        return device;
+    }
+
+  /*  private final DeviceRepository deviceRepository;
 
     public DeviceController(DeviceRepository deviceRepository) {
         this.deviceRepository = deviceRepository;
@@ -36,7 +90,7 @@ public class DeviceController {
         return this.deviceRepository.findById(new ObjectId(deviceId));
     }
 
-    public Flux<Device> getAllUserDevices() {
+   // public Flux<Device> getAllUserDevices() {
         return this.deviceRepository.findAllByUser(new ObjectId(""));
     }
 

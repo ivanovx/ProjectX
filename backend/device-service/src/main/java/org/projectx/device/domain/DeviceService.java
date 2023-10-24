@@ -1,20 +1,14 @@
 package org.projectx.device.domain;
 
-import java.security.Principal;
-import java.util.List;
-import java.time.LocalDateTime;
-
-import org.bson.types.ObjectId;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DeviceService {
-    private final DeviceRepository deviceRepository;
+    //private final DeviceRepository deviceRepository;
 
-    public DeviceService(DeviceRepository deviceRepository) {
-        this.deviceRepository = deviceRepository;
-    }
+   // public DeviceService(DeviceRepository deviceRepository) {
+  //      this.deviceRepository = deviceRepository;
+   // }
 
 
     /*public List<Device> getAll() {
