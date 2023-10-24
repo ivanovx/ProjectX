@@ -23,9 +23,9 @@ public class User {
 
     private String password;
 
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
 
-    private LocalDateTime modified;
+    private LocalDateTime modified = null;
 
     private boolean verified = true;
 

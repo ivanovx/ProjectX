@@ -6,7 +6,7 @@ spring:
     name: measurement-service
   cassandra:
     keyspace-name: projectx
-    local-datacenter: datacenter1
+    local-datacenter: simpleClusterName
     schema-action: create_if_not_exists
     port: 9042
 

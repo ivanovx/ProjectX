@@ -1,11 +1,9 @@
 package org.projectx.user.domain;
 
-import java.util.Optional;
+import reactor.core.publisher.Mono;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
-@Repository
-public interface UserRepository extends MongoRepository<User, String> {
-    Optional<User> findByUsername(String username);
+public interface UserRepository extends ReactiveMongoRepository<User, String> {
+    Mono<User> findByUsername(String username);
 }

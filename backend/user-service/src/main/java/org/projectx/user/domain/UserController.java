@@ -1,15 +1,15 @@
 package org.projectx.user.domain;
 
-import java.time.LocalDateTime;
 
-import org.springframework.http.ResponseEntity;
+import org.projectx.user.request.SignInRequest;
+import org.projectx.user.request.SignUpRequest;
+import org.springframework.http.HttpStatus;
 
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import org.projectx.user.request.UserLoginRequest;
-import org.projectx.user.request.CreateUserRequest;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/user")
@@ -23,23 +23,21 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/{username}")
-    public ResponseEntity loginUser(@PathVariable String username) {
-        User user = this.userRepository.findByUsername(username).orElseThrow();
-
-        return ResponseEntity.status(200).body(user);
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity createUser(@RequestBody CreateUserRequest request) {
+    @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<User> signUp(@RequestBody SignUpRequest request) {
         User user = new User();
 
-        user.setEmail(request.getEmail());
-        user.setUsername(request.getUsername());
-        user.setPassword(this.passwordEncoder.encode(request.getPassword()));
-        user.setCreated(LocalDateTime.now());
-        user.setModified(null);
+        user.setEmail(request.email());
+        user.setUsername(request.username());
+        user.setPassword(this.passwordEncoder.encode(request.password()));
 
-       return ResponseEntity.status(201).body(this.userRepository.save(user));
+        return this.userRepository.save(user);
+    }
+
+    @PostMapping("/signin")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<User> signIn(@RequestBody SignInRequest request) {
+        return this.userRepository.findByUsername(request.username());
     }
 }
