@@ -1,14 +1,6 @@
-import DeviceService from "@/modules/services/device-service";
 import Home from "@/modules/views/Home";
+import { DEVICES } from "@/modules/mock/devices";
 
-export default async function Index() {
-    const devices: any= await getDevices();
-
-    return <Home devices={devices} />;
+export default function Index() {
+    return <Home devices={DEVICES} />;
 }
-
-const getDevices = async () => {
-    const devices = await DeviceService.getAllDevices();
-
-    return devices;
-};

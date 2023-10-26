@@ -1,13 +1,15 @@
 "use client";
 
-import Search from "@/components/Search";
 import Map from "@/components/Map";
+import Search from "@/components/Search";
 
-type Props = {
-    devices: any[];
+import type { Device } from "@/types";
+
+type HomeProps = {
+    devices: Device[];
 }
 
-export default function Home({ devices }: Props) {
+export default function Home({ devices }: HomeProps) {
     const onSelectValue = (value: any) => {
         console.log(value);
     };
