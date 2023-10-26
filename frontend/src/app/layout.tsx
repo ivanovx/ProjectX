@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export const metadata: Metadata = {
     title: 'ProjectX',
@@ -14,21 +15,6 @@ type LayoutProps = {
 }
 
 export default function Layout({ children }: LayoutProps) {
-    return (
-        <html lang="en">
-            <body>
-                <div className="mx-auto max-w-7xl">
-                    <Header />
-                    <main className='flex-1'>{children}</main>
-                    <Footer />
-                </div>
-            </body>
-        </html>
-    );
-}
-
-/*
-export default function Layout({ children }: Props) {
     return (
         <UserProvider>
             <html lang="en">
@@ -42,4 +28,4 @@ export default function Layout({ children }: Props) {
             </html>
         </UserProvider>
     );
-}*/
+}

@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
+import org.projectx.auth.domain.SignInRequest;
 import org.springframework.http.MediaType;
 import org.springframework.core.annotation.Order;
 import org.springframework.context.annotation.Bean;
@@ -110,7 +111,8 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            User user = userClient.getUser(username);
+            SignInRequest request = new SignInRequest(username, username); // todo
+            User user = userClient.signIn(request);
 
             return new UserPrincipal(user);
         };

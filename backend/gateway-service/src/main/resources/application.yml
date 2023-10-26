@@ -11,25 +11,27 @@ spring:
           issuer-uri: http://localhost:8002
   cloud:
     gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
       routes:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user/**
-        - id: auth-service
-          uri: lb://AUTH-SERVICE
-          predicates:
-            - Path=/oauth2/**
+            - Path=/user/signup
         - id: device-service
           uri: lb://DEVICE-SERVICE
           predicates:
             - Path=/devices/**
-          filters:
-            - TokenRelay=
-        - id: measurements-service
-          uri: lb://MEASUREMENT-SERVICE
-          predicates:
-            - Path=/measurements/**
+          #filters:
+          #  - TokenRelay=
+       # - id: measurements-service
+       #   uri: lb://MEASUREMENT-SERVICE
+       #  predicates:
+       #    - Path=/measurements/**
 
 eureka:
   client:

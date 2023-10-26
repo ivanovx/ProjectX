@@ -10,6 +10,6 @@ export type UserSignUp = {
 
 export default class UserService {
     static signUp(userDetails: UserSignUp) {
-        return HttpService.doPost(`${API_URL}/user/create`, userDetails);
+        return HttpService.doPost(`${API_URL}/user/signup`, userDetails);
     }
 }
