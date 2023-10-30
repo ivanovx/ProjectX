@@ -36,9 +36,10 @@ public class DeviceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Device> createDevice(@RequestBody DeviceRequest request) {
+    public Mono<Device> createDevice(@RequestParam String userId, @RequestBody DeviceRequest request) {
         Device device = new Device();
 
+        device.setUserId(userId);
         device.setName(request.name());
         device.setOutdoor(request.outdoor());
         device.setSensors(request.sensors());

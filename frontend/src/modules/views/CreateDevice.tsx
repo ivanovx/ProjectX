@@ -9,10 +9,11 @@ import Search from '@/components/Search';
 import { Check, Input, SelectList } from '@/components/Forms';
 
 type Props = {
+    userId: string;
     token: string;
 }
 
-export default function CreateDevice({ token }: Props) {
+export default function CreateDevice({ userId, token }: Props) {
 
     const [openModal, setOpenModal] = React.useState<string | undefined>();
 
@@ -31,7 +32,7 @@ export default function CreateDevice({ token }: Props) {
             console.log(values);
 
             DeviceService
-                .createDevice(values, token)
+                .createDevice(values, userId, token)
                 .then(device => console.log(device))
                 .catch(error => console.log(error));
         }

@@ -15,8 +15,8 @@ export default class DeviceService {
         });
     }
 
-    static createDevice(deviceData: any, token: string) {
-        return HttpService.doPost("http://localhost:8000/devices", deviceData/*, {
+    static createDevice(deviceData: any, userId: string, token: string) {
+        return HttpService.doPost("http://localhost:8000/devices?userId" + userId, deviceData/*, {
             headers: {
                 'Authorization' : `Bearer ${token}`
             }
