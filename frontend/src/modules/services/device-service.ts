@@ -7,16 +7,16 @@ export default class DeviceService {
         return HttpService.doGet(HOME_URL);
     }
 
-    static getUserDevices(token: string) {
-        return HttpService.doGet("http://localhost:8000/devices", {
+    static getUserDevices(userId: string, token: string) {
+        return HttpService.doGet("http://localhost:8000/devices?userId=" + userId/*, {
             headers: {
                 'Authorization' : `Bearer ${token}`
             }
-        });
+        }*/);
     }
 
     static createDevice(deviceData: any, userId: string, token: string) {
-        return HttpService.doPost("http://localhost:8000/devices?userId" + userId, deviceData/*, {
+        return HttpService.doPost("http://localhost:8000/devices?userId=" + userId, deviceData/*, {
             headers: {
                 'Authorization' : `Bearer ${token}`
             }
