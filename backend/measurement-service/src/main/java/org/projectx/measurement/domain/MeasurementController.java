@@ -18,7 +18,7 @@ public class MeasurementController {
     @GetMapping("/{deviceId}")
     @ResponseStatus(HttpStatus.OK)
     public Flux<Measurement> getMeasurements(@PathVariable String deviceId) {
-        return this.measurementRepository.findByKeyDeviceId(deviceId);
+        return this.measurementRepository.findByDeviceId(deviceId);
     }
 
     @PutMapping("/{deviceId}")
