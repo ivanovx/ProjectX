@@ -1,10 +1,7 @@
 package org.projectx.measurement.domain;
 
-import java.util.UUID;
-import java.time.LocalDateTime;
-
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +25,15 @@ public class MeasurementController {
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Measurement> putMeasurement(@PathVariable String deviceId) {
         Measurement measurement = new Measurement();
-        MeasurementKey key = new MeasurementKey(UUID.randomUUID(),deviceId);
 
-        MeasurementValue value = MeasurementValue.builder().temperature("10.00").airQuality("10.00").build();
+        MeasurementValue value = MeasurementValue
+                .builder()
+                .temperature("10.00")
+                .airQuality("10.00")
+                .build();
 
-        measurement.setKey(key);
         measurement.setValue(value);
-        measurement.setTimestamp(LocalDateTime.now());
+        measurement.setDeviceId(deviceId);
 
         return this.measurementRepository.save(measurement);
     }

@@ -4,11 +4,14 @@ server:
 spring:
   application:
     name: measurement-service
-  cassandra:
-    keyspace-name: projectx
-    local-datacenter: simpleClusterName
-    schema-action: create_if_not_exists
-    port: 9042
+  data:
+    mongodb:
+      auto-index-creation: true
+      database: projectX
+      host: localhost
+      port: 27017
+      username: root
+      password: root
 
 eureka:
   client:

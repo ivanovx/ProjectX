@@ -2,23 +2,20 @@ package org.projectx.measurement.domain;
 
 import lombok.Data;
 
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Data
-@Table("measurements")
+@Document("measurements")
 public class Measurement {
-    @PrimaryKey
-    private MeasurementKey key;
+    @Id
+    private String id;
 
-    @Column
+    private String deviceId;
+
     private MeasurementValue value;
 
-    @Column
-    @CassandraType(type= CassandraType.Name.TIMESTAMP)
-    private LocalDateTime timestamp;
+    private LocalDateTime timestamp = LocalDateTime.now();
 }
