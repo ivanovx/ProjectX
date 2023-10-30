@@ -7,6 +7,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/devices")
@@ -19,7 +20,11 @@ public class DeviceController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Flux<Device> getAllDevices() {
+    public Flux<Device> getAllDevices(@RequestParam Optional<String> userId) {
+        if (userId.isPresent()) {
+            return this.deviceRepository.findByUserId(userId.get());
+        }
+
         return this.deviceRepository.findAll();
     }
 
