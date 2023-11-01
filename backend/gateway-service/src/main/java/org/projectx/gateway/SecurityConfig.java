@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
                 .cors(cors -> corsWebFilter())
                 .csrf(csrf -> csrf.disable())
-                .authorizeExchange(exchanges -> exchanges.pathMatchers("/user/**", "/measurements/**").permitAll().anyExchange().authenticated())
+                .authorizeExchange(exchanges -> exchanges.pathMatchers("/devices/**","/user/**", "/measurements/**").permitAll().anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return http.build();

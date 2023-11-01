@@ -9,7 +9,9 @@ export default function Header() {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
 
-    return (
+    return user!.sid;
+
+   /* return (
         <Navbar fluid rounded>
             <Navbar.Brand href="/">
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -27,7 +29,7 @@ export default function Header() {
                 <Navbar.Link href="/dashboard">Dashboard</Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
-    );
+    );*/
 }
 
 /*

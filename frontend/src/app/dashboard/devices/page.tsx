@@ -1,9 +1,9 @@
 import { withPageAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
-
+import { useUser } from '@auth0/nextjs-auth0/client';
 import ListDevices from '@/modules/views/ListDevices';
 
 export default withPageAuthRequired(async function Devices() {
     const { accessToken } = await getAccessToken();
 
-    return  <ListDevices token={accessToken!} />;
+    return <ListDevices token={accessToken!} />;
 });
