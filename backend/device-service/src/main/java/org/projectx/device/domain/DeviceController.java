@@ -2,11 +2,12 @@ package org.projectx.device.domain;
 
 import org.projectx.device.request.DeviceRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/devices")
@@ -19,11 +20,7 @@ public class DeviceController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Flux<Device> getAllDevices(@RequestParam Optional<String> userId) {
-        if (userId.isPresent()) {
-            return this.deviceRepository.findByUserId(userId.get());
-        }
-
+    public Flux<Device> getAllDevices() {
         return this.deviceRepository.findAll();
     }
 
@@ -35,17 +32,23 @@ public class DeviceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Device> createDevice(@RequestParam String userId, @RequestBody DeviceRequest request) {
-        Device device = new Device();
+    public Mono<Object> createDevice(@RequestBody DeviceRequest request) {
+        /*return ReactiveSecurityContextHolder.getContext().map(user -> {
 
-        device.setUserId(userId);
-        device.setName(request.name());
-        device.setOutdoor(request.outdoor());
-        device.setSensors(request.sensors());
-        device.setController(request.controller());
-        device.setCoordinates(request.coordinates());
 
-        return this.deviceRepository.save(device);
+            Device device = new Device();
+
+            device.setName(request.name());
+            device.setOutdoor(request.outdoor());
+            device.setSensors(request.sensors());
+            device.setController(request.controller());
+            device.setCoordinates(request.coordinates());
+            device.setUserId(user.getAuthentication().getCredentials().toString());
+
+            return this.deviceRepository.save(device);
+        });*/
+
+        return ReactiveSecurityContextHolder.getContext().map(user -> user.getAuthentication());
     }
 
     @PostMapping("/{id}")
@@ -58,7 +61,7 @@ public class DeviceController {
 
     @PostMapping("/activate/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Device> updateDevice(@PathVariable String id) {
+    public Mono<Device> activateDevice(@PathVariable String id) {
         Mono<Device> device = this.deviceRepository.findById(id);
 
         return device;

@@ -1,5 +1,6 @@
 package org.projectx.auth;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
@@ -133,6 +134,7 @@ public class SecurityConfig {
                 .scope(OidcScopes.EMAIL)
                 .scope(OidcScopes.PROFILE)
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofDays(1)).build())
                 .build();
 
         return new InMemoryRegisteredClientRepository(appClient);

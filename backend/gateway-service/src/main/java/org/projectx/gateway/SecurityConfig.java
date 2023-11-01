@@ -20,16 +20,16 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
         http
-                .cors(cors -> corsConfigurationSource())
+                .cors(cors -> corsWebFilter())
                 .csrf(csrf -> csrf.disable())
-                .authorizeExchange(exchanges -> exchanges.pathMatchers("/oauth2/**", "/devices/**", "/user/**", "/measurements/**").permitAll().anyExchange().authenticated())
+                .authorizeExchange(exchanges -> exchanges.pathMatchers("/user/**", "/measurements/**").permitAll().anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return http.build();
     }
 
     @Bean
-    public CorsWebFilter corsConfigurationSource() {
+    public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
 
         corsConfig.setAllowedOrigins(List.of("*"));
@@ -40,6 +40,6 @@ public class SecurityConfig {
 
         source.registerCorsConfiguration("/**", corsConfig);
 
-        return new CorsWebFilter( source );
+        return new CorsWebFilter(source);
     }
 }
