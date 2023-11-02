@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/devices")
@@ -20,14 +21,19 @@ public class DeviceController {
         this.deviceRepository = deviceRepository;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Jwt> getAllDevices(@AuthenticationPrincipal Jwt jwt) {
-        return Mono.just(jwt);
+    public Flux<Device> getAllDevices() {
+        return this.deviceRepository.findAll();
     }
-    //public Flux<Device> getAllDevices() {
-    //    return this.deviceRepository.findAll();
-   // }
+
+    @GetMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<Device> getAllUserDevices(@AuthenticationPrincipal Jwt jwt) {
+        String userId = jwt.getClaimAsString("userId");
+
+        return this.deviceRepository.findAllByUserId(userId);
+    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -35,41 +41,55 @@ public class DeviceController {
         return this.deviceRepository.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Object> createDevice(@RequestBody DeviceRequest request) {
-        /*return ReactiveSecurityContextHolder.getContext().map(user -> {
+    public Mono<Device> createDevice(@AuthenticationPrincipal Jwt jwt, @RequestBody DeviceRequest request) {
+        String userId = jwt.getClaimAsString("userId");
 
+        Device device = new Device();
 
-            Device device = new Device();
+        device.setUserId(userId);
+        device.setName(request.name());
+        device.setOutdoor(request.outdoor());
+        device.setSensors(request.sensors());
+        device.setController(request.controller());
+        device.setCoordinates(request.coordinates());
 
-            device.setName(request.name());
-            device.setOutdoor(request.outdoor());
-            device.setSensors(request.sensors());
-            device.setController(request.controller());
-            device.setCoordinates(request.coordinates());
-            device.setUserId(user.getAuthentication().getCredentials().toString());
-
-            return this.deviceRepository.save(device);
-        });*/
-
-        return ReactiveSecurityContextHolder.getContext().map(user -> user.getAuthentication());
+        return this.deviceRepository.save(device);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Device> updateDevice(@PathVariable String id, @RequestBody DeviceRequest request) {
-        Mono<Device> device = this.deviceRepository.findById(id);
+    public Mono<Device> updateDevice(@PathVariable String id, @AuthenticationPrincipal Jwt jwt, @RequestBody DeviceRequest request) {
+        String userId = jwt.getClaimAsString("userId");
 
-        return device;
+        return this.deviceRepository
+                .findById(id)
+                .map(device -> {
+                    device.setUserId(userId);
+                    device.setName(request.name());
+                    device.setOutdoor(request.outdoor());
+                    device.setSensors(request.sensors());
+                    device.setController(request.controller());
+                    device.setCoordinates(request.coordinates());
+                    device.setModified(LocalDateTime.now());
+
+                    return device;
+                })
+                .flatMap(deviceRepository::save);
     }
 
     @PostMapping("/activate/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Device> activateDevice(@PathVariable String id) {
-        Mono<Device> device = this.deviceRepository.findById(id);
+        return this.deviceRepository
+                .findById(id)
+                .map(device -> {
+                    device.setActivated(LocalDateTime.now());
 
-        return device;
+                    return device;
+                })
+                .flatMap(deviceRepository::save);
     }
 
     @PostMapping("/delete/{id}")
@@ -79,67 +99,4 @@ public class DeviceController {
 
         return device;
     }
-
-  /*  private final DeviceRepository deviceRepository;
-
-    public DeviceController(DeviceRepository deviceRepository) {
-        this.deviceRepository = deviceRepository;
-    }
-
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Flux<Device> getAllDevices() {
-        return this.deviceRepository.findAll();
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Device> createDevice(@RequestBody Device device) {
-        return this.deviceRepository.save(device);
-    }
-
-    @GetMapping("/{deviceId}")
-    public Mono<Device> getDevice(@PathVariable String deviceId) {
-        return this.deviceRepository.findById(new ObjectId(deviceId));
-    }
-
-   // public Flux<Device> getAllUserDevices() {
-        return this.deviceRepository.findAllByUser(new ObjectId(""));
-    }
-
-  /*  private final DeviceService deviceService;
-
-    public DeviceController(DeviceService deviceService) {
-        this.deviceService = deviceService;
-    }
-
-    @GetMapping
-    public List<Device> allDevices(Principal principal) {
-        return this.deviceService.getAll();
-    }
-
-    @PostMapping("/create")
-    public Device createDevice(@RequestBody DeviceRequest request) {
-        return this.deviceService.create(request);
-    }
-
-    @GetMapping("/device/{id}")
-    public Device getDevice(@PathVariable String id) {
-        return this.deviceService.getById(id);
-    }
-
-    @PostMapping("/update/{id}")
-    public Device updateDevice(@PathVariable String id, @RequestBody DeviceRequest request) {
-        return this.deviceService.update(id, request);
-    }
-
-    @PostMapping("/activate/{id}")
-    public Device activateDevice(@PathVariable String id) {
-        return this.deviceService.activate(id);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteDevice(@PathVariable String id) {
-        return this.deviceService.delete(id);
-    }*/
 }

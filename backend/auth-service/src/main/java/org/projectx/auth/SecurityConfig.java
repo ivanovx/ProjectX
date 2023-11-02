@@ -15,10 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.core.annotation.Order;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +28,7 @@ import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -82,7 +83,9 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer(resourceServer -> resourceServer.jwt(Customizer.withDefaults()));
 
-        return http.cors(cors -> this.corsConfigurationSource()).build();
+        //return http.cors(cors -> this.corsConfigurationSource()).build();
+
+        return http.build();
     }
 
     @Bean
@@ -92,7 +95,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults());
 
-        return http.cors(cors -> this.corsConfigurationSource()).build();
+        //return http.cors(cors -> this.corsConfigurationSource()).build();
+
+        return http.build();
     }
 
     @Bean
@@ -122,6 +127,18 @@ public class SecurityConfig {
             User user = userClient.signIn(request);
 
             return new UserPrincipal(user);
+        };
+    }
+
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {
+        return context -> {
+            if (OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType())) {
+                UsernamePasswordAuthenticationToken authentication = context.getPrincipal();
+                UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
+
+                context.getClaims().claim("userId", user.getId());
+            }
         };
     }
 
@@ -167,10 +184,10 @@ public class SecurityConfig {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
 
-    @Bean
+   /* @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
-        return AuthorizationServerSettings.builder().build();
-    }
+        return AuthorizationServerSettings.builder()..build();
+    }*/
 
     private KeyPair generateRsaKey() {
         KeyPair keyPair;

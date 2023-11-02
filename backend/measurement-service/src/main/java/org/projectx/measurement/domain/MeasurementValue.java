@@ -1,7 +1,7 @@
 package org.projectx.measurement.domain;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 
 @Data
 @Builder

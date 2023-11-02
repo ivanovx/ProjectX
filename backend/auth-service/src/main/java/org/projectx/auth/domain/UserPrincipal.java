@@ -18,6 +18,10 @@ public class UserPrincipal implements UserDetails {
         return user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role)).toList();
     }
 
+    public String getId() {
+        return user.getId();
+    }
+
     @Override
     public String getUsername() {
         return user.getUsername();
