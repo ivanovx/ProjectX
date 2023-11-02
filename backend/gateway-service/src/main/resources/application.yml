@@ -1,10 +1,31 @@
 server:
   port: 8000
 
+okta:
+  base-url: http://localhost:8001
+
 spring:
   application:
     name: gateway-service
-
+  security:
+    oauth2:
+      client:
+        registration:
+          projectx-client:
+            provider: okta
+            client-id: client
+            client-secret: secret
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          okta:
+            authorization-uri: ${okta.base-url}/oauth2/authorize
+            token-uri: ${okta.base-url}/oauth2/token
+            user-info-uri: ${okta.base-url}/oauth2/userinfo
+            jwk-set-uri: ${okta.base-url}/oauth2/keys
+            user-name-attribute: sub
   #security:
   #  oauth2:
   #    resourceserver:
