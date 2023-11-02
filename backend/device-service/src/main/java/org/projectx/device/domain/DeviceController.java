@@ -2,7 +2,9 @@ package org.projectx.device.domain;
 
 import org.projectx.device.request.DeviceRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,9 +22,12 @@ public class DeviceController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Flux<Device> getAllDevices() {
-        return this.deviceRepository.findAll();
+    public Mono<Jwt> getAllDevices(@AuthenticationPrincipal Jwt jwt) {
+        return Mono.just(jwt);
     }
+    //public Flux<Device> getAllDevices() {
+    //    return this.deviceRepository.findAll();
+   // }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

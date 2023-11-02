@@ -4,11 +4,13 @@ server:
 spring:
   application:
     name: gateway-service
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8001
+
+  #security:
+  #  oauth2:
+  #    resourceserver:
+  #      jwt:
+  #        issuer-uri: http://localhost:8001
+
   cloud:
     gateway:
       globalcors:
@@ -21,7 +23,7 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user/signup
+            - Path=/user/**
         - id: device-service
           uri: lb://DEVICE-SERVICE
           predicates:
