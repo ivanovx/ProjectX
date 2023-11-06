@@ -4,6 +4,14 @@ server:
 spring:
   application:
     name: auth-service
+  data:
+    mongodb:
+      auto-index-creation: true
+      database: projectX
+      host: localhost
+      port: 27017
+      username: root
+      password: root
 
 eureka:
   client:

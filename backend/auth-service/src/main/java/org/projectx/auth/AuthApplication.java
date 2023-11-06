@@ -3,11 +3,8 @@ package org.projectx.auth;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+// https://docs.spring.io/spring-authorization-server/reference/guides/how-to-pkce.html
 
-@EnableFeignClients
-@EnableDiscoveryClient
 @SpringBootApplication
 public class AuthApplication {
 	public static void main(String[] args) {
