@@ -4,11 +4,6 @@ server:
 spring:
   application:
     name: gateway-service
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-         issuer-uri: http://localhost:8001
   cloud:
     gateway:
       globalcors:
@@ -22,8 +17,6 @@ spring:
           uri: lb://DEVICE-SERVICE
           predicates:
             - Path=/devices/**
-          filters:
-            - TokenRelay=
         - id: measurements-service
           uri: lb://MEASUREMENT-SERVICE
           predicates:

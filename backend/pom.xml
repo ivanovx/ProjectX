@@ -13,7 +13,6 @@
 
     <modules>
         <module>common</module>
-        <module>config-service</module>
         <module>gateway-service</module>
         <module>device-service</module>
         <module>token-service</module>

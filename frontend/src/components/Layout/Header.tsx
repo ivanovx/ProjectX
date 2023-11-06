@@ -9,9 +9,7 @@ export default function Header() {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
 
-    return user!.sid;
-
-   /* return (
+   return (
         <Navbar fluid rounded>
             <Navbar.Brand href="/">
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -19,7 +17,7 @@ export default function Header() {
                 </span>
             </Navbar.Brand>
             <div className="flex md:order-2">
-                {!user && <Button href="/login">Login</Button>}
+                {!user && <Button href="/api/auth/login">Login</Button>}
                 {user && <span>Welcome {user.sub}! <Button href="/api/auth/logout">Logout</Button></span>}
                 <Navbar.Toggle />
             </div>
@@ -29,7 +27,7 @@ export default function Header() {
                 <Navbar.Link href="/dashboard">Dashboard</Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
-    );*/
+    );
 }
 
 /*

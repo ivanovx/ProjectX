@@ -70,7 +70,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
+    public UserDetailsService userDetailsService(UserRepository userRepository) throws UsernameNotFoundException {
         return username -> userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with %s not found!".formatted(username)));
