@@ -18,9 +18,10 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
         http
-                .csrf(Customizer.withDefaults())
-                .cors(Customizer.withDefaults())
-                .oauth2Login(Customizer.withDefaults());
+                .cors(cors -> cors.disable())
+                .csrf(csrf -> csrf.disable())
+                .authorizeExchange(exchanges -> exchanges.pathMatchers("/stats/**", "/devices/**", "/measurements/**").permitAll().anyExchange().authenticated())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return http.build();
     }
