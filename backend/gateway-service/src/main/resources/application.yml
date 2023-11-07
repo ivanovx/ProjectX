@@ -15,8 +15,10 @@ spring:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
       routes:
         - id: device-service
           uri: lb://DEVICE-SERVICE

@@ -8,7 +8,7 @@ export default class DeviceService {
     }
 
     static getUserDevices(token: string) {
-        return HttpService.doGet("http://localhost:8000/devices", {
+        return HttpService.doGet("http://localhost:8000/devices/user", {
             headers: {
                 'Authorization' : `Bearer ${token}`
             }
