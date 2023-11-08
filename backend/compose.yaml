@@ -1,18 +1,21 @@
 services:
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    restart: always
+  authDb:
+    image: mongo:7.0
+    container_name: authDb
     ports:
-      - 27017:27017
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-  cassandra:
-    image: cassandra:latest
-    container_name: cassandra
-    restart: always
+      - 27017: 27117
+  deviceDb:
+    image: mongo:7.0
+    container_name: deviceDb
     ports:
-      - 9042:9042
-    environment:
-      - CASSANDRA_CLUSTER_NAME=simpleClusterName
+      - 27017: 27217
+  tokenDb:
+    image: mongo:7.0
+    container_name: tokenDb
+    ports:
+      - 27017: 27317
+  measurementDb:
+    image: mongo:7.0
+    container_name: measurementDb
+    ports:
+      - 27017: 27317
