@@ -12,9 +12,15 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
-        return http
-                .authorizeExchange(exchanges -> exchanges.anyExchange().authenticated())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-                .build();
+        http
+                .authorizeExchange(exchanges -> exchanges
+                        .pathMatchers("/devices/all")
+                        .permitAll()
+                        .anyExchange()
+                        .authenticated()
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+
+        return http.build();
     }
 }

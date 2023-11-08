@@ -1,6 +1,8 @@
 "use client";
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
+
 import { useFormik } from 'formik';
 import { Button, Modal } from 'flowbite-react';
 import DeviceService from '../services/device-service';
@@ -13,7 +15,7 @@ type Props = {
 }
 
 export default function CreateDevice({ token }: Props) {
-
+    const router = useRouter();
     const [openModal, setOpenModal] = React.useState<string | undefined>();
 
     const formik = useFormik({
@@ -32,7 +34,9 @@ export default function CreateDevice({ token }: Props) {
 
             DeviceService
                 .createDevice(values, token)
-                .then(device => console.log(device))
+                .then(device => {
+                    console.log(device);
+                })
                 .catch(error => console.log(error));
         }
     });
@@ -76,8 +80,3 @@ export default function CreateDevice({ token }: Props) {
         </>
     );
 }
-
-/*
-
-
-*/

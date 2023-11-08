@@ -19,12 +19,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
-        return http
+        http
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeExchange(exchanges -> exchanges.pathMatchers("/stats/**").permitAll().anyExchange().authenticated())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-                .build();
+                .authorizeExchange(exchanges -> exchanges
+                        .pathMatchers("/devices/all", "/stats/**")
+                        .permitAll()
+                        .anyExchange()
+                        .authenticated()
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+
+        return http.build();
     }
 
     @Bean

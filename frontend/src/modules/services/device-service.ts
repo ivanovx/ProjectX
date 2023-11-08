@@ -1,6 +1,6 @@
 import HttpService from "./http-service";
 
-import { API_URL, CREATE_DEVICE_URL, HOME_URL, USER_DEVICES_URL } from "../apiConfig";
+import { HOME_URL, USER_DEVICES_URL } from "../apiConfig";
 
 export default class DeviceService {
     static getAllDevices() {
@@ -16,7 +16,7 @@ export default class DeviceService {
     }
 
     static createDevice(deviceData: any, token: string) {
-        return HttpService.doPost("http://localhost:8000/devices", deviceData, {
+        return HttpService.doPost("http://localhost:8000/devices/create", deviceData, {
             headers: {
                 'Authorization' : `Bearer ${token}`
             }
@@ -24,7 +24,7 @@ export default class DeviceService {
     }
 
     static activateDevice(deviceId: string, token: string) {
-        return HttpService.doPost(`${USER_DEVICES_URL}/activate/${deviceId}`, null, {
+        return HttpService.doPost(`http://localhost:8000/devices/activate/${deviceId}`, null, {
             headers: {
                 'Authorization' : `Bearer ${token}`
             }
