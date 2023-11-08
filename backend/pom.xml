@@ -11,12 +11,11 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>common</module>
-        <module>gateway-service</module>
-        <module>device-service</module>
-        <module>token-service</module>
+    <modules>       
         <module>auth-service</module>
+        <module>token-service</module>
+        <module>device-service</module>
+        <module>gateway-service</module>
         <module>discovery-service</module>
         <module>measurement-service</module>
     </modules>
