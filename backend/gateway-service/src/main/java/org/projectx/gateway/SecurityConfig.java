@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/devices/all", "/stats/**")
+                        .pathMatchers("/devices/all", "/stats/**", "/measurements/**")
                         .permitAll()
                         .anyExchange()
                         .authenticated()
