@@ -2,12 +2,16 @@ package org.projectx.measurement;
 
 import org.projectx.measurement.domain.Measurement;
 import org.projectx.measurement.domain.MeasurementRepository;
+import org.projectx.measurement.domain.MeasurementRequest;
 import org.projectx.measurement.domain.MeasurementValue;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Objects;
+import java.util.stream.Stream;
 
 @Component
 public class MeasurementHandler {
@@ -25,7 +29,11 @@ public class MeasurementHandler {
     }
 
     public Mono<ServerResponse> putMeasurement(ServerRequest request) {
-        String deviceId = request.pathVariable("id");
+        return request
+                .bodyToMono(MeasurementRequest.class)
+                .flatMap(body -> ServerResponse.ok().body(Mono.just(body), MeasurementRequest.class));
+
+        /*String deviceId = request.pathVariable("id");
         String apiKey = request.headers().firstHeader("X-API-KEY");
         String apiSecret = request.headers().firstHeader("X-API-SECRET");
 
@@ -41,9 +49,9 @@ public class MeasurementHandler {
                 .airQuality("10.00")
                 .build();
 
-        measurement.setValue(value);
+        //measurement.setValue(value);
         measurement.setDeviceId(deviceId);
 
-        return measurementRepository.save(measurement).flatMap(m -> ServerResponse.status(201).body(Mono.just(m), Measurement.class));
+        return measurementRepository.save(measurement).flatMap(m -> ServerResponse.status(201).body(Mono.just(m), Measurement.class));*/
     }
 }

@@ -2,10 +2,10 @@ package org.projectx.measurement.domain;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDateTime;
 
 @Data
 @Document("measurements")
@@ -14,8 +14,6 @@ public class Measurement {
     private String id;
 
     private String deviceId;
-
-    private MeasurementValue value;
 
     private LocalDateTime timestamp = LocalDateTime.now();
 }
