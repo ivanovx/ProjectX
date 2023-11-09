@@ -12,11 +12,7 @@ spring:
   data:
     mongodb:
       auto-index-creation: true
-      database: projectX
-      host: localhost
-      port: 27017
-      username: root
-      password: root
+      uri: mongodb://localhost:27217/deviceDb
 
 eureka:
   client:
