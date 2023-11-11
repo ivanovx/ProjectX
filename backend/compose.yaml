@@ -1,4 +1,10 @@
 services:
+  zookeeper:
+    image: zookeeper
+    restart: always
+    container_name: zookeeper
+    ports:
+      - 2181:2181
   authDb:
     image: mongo:7.0
     container_name: authDb

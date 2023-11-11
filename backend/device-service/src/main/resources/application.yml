@@ -1,6 +1,5 @@
 server:
   port: 8004
-
 spring:
   application:
     name: device-service
@@ -13,9 +12,6 @@ spring:
     mongodb:
       auto-index-creation: true
       uri: mongodb://localhost:27217/deviceDb
-
-eureka:
-  client:
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
