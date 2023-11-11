@@ -1,4 +1,4 @@
-package org.projectx.token;
+package org.projectx.tokenservice.token;
 
 import lombok.Builder;
 import lombok.Data;

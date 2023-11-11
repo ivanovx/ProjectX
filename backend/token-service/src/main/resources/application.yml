@@ -3,10 +3,10 @@ server:
 spring:
   application:
     name: token-service
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
   data:
     mongodb:
       auto-index-creation: true
       uri: mongodb://localhost:27317/tokenDb
-  cloud:
-    zookeeper:
-      connect-string: localhost:2181

@@ -1,10 +1,10 @@
-package org.projectx.token;
+package org.projectx.tokenservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WebappApplicationTests {
+class TokenApplicationTests {
 
 	@Test
 	void contextLoads() {

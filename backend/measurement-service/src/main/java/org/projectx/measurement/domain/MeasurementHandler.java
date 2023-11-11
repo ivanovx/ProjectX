@@ -1,9 +1,6 @@
-package org.projectx.measurement;
+package org.projectx.measurement.domain;
 
 import org.projectx.measurement.client.TokenResponse;
-import org.projectx.measurement.domain.Measurement;
-import org.projectx.measurement.domain.MeasurementRepository;
-import org.projectx.measurement.domain.MeasurementRequest;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.stereotype.Component;
@@ -54,4 +51,6 @@ public class MeasurementHandler {
                             });
                 });
     }
+
+    private record VerifyToken(String token, String deviceId);
 }

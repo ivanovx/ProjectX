@@ -1,28 +1,26 @@
-package org.projectx.measurement.config;
+package org.projectx.tokenservice.config;
 
+import org.projectx.tokenservice.token.TokenHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import org.projectx.measurement.domain.MeasurementHandler;
-
 @Configuration
 public class RouteConfig {
+    private final TokenHandler tokenHandler;
 
-    private final MeasurementHandler measurementHandler;
-
-    public RouteConfig(MeasurementHandler measurementHandler) {
-        this.measurementHandler = measurementHandler;
+    public RouteConfig(TokenHandler tokenHandler) {
+        this.tokenHandler = tokenHandler;
     }
 
     @Bean
     public RouterFunction<ServerResponse> route() {
         return RouterFunctions.route()
-                .GET("/measurements/{id}", measurementHandler::getMeasurements)
-                .POST("/measurements/{id}", measurementHandler::putMeasurement)
+                .GET("/tokens/{deviceId}", tokenHandler::getToken)
+                .POST("/tokens/{deviceId}", tokenHandler::createToken)
+                .POST("/tokens", tokenHandler::verifyToken)
                 .build();
     }
 }
