@@ -1,10 +1,10 @@
-package org.projectx.measurement;
+package org.projectx.device;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WebappApplicationTests {
+class DeviceApplicationTests {
 
 	@Test
 	void contextLoads() {

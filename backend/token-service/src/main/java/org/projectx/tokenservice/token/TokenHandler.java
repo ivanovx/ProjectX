@@ -47,14 +47,14 @@ public class TokenHandler {
         return request.bodyToMono(VerifyRequest.class)
                 .flatMap(body -> tokenRepository.findByDeviceId(body.deviceId()).flatMap(token -> {
                     if (LocalDateTime.now().isAfter(token.getExpiredAt())) {
-                        return ServerResponse.badRequest().bodyValue("This token is expired.");
+                        return ServerResponse.badRequest().bodyValue("EXPIRED");
                     }
 
                     if (!token.getValue().equals(body.token())) {
-                        return ServerResponse.badRequest().bodyValue("This token is not valid.");
+                        return ServerResponse.badRequest().bodyValue("NOT_VALID");
                     }
 
-                    return ServerResponse.ok().bodyValue("This token is valid");
+                    return ServerResponse.ok().bodyValue("VALID");
                 }))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }

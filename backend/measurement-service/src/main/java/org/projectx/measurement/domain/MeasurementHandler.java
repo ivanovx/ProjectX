@@ -52,5 +52,5 @@ public class MeasurementHandler {
                 });
     }
 
-    private record VerifyToken(String token, String deviceId);
+    private record VerifyToken(String token, String deviceId){}
 }

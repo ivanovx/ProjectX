@@ -1,6 +1,6 @@
 services:
   zookeeper:
-    image: zookeeper
+    image: zookeeper:3.9.1
     restart: always
     container_name: zookeeper
     ports:
