@@ -85,7 +85,7 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .redirectUri("http://localhost:3000/api/auth/callback")
-                .postLogoutRedirectUri("http://localhost:3000")
+                .postLogoutRedirectUri("http://localhost:3000/")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.EMAIL)
                 .scope(OidcScopes.PROFILE)
