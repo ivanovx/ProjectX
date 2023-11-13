@@ -15,9 +15,13 @@ spring:
           uri: lb://device-service
           predicates:
             - Path=/devices/**
-        - id: device-service
+        - id: measurement-service
           uri: lb://measurement-service
           predicates:
             - Path=/measurements/**
+        - id: stat-service
+          uri: lb://stat-service
+          predicates:
+            - Path=/stats/**
     zookeeper:
       connect-string: localhost:2181

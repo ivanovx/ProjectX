@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class WebClientConfig {
+
     private final DiscoveryClient discoveryClient;
 
     public WebClientConfig(DiscoveryClient discoveryClient) {
@@ -15,8 +16,11 @@ public class WebClientConfig {
 
     @Bean
     public WebClient webClient() {
-        String baseUrl = discoveryClient.getInstances("token-service").get(0).getUri().toString();
+        String baseUrl = discoveryClient.getInstances("token-service").get(0).getUri().toString(); // discoveryService.serviceUrl();
 
-        return WebClient.builder().baseUrl(baseUrl).build();
+        return WebClient
+                .builder()
+                .baseUrl(baseUrl)
+                .build();
     }
 }

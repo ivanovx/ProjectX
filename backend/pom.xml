@@ -11,7 +11,8 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
-    <modules>       
+    <modules>
+        <module>stat-service</module>
         <module>auth-service</module>
         <module>token-service</module>
         <module>device-service</module>
