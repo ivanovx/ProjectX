@@ -99,12 +99,8 @@ function CreateDevice(token: string) {
 
 }
 
-export async function getServerSideProps(ctx: any) {
-    const { accessToken } = await getAccessToken(ctx.req, ctx.res);
-
-    return { props: { token: accessToken } };
-}*/
-
+*/
+import dynamic from 'next/dynamic'
 import { useFormik } from "formik";
 
 import {
@@ -118,8 +114,16 @@ import {
 
 import { SENSORS, CONTROLLERS } from "@/modules/mock";
 
-export default function CreateDevice() {
+const Search = dynamic(() => import('@/components/Search'), {
+    ssr: false,
+});
+
+export default function CreateDevice({ token }: any) {
     const [open, setOpen] = React.useState(false);
+    const [coordinates, setCoordinates] = React.useState({
+        latitude: 0.0,
+         longitude: 0.0
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -132,7 +136,14 @@ export default function CreateDevice() {
             }
         },
         onSubmit: (values) => {
+            values = {
+                ...values,
+                coordinates,
+            };
+
             console.log(values);
+
+            DeviceService.createDevice(values, token).then(console.log).catch(console.log);
         },
     });
 
@@ -144,8 +155,8 @@ export default function CreateDevice() {
                 <DialogContent>
                     <form onSubmit={formik.handleSubmit}>
                         <TextField
+                            name="name"
                             label="Name"
-                            type="text"
                             fullWidth
                             variant="standard"
                             value={formik.values.name}
@@ -155,10 +166,11 @@ export default function CreateDevice() {
                             helperText={formik.touched.name && formik.errors.name}
                         />
                         <TextField
-                            fullWidth
-                            select
+                            name="controller"
                             label="Controller"
                             variant="standard"
+                            fullWidth
+                            select
                             SelectProps={{
                                 native: true,
                             }}
@@ -171,10 +183,11 @@ export default function CreateDevice() {
                             {CONTROLLERS.map((option) => <option key={option} value={option}>{option}</option>)}
                         </TextField>
                         <TextField
-                            fullWidth
-                            select
+                            name="sensors"
                             label="Sensors"
                             variant="standard"
+                            fullWidth
+                            select
                             SelectProps={{
                                 native: true
                             }}
@@ -186,13 +199,25 @@ export default function CreateDevice() {
                         >
                             {SENSORS.map((option) => <option key={option} value={option}>{option}</option>)}
                         </TextField>
+                        <hr />
+                        <Search onSelectValue={(coordinates) => setCoordinates({
+                            latitude: coordinates.x,
+                            longitude: coordinates.y
+                        })} />
                     </form>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
-                    <Button onClick={() => setOpen(false)}>Create</Button>
+                    <Button onClick={() => formik.submitForm()}>Create</Button>
                 </DialogActions>
             </Dialog>
         </>
     );
+}
+
+
+export async function getServerSideProps(ctx: any) {
+    const { accessToken } = await getAccessToken(ctx.req, ctx.res);
+
+    return { props: { token: accessToken } };
 }
