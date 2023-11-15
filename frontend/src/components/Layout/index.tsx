@@ -86,14 +86,14 @@ export default function Layout({ children }: LayoutProps) {
                         >
                             Stats
                         </Link>
-                        <Link
+                        {user && <Link
                             variant="button"
                             color="text.primary"
                             href="#"
                             sx={{ my: 1, mx: 1.5 }}
                         >
                             Dashboard
-                        </Link>
+                        </Link>}
                     </nav>
                     {user && user?.sub}
                     {!user && <Button href="/api/auth/login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign in</Button>}

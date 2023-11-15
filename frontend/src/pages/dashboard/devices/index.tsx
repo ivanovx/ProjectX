@@ -105,20 +105,36 @@ export async function getServerSideProps(ctx: any) {
     return { props: { token: accessToken } };
 }*/
 
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { useFormik } from "formik";
+
+import {
+    Button,
+    TextField,
+    Dialog,
+    DialogTitle,
+    DialogActions,
+    DialogContent,
+} from '@mui/material';
 
 import { SENSORS, CONTROLLERS } from "@/modules/mock";
-import Slider from "@mui/material/Slider";
-import { Typography } from "@mui/material";
 
 export default function CreateDevice() {
     const [open, setOpen] = React.useState(false);
+
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            controller: '',
+            sensors: '',
+            coordinates: {
+                latitude: 0.0,
+                longitude: 0.0
+            }
+        },
+        onSubmit: (values) => {
+            console.log(values);
+        },
+    });
 
     return (
         <>
@@ -126,74 +142,51 @@ export default function CreateDevice() {
             <Dialog open={open} fullWidth={true} maxWidth="lg">
                 <DialogTitle>New device</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        label="Name"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                    />
-                    <TextField
-                        fullWidth
-                        select
-                        label="Controller"
-                        defaultValue="Arduino"
-                        variant="standard"
-                        SelectProps={{
-                            native: true,
-                        }}
-                    >
-                        {CONTROLLERS.map((option) => (
-                            <option key={option} value={option}>
-                                {option}
-                            </option>
-                        ))}
-                    </TextField>
-                    <TextField
-                        fullWidth
-                        select
-                        label="Sensors"
-                        defaultValue="Arduino"
-                        variant="standard"
-                        SelectProps={{
-                            native: true
-                        }}
-                    >
-                        {SENSORS.map((option) => (
-                            <option key={option} value={option}>
-                                {option}
-                            </option>
-                        ))}
-                    </TextField>
-                    <Typography id="input-slider" gutterBottom>
-        Volume
-      </Typography>
-                    <Slider
-                        defaultValue={30}
-                        step={1}
-                        marks
-                        min={1}
-                        max={10}
-                    />
-                     <Typography id="input-slider" gutterBottom>
-        Volume
-      </Typography>
-                     <Slider
-                        defaultValue={30}
-                        step={1}
-                        marks
-                        min={1}
-                        max={10}
-                    />
-                     <Typography id="input-slider" gutterBottom>
-        Volume
-      </Typography>
-                     <Slider
-                        defaultValue={30}
-                        step={1}
-                        marks
-                        min={1}
-                        max={10}
-                    />
+                    <form onSubmit={formik.handleSubmit}>
+                        <TextField
+                            label="Name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={formik.values.name}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.name && Boolean(formik.errors.name)}
+                            helperText={formik.touched.name && formik.errors.name}
+                        />
+                        <TextField
+                            fullWidth
+                            select
+                            label="Controller"
+                            variant="standard"
+                            SelectProps={{
+                                native: true,
+                            }}
+                            value={formik.values.controller}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.controller && Boolean(formik.errors.controller)}
+                            helperText={formik.touched.controller && formik.errors.controller}    
+                        >
+                            {CONTROLLERS.map((option) => <option key={option} value={option}>{option}</option>)}
+                        </TextField>
+                        <TextField
+                            fullWidth
+                            select
+                            label="Sensors"
+                            variant="standard"
+                            SelectProps={{
+                                native: true
+                            }}
+                            value={formik.values.sensors}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.sensors && Boolean(formik.errors.sensors)}
+                            helperText={formik.touched.sensors && formik.errors.sensors}  
+                        >
+                            {SENSORS.map((option) => <option key={option} value={option}>{option}</option>)}
+                        </TextField>
+                    </form>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
