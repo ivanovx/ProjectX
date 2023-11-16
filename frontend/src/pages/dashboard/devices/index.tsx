@@ -1,91 +1,55 @@
 import React from "react";
+import dynamic from 'next/dynamic'
+import { useFormik } from "formik";
 import { getAccessToken } from '@auth0/nextjs-auth0';
+
+import {
+    Button,
+    TextField,
+    Dialog,
+    DialogTitle,
+    DialogActions,
+    DialogContent,
+    Container,
+    TableContainer,
+    Paper,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
+} from '@mui/material';
 
 import DeviceService from "@/modules/services/device-service";
 
-/*
-import { getAccessToken } from '@auth0/nextjs-auth0';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
-import { Container } from "@mui/material";
+import { SENSORS, CONTROLLERS } from "@/modules/mock";
 
-export default withPageAuthRequired(function Dashboard(props: any) {
-    return (
-        <Container maxWidth="md">
-            <h1>Devices</h1>
-        </Container>
-    );
+const Search = dynamic(() => import('@/components/Search'), {
+    ssr: false,
 });
 
-export async function getServerSideProps(ctx: any) {
-    const { accessToken } = await getAccessToken(ctx.req, ctx.res);
-
-    return { props: { token: accessToken } };
-  }*/
-/*
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Button, Container } from "@mui/material";
-
-function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-) {
-    return { name, calories, fat, carbs, protein };
+type DeviceProps = {
+    devices: any[];
+    token: string;
 }
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-export default function Devices(props) {
-    const [devices, setDevices] = React.useState<any[] | null>(null);
-
-    React.useEffect(() => {
-        DeviceService.getUserDevices(props.token).then((devices: any[]) => {
-            console.log(devices);
-            setDevices(devices);
-        });
-    }, []);
-
+export default function Devices({ devices, token }: DeviceProps) {
     return (
-        <Container maxWidth="md">
-            <Button>Create Device</Button>
-            <TableContainer component={Paper}>
+        <Container sx={{ marginTop: "1rem" }}>
+            <CreateDevice token={token} />
+            <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Dessert (100g serving)</TableCell>
-                            <TableCell align="right">Calories</TableCell>
-                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                            <TableCell>#</TableCell>
+                            <TableCell align="right">Name</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <TableRow
-                                key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                        {devices.map(device => (
+                            <TableRow key={device.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell component="th" scope="row">{device.id}</TableCell>
+                                <TableCell align="right">{device.name}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -95,30 +59,7 @@ export default function Devices(props) {
     );
 }
 
-function CreateDevice(token: string) {
-
-}
-
-*/
-import dynamic from 'next/dynamic'
-import { useFormik } from "formik";
-
-import {
-    Button,
-    TextField,
-    Dialog,
-    DialogTitle,
-    DialogActions,
-    DialogContent,
-} from '@mui/material';
-
-import { SENSORS, CONTROLLERS } from "@/modules/mock";
-
-const Search = dynamic(() => import('@/components/Search'), {
-    ssr: false,
-});
-
-export default function CreateDevice({ token }: any) {
+function CreateDevice({ token }: { token: string }) {
     const [open, setOpen] = React.useState(false);
     const [coordinates, setCoordinates] = React.useState({
         latitude: 0.0,
@@ -218,6 +159,13 @@ export default function CreateDevice({ token }: any) {
 
 export async function getServerSideProps(ctx: any) {
     const { accessToken } = await getAccessToken(ctx.req, ctx.res);
+    
+    const devices: any[] = await DeviceService.getUserDevices(accessToken!) as any[];
 
-    return { props: { token: accessToken } };
+    return { 
+        props: {
+            devices,
+            token: accessToken 
+        } 
+    };
 }
