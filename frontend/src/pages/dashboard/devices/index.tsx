@@ -1,7 +1,7 @@
 import React from "react";
-import dynamic from 'next/dynamic'
-import { useFormik } from "formik";
+import dynamic from 'next/dynamic';
 import { getAccessToken } from '@auth0/nextjs-auth0';
+import { useFormik, FormikProvider, FieldArray } from "formik";
 
 import {
     Button,
@@ -14,15 +14,15 @@ import {
     TableContainer,
     Paper,
     Table,
-    TableHead,
     TableRow,
+    TableHead,
     TableCell,
     TableBody,
 } from '@mui/material';
 
 import DeviceService from "@/modules/services/device-service";
 
-import { SENSORS, CONTROLLERS } from "@/modules/mock";
+import { CONTROLLERS } from "@/modules/mock";
 
 const Search = dynamic(() => import('@/components/Search'), {
     ssr: false,
@@ -70,7 +70,7 @@ function CreateDevice({ token }: { token: string }) {
         initialValues: {
             name: '',
             controller: '',
-            sensors: '',
+            sensors: [],
             coordinates: {
                 latitude: 0.0,
                 longitude: 0.0
@@ -89,7 +89,7 @@ function CreateDevice({ token }: { token: string }) {
     });
 
     return (
-        <>
+        <FormikProvider value={formik}>
             <Button variant="outlined" onClick={() => setOpen(true)}>Create Device</Button>
             <Dialog open={open} fullWidth={true} maxWidth="lg">
                 <DialogTitle>New device</DialogTitle>
@@ -112,9 +112,6 @@ function CreateDevice({ token }: { token: string }) {
                             variant="standard"
                             fullWidth
                             select
-                            SelectProps={{
-                                native: true,
-                            }}
                             value={formik.values.controller}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -123,23 +120,26 @@ function CreateDevice({ token }: { token: string }) {
                         >
                             {CONTROLLERS.map((option) => <option key={option} value={option}>{option}</option>)}
                         </TextField>
-                        <TextField
-                            name="sensors"
-                            label="Sensors"
-                            variant="standard"
-                            fullWidth
-                            select
-                            SelectProps={{
-                                native: true
-                            }}
-                            value={formik.values.sensors}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.sensors && Boolean(formik.errors.sensors)}
-                            helperText={formik.touched.sensors && formik.errors.sensors}  
-                        >
-                            {SENSORS.map((option) => <option key={option} value={option}>{option}</option>)}
-                        </TextField>
+
+                        <FieldArray name="sensors">
+                            {({ push, remove }) => (
+                            <>
+                                {formik.values.sensors.length > 0 && formik.values.sensors.map((sensor: string, index: number) => (
+                                    <div key={index}>
+                                        <TextField
+                                            fullWidth
+                                            label="Sensor"
+                                            name={`sensors.${index}`}
+                                            value={sensor}
+                                            onChange={formik.handleChange}
+                                        />
+                                        <Button onClick={() => remove(index)}>X</Button>
+                                    </div>
+                                ))}
+                                <Button onClick={() => push('')}>Add Sensor</Button>
+                            </>
+                            )}
+                        </FieldArray>
                         <hr />
                         <Search onSelectValue={(coordinates) => setCoordinates({
                             latitude: coordinates.x,
@@ -152,7 +152,7 @@ function CreateDevice({ token }: { token: string }) {
                     <Button onClick={() => formik.submitForm()}>Create</Button>
                 </DialogActions>
             </Dialog>
-        </>
+        </FormikProvider>
     );
 }
 
