@@ -1,6 +1,5 @@
-package org.projectx.deviceservice.domain;
+package org.projectx.deviceservice.token;
 
-import org.projectx.deviceservice.client.TokenResponse;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.web.bind.annotation.*;

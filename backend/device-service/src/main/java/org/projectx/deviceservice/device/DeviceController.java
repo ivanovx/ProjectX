@@ -1,13 +1,15 @@
 package org.projectx.deviceservice.device;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 @RequestMapping("/devices")
@@ -32,11 +34,11 @@ public class DeviceController {
         return this.deviceRepository.findAllByUserId(userId);
     }
 
- /*   @GetMapping("/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Device> getDevice(@PathVariable String id) {
         return this.deviceRepository.findById(id);
-    }*/
+    }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)

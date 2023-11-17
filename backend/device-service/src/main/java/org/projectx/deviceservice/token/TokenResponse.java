@@ -1,3 +1,3 @@
-package org.projectx.deviceservice.client;
+package org.projectx.deviceservice.token;
 
 public record TokenResponse(String value, String deviceId) { }

@@ -19,8 +19,8 @@ public class TokenHandler {
         String deviceId = request.pathVariable("deviceId");
 
         return tokenRepository.findByDeviceId(deviceId)
-                .flatMap(token -> ServerResponse.ok().bodyValue(token))
-                .switchIfEmpty(ServerResponse.notFound().build());
+                .flatMap(token -> ServerResponse.ok().bodyValue(token));
+                //.switchIfEmpty(ServerResponse.notFound().build());
     }
 
     public Mono<ServerResponse> createToken(ServerRequest request) {
@@ -55,7 +55,7 @@ public class TokenHandler {
                     }
 
                     return ServerResponse.ok().bodyValue("VALID");
-                }))
-                .switchIfEmpty(ServerResponse.notFound().build());
+                }));
+               // .switchIfEmpty(ServerResponse.notFound().build());
     }
 }

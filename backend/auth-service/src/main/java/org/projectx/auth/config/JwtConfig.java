@@ -36,11 +36,6 @@ public class JwtConfig {
         return new ImmutableJWKSet<>(jwkSet);
     }
 
-    @Bean
-    public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
-        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
-    }
-
     private KeyPair generateRsaKey() {
         KeyPair keyPair;
 
