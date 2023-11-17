@@ -61,9 +61,10 @@ export default function Devices({ devices, token }: DeviceProps) {
 
 function CreateDevice({ token }: { token: string }) {
     const [open, setOpen] = React.useState(false);
-    const [coordinates, setCoordinates] = React.useState({
+
+    const [location, setLocation] = React.useState({
         latitude: 0.0,
-         longitude: 0.0
+        longitude: 0.0
     });
 
     const formik = useFormik({
@@ -71,15 +72,20 @@ function CreateDevice({ token }: { token: string }) {
             name: '',
             controller: '',
             sensors: [],
-            coordinates: {
+            location: {
                 latitude: 0.0,
                 longitude: 0.0
+            },
+            description: {
+                indoor: false,
+                trafficInArea: 0,
+                industryInArea: 0
             }
         },
         onSubmit: (values) => {
             values = {
                 ...values,
-                coordinates,
+                location
             };
 
             console.log(values);
@@ -120,7 +126,6 @@ function CreateDevice({ token }: { token: string }) {
                         >
                             {CONTROLLERS.map((option) => <option key={option} value={option}>{option}</option>)}
                         </TextField>
-
                         <FieldArray name="sensors">
                             {({ push, remove }) => (
                             <>
@@ -141,10 +146,31 @@ function CreateDevice({ token }: { token: string }) {
                             )}
                         </FieldArray>
                         <hr />
-                        <Search onSelectValue={(coordinates) => setCoordinates({
+                        <Search onSelectValue={(coordinates) => setLocation({
                             latitude: coordinates.x,
                             longitude: coordinates.y
                         })} />
+                        <hr />
+                        <TextField
+                            type="number"
+                            name="trafficInArea"
+                            label="Traffic in area"
+                            fullWidth
+                            variant="standard"
+                            value={formik.values.description.trafficInArea}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        <TextField
+                            type="number"
+                            name="industryInArea"
+                            label="Industry in area"
+                            fullWidth
+                            variant="standard"
+                            value={formik.values.description.industryInArea}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
                     </form>
                 </DialogContent>
                 <DialogActions>

@@ -94,8 +94,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public RegisteredClientRepository registeredClientRepository() {
-        RegisteredClient appClient = RegisteredClient.withId(UUID.randomUUID().toString())
+    public RegisteredClientRepository clientRepository() {
+        RegisteredClient client = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("projectx-client")
                 .clientSecret(this.passwordEncoder().encode("projectx-secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
@@ -110,6 +110,6 @@ public class SecurityConfig {
                 .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofDays(1)).build())
                 .build();
 
-        return new InMemoryRegisteredClientRepository(appClient);
+        return new InMemoryRegisteredClientRepository(client);
     }
 }

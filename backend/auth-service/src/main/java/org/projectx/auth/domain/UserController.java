@@ -52,22 +52,4 @@ public class UserController {
 
         return "redirect:/signin";
     }
-
-  /*  @PostMapping("/signup")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Mono<User> signUp(@RequestBody SignUpRequest request) {
-        User user = new User();
-
-        user.setEmail(request.email());
-        user.setUsername(request.username());
-        user.setPassword(this.passwordEncoder.encode(request.password()));
-
-        return this.userRepository.save(user);
-    }
-
-    @PostMapping("/signin")
-    @ResponseStatus(HttpStatus.OK)
-    public Mono<User> signIn(@RequestBody SignInRequest request) {
-        return this.userRepository.findByUsername(request.username());
-    }*/
 }

@@ -1,8 +1,7 @@
 services:
-  zookeeper:
+  serviceRegistry:
     image: zookeeper:3.9.1
-    restart: always
-    container_name: zookeeper
+    container_name: serviceRegistry
     ports:
       - 2181:2181
   authDb:
