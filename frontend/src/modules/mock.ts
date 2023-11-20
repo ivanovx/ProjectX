@@ -1,4 +1,5 @@
 // TODO
+// use mock service
 
 export const SENSORS = [
     'BME280',
