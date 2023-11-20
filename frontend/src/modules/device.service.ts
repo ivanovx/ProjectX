@@ -1,19 +1,24 @@
-import { httpService } from './http.service';
+import { httpService, secureHttpService } from './http.service';
 
 type Device = {
     [key: string]: any;
 }
 
-export const getAllDevices = async () => await httpService.get("/devices/all");
+export const getAllDevices = async () => {
+    const res = await httpService.get<Device[]>("/devices/all");
 
-export const getUserDevices = async (accessToken: string) => await httpService.get("/devices/user", {
-    headers: {
-        'Authorization' : `Bearer ${accessToken}`
-    }
-});
+    return res.data;
+}
 
-export const createDevice = async (deviceData: Device, accessToken: string ) => httpService.post("/devices/create", deviceData, {
-    headers: {
-        'Authorization' : `Bearer ${accessToken}`
-    }
-});
+
+export const getUserDevices = async (accessToken: string) => {
+    const res = await secureHttpService(accessToken).get<Device[]>("/devices/user");
+
+    return res.data;
+}
+
+export const createDevice = async (deviceData: Device, accessToken: string) => {
+    const res = await secureHttpService(accessToken).post<Device>("/devices/create", deviceData);
+
+    return res.data;
+}

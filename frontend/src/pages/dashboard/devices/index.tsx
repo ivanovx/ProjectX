@@ -20,7 +20,7 @@ import {
     TableBody,
 } from '@mui/material';
 
-import DeviceService from "@/modules/services/device-service";
+import { getUserDevices, createDevice } from "@/modules/device.service";
 
 import { CONTROLLERS } from "@/modules/mock";
 
@@ -72,25 +72,21 @@ function CreateDevice({ token }: { token: string }) {
             name: '',
             controller: '',
             sensors: [],
-            location: {
-                latitude: 0.0,
-                longitude: 0.0
-            },
             description: {
                 indoor: false,
                 trafficInArea: 0,
                 industryInArea: 0
             }
         },
-        onSubmit: (values) => {
-            values = {
+        onSubmit: async (values) => {
+            const device = {
                 ...values,
                 location
             };
 
-            console.log(values);
+            const res = await createDevice(device, token);
 
-            DeviceService.createDevice(values, token).then(console.log).catch(console.log);
+            console.log(res);
         },
     });
 
@@ -186,7 +182,9 @@ function CreateDevice({ token }: { token: string }) {
 export async function getServerSideProps(ctx: any) {
     const { accessToken } = await getAccessToken(ctx.req, ctx.res);
     
-    const devices: any[] = await DeviceService.getUserDevices(accessToken!) as any[];
+    const devices = await getUserDevices(accessToken!);
+
+   //const devices: any[] = await DeviceService.getUserDevices(accessToken!) as any[];
 
     return { 
         props: {
