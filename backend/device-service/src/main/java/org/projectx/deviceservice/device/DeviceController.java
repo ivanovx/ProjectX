@@ -58,45 +58,27 @@ public class DeviceController {
         return this.deviceRepository.save(device);
     }
 
- /*   @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Device> updateDevice(@PathVariable String id, @AuthenticationPrincipal Jwt jwt, @RequestBody DeviceRequest request) {
         String userId = jwt.getClaimAsString("userId");
 
-        return this.deviceRepository
-                .findById(id)
-                .map(device -> {
-                    device.setUserId(userId);
-                    device.setName(request.name());
-                    device.setOutdoor(request.outdoor());
-                    device.setSensors(request.sensors());
-                    device.setController(request.controller());
-                    device.setCoordinates(request.coordinates());
-                    device.setModified(LocalDateTime.now());
+        return deviceRepository.findById(id).map(device -> {
+            device.setName(request.name());
+            device.setSensors(request.sensors());
+            device.setController(request.controller());
+            device.setLocation(request.location());
+            device.setDescription(request.description());
 
-                    return device;
-                })
-                .flatMap(deviceRepository::save);
-    }
-
-    @PostMapping("/activate/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Mono<org.projectx.deviceservice.domain.Device> activateDevice(@PathVariable String id) {
-        return this.deviceRepository
-                .findById(id)
-                .map(device -> {
-                    device.setActivated(LocalDateTime.now());
-
-                    return device;
-                })
-                .flatMap(deviceRepository::save);
+            return device;
+        }).flatMap(deviceRepository::save);
     }
 
     @PostMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<org.projectx.deviceservice.domain.Device> deleteDevice(@PathVariable String id) {
+    public Mono<Void> deleteDevice(@PathVariable String id, @AuthenticationPrincipal Jwt jwt) {
         Mono<Device> device = this.deviceRepository.findById(id);
 
-        return device;
-    }*/
+        return deviceRepository.deleteById(id);
+    }
 }
