@@ -7,3 +7,9 @@ export const httpService = axios.create({
         'Content-Type': 'application/json'
     }
 });
+
+export const secureHttpService = (accessToken: string) => {
+    httpService.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
+
+    return httpService;
+}
