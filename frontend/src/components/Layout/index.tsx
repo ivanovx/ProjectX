@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
+import { Menu, MenuItem } from '@mui/material';
 
 type LayoutProps = {
     children: React.ReactNode
@@ -57,6 +58,47 @@ const footers = [
     },
 ];
 
+const NavLink = ({ href, label }: { href: string, label: string }) => 
+    <Link variant="button" color="text.primary" href={href} sx={{ my: 1, mx: 1.5 }}>{label}</Link>
+
+const DropdownMenu = () => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+  
+    return (
+      <>
+        <Button
+          id="basic-button"
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          Dashboard
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
+      </>
+    );
+}
+
 export default function Layout({ children }: LayoutProps) {
     const { user, error, isLoading } = useUser();
     
@@ -66,26 +108,11 @@ export default function Layout({ children }: LayoutProps) {
             <CssBaseline />
             <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
                 <Toolbar sx={{ flexWrap: 'wrap' }}>
-                    <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                        ProjectX
-                    </Typography>
+                    <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>ProjectX</Typography>
                     <nav>
-                        <Link
-                            variant="button"
-                            color="text.primary"
-                            href="#"
-                            sx={{ my: 1, mx: 1.5 }}
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            variant="button"
-                            color="text.primary"
-                            href="#"
-                            sx={{ my: 1, mx: 1.5 }}
-                        >
-                            Stats
-                        </Link>
+                        <NavLink href="/" label="Home" />
+                        <NavLink href="/stats" label="Stats" />
+                        <DropdownMenu />
                         {user && <Link
                             variant="button"
                             color="text.primary"
