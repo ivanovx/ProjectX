@@ -6,8 +6,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.projectx</groupId>
-    <artifactId>projectx</artifactId>
+    <groupId>org.sensornetwork</groupId>
+    <artifactId>sensornetwork</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
