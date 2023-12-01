@@ -1,9 +1,4 @@
 services:
-  serviceRegistry:
-    image: zookeeper:3.9.1
-    container_name: serviceRegistry
-    ports:
-      - 2181:2181
   authDb:
     image: mongo:7.0
     container_name: authDb

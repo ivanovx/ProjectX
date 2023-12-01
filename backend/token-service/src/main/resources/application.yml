@@ -1,8 +1,12 @@
 server:
-  port: 8006
+  port: 8003
 spring:
   application:
-    name: stat-service
+    name: token-service
+  data:
+    mongodb:
+      auto-index-creation: true
+      uri: mongodb://localhost:27317/tokenDb
 eureka:
   client:
     registerWithEureka: true

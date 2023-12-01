@@ -12,11 +12,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>stat-service</module>
         <module>auth-service</module>
+        <module>stat-service</module>
         <module>token-service</module>
         <module>device-service</module>
         <module>gateway-service</module>
+        <module>discovery-service</module>
         <module>measurement-service</module>
     </modules>
 </project>
