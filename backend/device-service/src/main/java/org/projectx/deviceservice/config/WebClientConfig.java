@@ -1,22 +1,22 @@
 package org.projectx.deviceservice.config;
 
+import com.netflix.discovery.EurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 
 @Configuration
 public class WebClientConfig {
+    private final EurekaClient eurekaClient;
 
-    private final DiscoveryClient discoveryClient;
-
-    public WebClientConfig(DiscoveryClient discoveryClient) {
-        this.discoveryClient = discoveryClient;
+    public WebClientConfig(EurekaClient eurekaClient) {
+        this.eurekaClient = eurekaClient;
     }
 
-    @Bean
+    @Bean(name="TOKEN_WEB_CLIENT")
     public WebClient tokenClient() {
-        String baseUrl = discoveryClient.getInstances("token-service").get(0).getUri().toString();
+        String baseUrl = eurekaClient.getNextServerFromEureka("token-service", false).getHomePageUrl();
+        //String baseUrl = discoveryClient.getInstances("token-service").get(0).getUri().toString();
 
         return WebClient.builder().baseUrl(baseUrl).build();
     }
