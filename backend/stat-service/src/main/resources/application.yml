@@ -1,8 +1,0 @@
-server:
-  port: 8006
-spring:
-  application:
-    name: stat-service
-  cloud:
-    zookeeper:
-      connect-string: localhost:2181
