@@ -18,12 +18,8 @@
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>discovery-service</name>
-	<description>Demo project for Spring Boot</description>
-
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2023.0.0-SNAPSHOT</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -47,7 +43,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
+				<version>2023.0.0-SNAPSHOT</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

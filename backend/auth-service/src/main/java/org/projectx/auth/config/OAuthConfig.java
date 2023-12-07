@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.server.authorization.token.JwtEncodin
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 
-import org.projectx.auth.domain.User;
+import org.projectx.auth.user.User;
 
 @Configuration
 public class OAuthConfig {

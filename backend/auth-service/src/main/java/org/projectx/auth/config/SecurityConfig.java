@@ -35,7 +35,7 @@ import org.springframework.security.oauth2.server.authorization.client.InMemoryR
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 
-import org.projectx.auth.domain.UserRepository;
+import org.projectx.auth.user.UserRepository;
 
 @Configuration
 @EnableWebSecurity
