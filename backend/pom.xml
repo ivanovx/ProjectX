@@ -19,5 +19,6 @@
         <module>gateway-service</module>
         <module>discovery-service</module>
         <module>measurement-service</module>
+        <module>common</module>
     </modules>
 </project>
