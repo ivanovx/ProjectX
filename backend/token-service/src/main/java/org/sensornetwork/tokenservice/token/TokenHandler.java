@@ -1,5 +1,6 @@
 package org.sensornetwork.tokenservice.token;
 
+import org.sensornetwork.common.TokenGenerator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -32,9 +33,11 @@ public class TokenHandler {
                         return ServerResponse.badRequest().bodyValue("Token for device %s already exist".formatted(deviceId));
                     }
 
+                    String tokenValue = TokenGenerator.buildToken(deviceId);
+
                     Token token = Token.builder()
                             .deviceId(deviceId)
-                            .value("token-" + deviceId)
+                            .value(tokenValue)
                             .createdAt(LocalDateTime.now())
                             .expiredAt(LocalDateTime.now().plusYears(1))
                             .build();
