@@ -16,7 +16,6 @@ import org.projectx.auth.user.User;
 
 @Configuration
 public class OAuthConfig {
-
     @Bean
     public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);

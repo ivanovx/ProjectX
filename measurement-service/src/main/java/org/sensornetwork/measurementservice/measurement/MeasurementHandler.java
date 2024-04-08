@@ -1,13 +1,14 @@
 package org.sensornetwork.measurementservice.measurement;
 
-import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
-import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 
 @Component
 public class MeasurementHandler {
@@ -37,7 +38,7 @@ public class MeasurementHandler {
                 .flatMap(body -> {
                     String deviceId = request.pathVariable("id");
                     String apiKey = request.headers().firstHeader("X-API-KEY");
-                    String apiSecret = request.headers().firstHeader("X-API-SECRET");
+                    // String apiSecret = request.headers().firstHeader("X-API-SECRET");
 
                     return tokenCircuitBreaker
                             .run(webClient.get().uri("/tokens/" + deviceId).retrieve().bodyToMono(TokenResponse.class))
@@ -50,6 +51,4 @@ public class MeasurementHandler {
                             });
                 });
     }
-
-    private record VerifyToken(String token, String deviceId){}
 }

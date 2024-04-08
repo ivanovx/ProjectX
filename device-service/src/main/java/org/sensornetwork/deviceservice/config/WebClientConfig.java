@@ -16,7 +16,6 @@ public class WebClientConfig {
     @Bean(name="TOKEN_WEB_CLIENT")
     public WebClient tokenClient() {
         String baseUrl = eurekaClient.getNextServerFromEureka("token-service", false).getHomePageUrl();
-        //String baseUrl = discoveryClient.getInstances("token-service").get(0).getUri().toString();
 
         return WebClient.builder().baseUrl(baseUrl).build();
     }
