@@ -1,21 +1,21 @@
 services:
   authDb:
-    image: mongo:7.0
+    image: mongo:latest
     container_name: authDb
     ports:
       - 27117:27017
   deviceDb:
-    image: mongo:7.0
+    image: mongo:latest
     container_name: deviceDb
     ports:
       - 27217:27017
   tokenDb:
-    image: mongo:7.0
+    image: mongo:latest
     container_name: tokenDb
     ports:
       - 27317:27017
   measurementDb:
-    image: mongo:7.0
+    image: mongo:latest
     container_name: measurementDb
     ports:
       - 27417:27017
