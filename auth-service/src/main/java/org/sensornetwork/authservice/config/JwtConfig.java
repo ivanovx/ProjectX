@@ -1,4 +1,4 @@
-package org.projectx.auth.config;
+package org.sensornetwork.authservice.config;
 
 import java.util.UUID;
 import java.security.KeyPair;

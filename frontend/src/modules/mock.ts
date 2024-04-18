@@ -1,12 +1,13 @@
 // TODO
-// use mock service
-
+// Make sensors list
 export const SENSORS = [
     'BME280',
     'BME680',
     'SDS011'
 ];
 
+// TODO
+// Make controllers list
 export const CONTROLLERS = [
     'Arduino',
     'Raspberry Pi',

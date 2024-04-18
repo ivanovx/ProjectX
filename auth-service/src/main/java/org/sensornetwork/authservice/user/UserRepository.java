@@ -1,4 +1,4 @@
-package org.projectx.auth.user;
+package org.sensornetwork.authservice.user;
 
 import java.util.Optional;
 

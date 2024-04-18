@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
+
+
 import { Menu, MenuItem } from '@mui/material';
 
 type LayoutProps = {
@@ -24,9 +26,8 @@ function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="#">
-                ProjectX
-            </Link>{' '}
+            <Link color="inherit" href="/">Sensor Network</Link>
+            {' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -59,7 +60,7 @@ const footers = [
 ];
 
 const NavLink = ({ href, label }: { href: string, label: string }) => 
-    <Link variant="button" color="text.primary" href={href} sx={{ my: 1, mx: 1.5 }}>{label}</Link>
+<Link variant="button" color="text.primary" href={href} sx={{ my: 1, mx: 1.5 }}>{label}</Link>
 
 const DropdownMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -99,28 +100,21 @@ const DropdownMenu = () => {
     );
 }
 
+// <DropdownMenu />
+
 export default function Layout({ children }: LayoutProps) {
     const { user, error, isLoading } = useUser();
     
     return (
         <ThemeProvider theme={defaultTheme}>
-            <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
             <CssBaseline />
             <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
                 <Toolbar sx={{ flexWrap: 'wrap' }}>
-                    <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>ProjectX</Typography>
+                    <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>Sensor Network</Typography>
                     <nav>
                         <NavLink href="/" label="Home" />
                         <NavLink href="/stats" label="Stats" />
-                        <DropdownMenu />
-                        {user && <Link
-                            variant="button"
-                            color="text.primary"
-                            href="#"
-                            sx={{ my: 1, mx: 1.5 }}
-                        >
-                            Dashboard
-                        </Link>}
+                        {user && <NavLink href="/dashboard" label="Dashboard" />}
                     </nav>
                     {user && user?.sub}
                     {!user && <Button href="/api/auth/login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign in</Button>}
@@ -131,21 +125,16 @@ export default function Layout({ children }: LayoutProps) {
                 {children}
             </Container>
             
-            <Container
-                maxWidth="md"
-                component="footer"
+            <Container maxWidth="md" component="footer"
                 sx={{
                     borderTop: (theme) => `1px solid ${theme.palette.divider}`,
                     mt: 8,
                     py: [3, 6],
-                }}
-            >
+                }}>
                 <Grid container spacing={4} justifyContent="space-evenly">
                     {footers.map((footer) => (
                         <Grid item xs={6} sm={3} key={footer.title}>
-                            <Typography variant="h6" color="text.primary" gutterBottom>
-                                {footer.title}
-                            </Typography>
+                            <Typography variant="h6" color="text.primary" gutterBottom>{footer.title}</Typography>
                             <ul>
                                 {footer.description.map((item) => (
                                     <li key={item}>

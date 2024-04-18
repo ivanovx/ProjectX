@@ -1,12 +1,12 @@
-package org.projectx.auth.request;
+package org.sensornetwork.authservice.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class SignInRequest {
     private String username;
 

@@ -1,10 +1,11 @@
-package org.projectx.auth.config;
+package org.sensornetwork.authservice.config;
 
 import java.util.List;
 import java.util.UUID;
 import java.time.Duration;
 
 
+import org.sensornetwork.authservice.user.UserRepository;
 import org.springframework.http.MediaType;
 import org.springframework.core.annotation.Order;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +35,6 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-
-import org.projectx.auth.user.UserRepository;
 
 @Configuration
 @EnableWebSecurity

@@ -1,17 +1,18 @@
-package org.projectx.auth.user;
+package org.sensornetwork.authservice.user;
 
 import lombok.Data;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Collection;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Data
 @Document("users")
@@ -37,7 +38,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles().stream().map(role -> new SimpleGrantedAuthority(role)).toList();
+        return getRoles().stream().map(SimpleGrantedAuthority::new).toList();
     }
 
     @Override
