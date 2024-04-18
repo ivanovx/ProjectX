@@ -6,11 +6,13 @@ type SearchProps = {
     onSelectValue: (e: any) => void;
 }
 
-// TODO use autocomplete
+// TODO 
+// Use autocomplete
 /*
-https://github.com/smeijer/leaflet-geosearch
-https://stackoverflow.com/questions/48290555/react-leaflet-search-box-implementation
+    https://github.com/smeijer/leaflet-geosearch
+    https://stackoverflow.com/questions/48290555/react-leaflet-search-box-implementation
  */
+
 export default function Search({ onSelectValue }: SearchProps) {
     const [value, setValue] = React.useState<string | null>(null);
     const [options, setOptions] = React.useState<any[] | null>([]);

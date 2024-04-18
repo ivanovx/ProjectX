@@ -1,20 +1,23 @@
 import React from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { 
+    createTheme, 
+    ThemeProvider 
+} from '@mui/material/styles';
 
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import GlobalStyles from '@mui/material/GlobalStyles';
-import Container from '@mui/material/Container';
-
-
-import { Menu, MenuItem } from '@mui/material';
+import {
+    Link,
+    Grid,
+    AppBar,
+    Menu, 
+    MenuItem,
+    Container,
+    Button,
+    Toolbar,
+    CssBaseline,
+    Typography
+} from '@mui/material';
 
 type LayoutProps = {
     children: React.ReactNode
@@ -59,17 +62,17 @@ const footers = [
     },
 ];
 
-const NavLink = ({ href, label }: { href: string, label: string }) => 
+const NavLink = ({ href, label }: { href: string, label: string }) =>
 <Link variant="button" color="text.primary" href={href} sx={{ my: 1, mx: 1.5 }}>{label}</Link>
 
 const DropdownMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
-      setAnchorEl(null);
+        setAnchorEl(null);
     };
   
     return (
