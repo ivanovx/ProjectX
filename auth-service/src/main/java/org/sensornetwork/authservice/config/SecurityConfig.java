@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import java.time.Duration;
 
-
 import org.sensornetwork.authservice.user.UserRepository;
 import org.springframework.http.MediaType;
 import org.springframework.core.annotation.Order;
@@ -98,16 +97,16 @@ public class SecurityConfig {
     @Bean
     public RegisteredClientRepository clientRepository() {
         RegisteredClient client = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("projectx-client")
-                .clientSecret(this.passwordEncoder().encode("projectx-secret"))
+                .clientId("sensor-network")
+                .clientSecret(this.passwordEncoder().encode("sensor-network-secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .redirectUri("http://localhost:3000/api/auth/callback")
                 .postLogoutRedirectUri("http://localhost:3000/")
                 .scope(OidcScopes.OPENID)
-                .scope(OidcScopes.EMAIL)
-                .scope(OidcScopes.PROFILE)
+                //.scope(OidcScopes.EMAIL)
+                //.scope(OidcScopes.PROFILE)
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofDays(1)).build())
                 .build();
