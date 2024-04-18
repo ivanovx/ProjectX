@@ -105,9 +105,9 @@ public class SecurityConfig {
                 .redirectUri("http://localhost:3000/api/auth/callback")
                 .postLogoutRedirectUri("http://localhost:3000/")
                 .scope(OidcScopes.OPENID)
-                //.scope(OidcScopes.EMAIL)
-                //.scope(OidcScopes.PROFILE)
-                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                .scope(OidcScopes.EMAIL)
+                .scope(OidcScopes.PROFILE)
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofDays(1)).build())
                 .build();
 

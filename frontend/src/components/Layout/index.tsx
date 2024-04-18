@@ -10,8 +10,6 @@ import {
     Link,
     Grid,
     AppBar,
-    Menu, 
-    MenuItem,
     Container,
     Button,
     Toolbar,
@@ -39,22 +37,12 @@ function Copyright(props: any) {
 
 const footers = [
     {
-        title: 'Company',
+        title: 'Project',
         description: ['Team', 'History', 'Contact us', 'Locations'],
     },
     {
-        title: 'Features',
-        description: [
-            'Cool stuff',
-            'Random feature',
-            'Team feature',
-            'Developer stuff',
-            'Another one',
-        ],
-    },
-    {
         title: 'Resources',
-        description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
+        description: ['Resource', 'Another resource', 'Final resource'],
     },
     {
         title: 'Legal',
@@ -64,46 +52,6 @@ const footers = [
 
 const NavLink = ({ href, label }: { href: string, label: string }) =>
 <Link variant="button" color="text.primary" href={href} sx={{ my: 1, mx: 1.5 }}>{label}</Link>
-
-const DropdownMenu = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-  
-    return (
-      <>
-        <Button
-          id="basic-button"
-          aria-controls={open ? 'basic-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-        >
-          Dashboard
-        </Button>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
-      </>
-    );
-}
-
-// <DropdownMenu />
 
 export default function Layout({ children }: LayoutProps) {
     const { user, error, isLoading } = useUser();
@@ -118,8 +66,10 @@ export default function Layout({ children }: LayoutProps) {
                         <NavLink href="/" label="Home" />
                         <NavLink href="/stats" label="Stats" />
                         {user && <NavLink href="/dashboard" label="Dashboard" />}
+
                     </nav>
                     {user && user?.sub}
+                    {user && <Button href="/api/auth/logout" variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign out</Button>}
                     {!user && <Button href="/api/auth/login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign in</Button>}
                 </Toolbar>
             </AppBar>

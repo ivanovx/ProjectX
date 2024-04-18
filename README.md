@@ -23,3 +23,12 @@ Make open weather data from community sensors.
 * discovery-service
 
 ## Used technologies
+
+
+## docs
+
+1. generate secure token for client openid
+
+```
+node -e "console.log(crypto.randomBytes(32).toString('hex'))"
+```
