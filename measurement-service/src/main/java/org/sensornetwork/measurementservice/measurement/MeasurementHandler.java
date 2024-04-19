@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 
+import org.sensornetwork.common.response.TokenResponse;
+
 @Component
 public class MeasurementHandler {
 
@@ -19,7 +21,8 @@ public class MeasurementHandler {
 
     private final ReactiveCircuitBreaker tokenCircuitBreaker;
 
-    public MeasurementHandler(WebClient webClient, MeasurementRepository measurementRepository, ReactiveCircuitBreakerFactory circuitBreakerFactory) {
+    public MeasurementHandler(WebClient webClient, MeasurementRepository measurementRepository,
+                              ReactiveCircuitBreakerFactory circuitBreakerFactory) {
         this.webClient = webClient;
         this.measurementRepository = measurementRepository;
         this.tokenCircuitBreaker = circuitBreakerFactory.create("token");

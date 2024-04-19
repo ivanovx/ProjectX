@@ -1,10 +1,10 @@
-package org.sensornetwork.authservice.config;
+package org.sensornetwork.auth.config;
 
 import java.util.List;
 import java.util.UUID;
 import java.time.Duration;
 
-import org.sensornetwork.authservice.user.UserRepository;
+import org.sensornetwork.auth.user.UserRepository;
 import org.springframework.http.MediaType;
 import org.springframework.core.annotation.Order;
 import org.springframework.context.annotation.Bean;

@@ -24,16 +24,12 @@ import { getUserDevices, createDevice } from "@/modules/device.service";
 
 import { CONTROLLERS } from "@/modules/mock";
 
-const Search = dynamic(() => import('@/components/Search'), {
-    ssr: false,
-});
-
 type DeviceProps = {
     devices: any[];
     token: string;
 }
 
-export default function Devices({ devices, token }: DeviceProps) {
+export default function Devices({ devices, token }: DeviceProps) {    
     return (
         <Container sx={{ marginTop: "1rem" }}>
             <CreateDevice token={token} />
@@ -60,6 +56,10 @@ export default function Devices({ devices, token }: DeviceProps) {
 }
 
 function CreateDevice({ token }: { token: string }) {
+    const Search = dynamic(() => import('@/components/Search'), {
+        ssr: false,
+    });
+
     const [open, setOpen] = React.useState(false);
 
     const [location, setLocation] = React.useState({
@@ -183,9 +183,7 @@ export async function getServerSideProps(ctx: any) {
     const { accessToken } = await getAccessToken(ctx.req, ctx.res);
     
     const devices = await getUserDevices(accessToken!);
-
-   //const devices: any[] = await DeviceService.getUserDevices(accessToken!) as any[];
-
+    
     return { 
         props: {
             devices,

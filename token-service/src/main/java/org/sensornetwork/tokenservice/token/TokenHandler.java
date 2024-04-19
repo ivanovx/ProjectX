@@ -20,8 +20,8 @@ public class TokenHandler {
         String deviceId = request.pathVariable("deviceId");
 
         return tokenRepository.findByDeviceId(deviceId)
-                .flatMap(token -> ServerResponse.ok().bodyValue(token));
-                //.switchIfEmpty(ServerResponse.notFound().build());
+                .flatMap(token -> ServerResponse.ok().bodyValue(token))
+                .switchIfEmpty(ServerResponse.notFound().build());
     }
 
     public Mono<ServerResponse> createToken(ServerRequest request) {
@@ -33,7 +33,7 @@ public class TokenHandler {
                         return ServerResponse.badRequest().bodyValue("Token for device %s already exist".formatted(deviceId));
                     }
 
-                    String tokenValue = TokenGenerator.buildToken(deviceId);
+                    String tokenValue = TokenGenerator.createToken(deviceId);
 
                     Token token = Token.builder()
                             .deviceId(deviceId)

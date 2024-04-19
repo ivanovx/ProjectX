@@ -1,23 +1,13 @@
-// TODO
+import { secureHttpService } from "./http.service";
 
-/*
-import { API_URL } from "../apiConfig";
-import HttpService from "./http-service";
+export const getDeviceToken = async (accessToken: string, deviceId: string) => {
+    const res = await secureHttpService(accessToken).get(`/devices/${deviceId}/token`);
 
-export default class TokenService {
-    static getDeviceToken(deviceId: string, token: string) {
-        return HttpService.doGet(`${API_URL}/devices/${deviceId}/token`, {
-            headers: {
-                'Authorization' : `Bearer ${token}`
-            }
-        });
-    }
+    return res.data;
+}
 
-    static createDeviceToken(deviceId: string, token: string) {
-        return HttpService.doPost(`${API_URL}/devices/${deviceId}/token`, null, {
-            headers: {
-                'Authorization' : `Bearer ${token}`
-            }
-        });
-    }
-}*/
+export const createDeviceToken = async (accessToken: string, deviceId: string) => {
+    const res = await secureHttpService(accessToken).post(`/devices/${deviceId}/token`);
+
+    return res.data;
+}

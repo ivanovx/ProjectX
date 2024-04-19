@@ -1,4 +1,4 @@
-package org.sensornetwork.authservice.user;
+package org.sensornetwork.auth.user;
 
 import java.util.Optional;
 

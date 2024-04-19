@@ -19,15 +19,10 @@ import {
     TableBody,
 } from '@mui/material';
 
-import TokenService from "@/modules/services/token-service";
-import DeviceService from "@/modules/services/device-service";
+import { getUserDevices } from "@/modules/device.service";
+import { getDeviceToken, createDeviceToken } from "@/modules/token.service";
 
-type DeviceProps = {
-    accessToken: string;
-    tokens: any[];
-}
-
-export default function Tokens({ tokens, accessToken }: DeviceProps) {
+export default function Tokens({ userDevices, deviceTokens, accessToken }: any) {
 
     return (
         <Container sx={{ marginTop: "1rem" }}>
@@ -40,7 +35,7 @@ export default function Tokens({ tokens, accessToken }: DeviceProps) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {tokens.map(token => (
+                        {deviceTokens.map((token: any) => (
                             <TableRow key={token.deviceId}>
                                 <TableCell>{token.deviceId}</TableCell>
                                 <TableCell>{token.value}</TableCell>
@@ -55,17 +50,21 @@ export default function Tokens({ tokens, accessToken }: DeviceProps) {
 
 export async function getServerSideProps(ctx: any) {
     const { accessToken } = await getAccessToken(ctx.req, ctx.res);
-    
-    const devices = await DeviceService.getUserDevices(accessToken!) as any[];
 
-    const allTokens = await Promise.all(devices.map(async(device) => await TokenService.getDeviceToken(device.id, accessToken!) as any));
+    const userDevices = await getUserDevices(accessToken!);
+    const deviceTokens = (
+        await Promise.all(
+            userDevices.map(async(device) => await getDeviceToken(accessToken!, device.id) as any)
+        )
+    ).filter(token => token.value != null)
 
-    const tokens = allTokens.filter(token => token !== null);
+    console.log(deviceTokens);
 
     return { 
         props: {
             accessToken,
-            tokens,
+            userDevices,
+            deviceTokens
         } 
     };
 }

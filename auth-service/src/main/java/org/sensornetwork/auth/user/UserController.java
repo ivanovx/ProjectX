@@ -1,7 +1,7 @@
-package org.sensornetwork.authservice.user;
+package org.sensornetwork.auth.user;
 
-import org.sensornetwork.authservice.request.SignInRequest;
-import org.sensornetwork.authservice.request.SignUpRequest;
+import org.sensornetwork.auth.request.SignInRequest;
+import org.sensornetwork.auth.request.SignUpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

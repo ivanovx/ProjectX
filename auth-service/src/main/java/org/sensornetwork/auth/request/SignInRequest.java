@@ -1,4 +1,4 @@
-package org.sensornetwork.authservice.request;
+package org.sensornetwork.auth.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

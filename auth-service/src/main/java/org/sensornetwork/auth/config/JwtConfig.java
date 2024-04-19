@@ -1,4 +1,4 @@
-package org.sensornetwork.authservice.config;
+package org.sensornetwork.auth.config;
 
 import java.util.UUID;
 import java.security.KeyPair;

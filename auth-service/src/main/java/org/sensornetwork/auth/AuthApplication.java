@@ -1,4 +1,4 @@
-package org.sensornetwork.authservice;
+package org.sensornetwork.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
