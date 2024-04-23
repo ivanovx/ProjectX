@@ -15,14 +15,14 @@ export default function Map({ devices }: { devices: any[] }) {
         const color = "blue";
 
         const eventHandlers = {
-            click: (event: any) => console.log(event)
+            click: (event: any) => console.log(event.target)
         };
 
         return (
             <Circle
-                key={device.id} 
-                center={[device.location.longitude, device.location.latitude]} 
+                id={device.id}
                 pathOptions={{ color }}
+                center={[device.location.longitude, device.location.latitude]} 
                 eventHandlers={eventHandlers}
             />
         );
@@ -35,7 +35,7 @@ export default function Map({ devices }: { devices: any[] }) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Pane name='devices'>
-                {devices.map(device => <Marker device={device} />)}
+                {devices.map(device => <Marker key={device.id} device={device} />)}
             </Pane>
         </MapContainer>
     );
