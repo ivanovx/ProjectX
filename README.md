@@ -1,4 +1,4 @@
-# ProjectX
+# Sensor network
 
 Make open data from community sensors.
 
@@ -8,6 +8,4 @@ Make open data from community sensors.
 2. Spring Cloud
 3. MongoDb
 4. Redis
-5. Apache Kafka
-6. Apache Zookeeper
-7. Docker
+5. Docker
