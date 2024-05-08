@@ -1,39 +1,16 @@
 import React from 'react';
-import { useUser } from '@auth0/nextjs-auth0/client';
-
-import { 
-    createTheme, 
-    ThemeProvider 
-} from '@mui/material/styles';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
     Link,
     Grid,
     AppBar,
     Container,
-    Button,
     Toolbar,
     CssBaseline,
     Typography
 } from '@mui/material';
 
-type LayoutProps = {
-    children: React.ReactNode
-}
-
-const defaultTheme = createTheme();
-
-function Copyright(props: any) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="/">Sensor Network</Link>
-            {' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import Navigation from './Navigation';
 
 const footers = [
     {
@@ -50,33 +27,20 @@ const footers = [
     },
 ];
 
-const NavLink = ({ href, label }: { href: string, label: string }) =>
-<Link variant="button" color="text.primary" href={href} sx={{ my: 1, mx: 1.5 }}>{label}</Link>
+export default function Layout({ children }: { children: React.ReactNode }) {
+    const defaultTheme = createTheme();
 
-export default function Layout({ children }: LayoutProps) {
-    const { user, error, isLoading } = useUser();
-    
     return (
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline />
             <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
                 <Toolbar sx={{ flexWrap: 'wrap' }}>
                     <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>Sensor Network</Typography>
-                    <nav>
-                        <NavLink href="/" label="Home" />
-                        <NavLink href="/stats" label="Stats" />
-                        {user && <NavLink href="/dashboard" label="Dashboard" />}
-
-                    </nav>
-                    {user && user?.sub}
-                    {user && <Button href="/api/auth/logout" variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign out</Button>}
-                    {!user && <Button href="/api/auth/login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign in</Button>}
+                    <Navigation />
                 </Toolbar>
             </AppBar>
             
-            <Container disableGutters maxWidth="100%" component="main">
-                {children}
-            </Container>
+            <Container disableGutters maxWidth="100%" component="main">{children}</Container>
             
             <Container maxWidth="md" component="footer"
                 sx={{
@@ -100,7 +64,13 @@ export default function Layout({ children }: LayoutProps) {
                         </Grid>
                     ))}
                 </Grid>
-                <Copyright sx={{ mt: 5 }} />
+                <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 5 }}>
+                    {'Copyright © '}
+                        <Link color="inherit" href="/">Sensor Network</Link>
+                    {' '}
+                    {new Date().getFullYear()}
+                    {'.'}
+                </Typography>
             </Container>
         </ThemeProvider>
     );

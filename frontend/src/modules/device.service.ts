@@ -10,9 +10,14 @@ export const getAllDevices = async () => {
     return res.data;
 }
 
-
 export const getUserDevices = async (accessToken: string) => {
     const res = await secureHttpService(accessToken).get<Device[]>("/devices/user");
+
+    return res.data;
+}
+
+export const getDeviceStats = async (deviceId: string) => {
+    const res = await httpService.get<Device>(`/devices/${deviceId}`);
 
     return res.data;
 }
