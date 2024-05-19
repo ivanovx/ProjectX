@@ -1,27 +1,51 @@
-//import { API_URL } from "@/modules/apiConfig";
 import React from "react";
+import { NextRequest, NextResponse } from "next/server";
 
-import { getAccessToken } from '@auth0/nextjs-auth0';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+
+//import { getToken } from "next-auth/jwt"
+
+//import { getAccessToken } from '@auth0/nextjs-auth0';
+//import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 
 import { getUserDevices } from "@/modules/device.service";
+import { Container } from "@mui/material";
+import { Session } from "@auth0/nextjs-auth0";
+import { getSession, useSession } from "next-auth/react";
 
-export default withPageAuthRequired(function Dashboard(props: any) {
-   const [devices, setDevices] = React.useState<any[]>([]);
+export default function Dashboard({ devices }: any) {
+    //const { data: session, status } = useSession()
 
-   React.useEffect(() => {
-        getUserDevices(props.accessToken!).then(devices => setDevices(devices)).catch(err => console.log(err));
-   }, []);
+    return devices.map(d => <li>{d.name}</li>);
+};
+export async function getServerSideProps({ req, res }: any) {
 
-    return (
-        <div>
-            {devices.map(device => <p>{device.id}</p>)}
-        </div>
-    );
-});
+   // const { accessToken } = await getAccessToken(req, res);
 
-export async function getServerSideProps(ctx: any) {
-    const { accessToken } = await getAccessToken(ctx.req, ctx.res);
+   // const session = await getSession(ctx);
 
-    return { props: { accessToken } };
-  }
+    //session?.
+
+    //
+
+    //return { props: { devices } };
+
+    //const session = await getServerSession(req, res, authOptions);
+
+    //const token = await getToken({req});
+
+    //const session = await getServerSession(req, res, authOptions);
+
+    const session = await getServerSession(req, res, authOptions);
+
+    const { access_token } = session.token;
+    const devices = await getUserDevices(access_token);
+  //  console.log("Current session username: " + JSON.stringify(session.token.access_token));
+    
+    return {
+        props: {
+            devices
+        }
+    }
+}
