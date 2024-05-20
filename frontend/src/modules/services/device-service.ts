@@ -1,4 +1,4 @@
-import { httpService, secureHttpService } from './http.service';
+import { httpService, secureHttpService } from './http-service';
 
 type Device = {
     [key: string]: any;

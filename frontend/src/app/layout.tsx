@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import { Inter } from "next/font/google";
 
-import { authOptions } from "@/modules/authOptions";
+import { getSession } from "@/modules/auth/auth";
 import GlobalLayout from "@/layouts/GlobalLayout";
 
 const inter = Inter({ 
@@ -15,12 +14,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-    const session = await getServerSession(authOptions);
+    const session = await getSession();
 
     return (
         <html lang="en">
             <body className={inter.className}>
-                <GlobalLayout session={session!}>{children}</GlobalLayout>
+                <GlobalLayout session={session}>{children}</GlobalLayout>
             </body>
         </html>
     );

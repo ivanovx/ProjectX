@@ -12,26 +12,23 @@ import {
     TableBody,
 } from '@mui/material';
 
-import { getUserDevices } from "@/modules/device.service";
-import { getDeviceToken, createDeviceToken } from "@/modules/token.service";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/modules/authOptions";
+import { getAccessToken } from "@/modules/auth/auth";
+import { getUserDevices } from "@/modules/services/device-service";
+import { getDeviceToken, createDeviceToken } from "@/modules/services/token-service";
+import CreateToken from "@/components/Tokens/CreateToken";
 
 export default async function Page() {
-    const session = await getServerSession(authOptions);
-    const accessToken = session.token.access_token;
-
-    const userDevices = await getUserDevices(accessToken!);
+    const token = await getAccessToken();
+    const devices = await getUserDevices(token);
     const deviceTokens = (
         await Promise.all(
-            userDevices.map(async(device) => await getDeviceToken(accessToken!, device.id) as any)
+            devices.map(async(device) => await getDeviceToken(token, device.id) as any)
         )
-    ).filter(token => token.value != null)
-
-    console.log(deviceTokens);
+    ).filter(token => token.value != null);
 
     return (
         <Container>
+            <CreateToken token={token} devices={devices.map(device => device.id)} />
             <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
                 <Table>
                     <TableHead>

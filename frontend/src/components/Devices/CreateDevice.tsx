@@ -14,7 +14,7 @@ import {
     Stack
 } from '@mui/material';
 
-import { createDevice } from "@/modules/device.service";
+import { createDevice } from "@/modules/services/device-service";
 
 import { CONTROLLERS } from "@/modules/mock";
 import Search from "../Search";

@@ -1,22 +1,25 @@
-import { Box, Button, Container, Grid, Link, Typography } from "@mui/material";
+"use client";
+
+import { Box, Container, Grid } from "@mui/material";
+
+import NavLink from "@/components/NavLink";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
         <Container maxWidth="xl" sx={{ marginY: "3rem" }}>
             <Grid container spacing={2}>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: '1rem' }}>
-                        <NavLink href="/dashboard/devices" title="Devices" />
-                        <NavLink href="/dashboard/tokens" title="Tokens" />
-                        <NavLink href="/dashboard/measurements" title="Measurements" />
+                        <NavLink href="/dashboard/devices">Devices</NavLink>
+                        <NavLink href="/dashboard/tokens">Tokens</NavLink>
+                        <NavLink href="/dashboard/measurements">Measurements</NavLink>
                     </Box>
                 </Grid>
-                <Grid item xs={8}>
-                    {children}
+                <Grid item xs={8}>{children}</Grid>
+                <Grid item xs={2}>
+                    Logs here
                 </Grid>
             </Grid>
         </Container>
     );
 }
-
-const NavLink = ({ href, title }: { href: string, title: string }) => <Button href={href} component={Link} variant="outlined">{title}</Button>

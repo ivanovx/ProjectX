@@ -1,5 +1,5 @@
-import { OAuthConfig } from "next-auth/providers/oauth"
-import { NextAuthOptions } from 'next-auth'
+import { NextAuthOptions } from 'next-auth';
+import { OAuthConfig } from "next-auth/providers/oauth";
 
 export const defaultProvider: OAuthConfig<any> = {
     id: 'default',

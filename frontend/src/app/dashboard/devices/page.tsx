@@ -1,14 +1,5 @@
 import React from "react";
-import dynamic from 'next/dynamic';
-import { useFormik, FormikProvider, FieldArray } from "formik";
-
 import {
-    Button,
-    TextField,
-    Dialog,
-    DialogTitle,
-    DialogActions,
-    DialogContent,
     Container,
     TableContainer,
     Paper,
@@ -19,20 +10,19 @@ import {
     TableBody,
 } from '@mui/material';
 
-import { getUserDevices } from "@/modules/device.service";
-
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/modules/authOptions";
 import CreateDevice from "@/components/Devices/CreateDevice";
 
+import { getAccessToken } from "@/modules/auth/auth";
+import { getUserDevices } from "@/modules/services/device-service";
+
 export default async function Page() {
-    const session = await getServerSession(authOptions);
-    const devices = await getUserDevices(session.token.access_token);
+    const token = await getAccessToken();
+    const devices = await getUserDevices(token);
 
     return (
         <Container>
-            <CreateDevice token={session.token.access_token} />
-            <CreateDevice token={session.token.access_token} />
+            <CreateDevice token={token} />
+            <CreateDevice token={token} />
             <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
                 <Table>
                     <TableHead>

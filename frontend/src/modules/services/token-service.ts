@@ -1,4 +1,4 @@
-import { secureHttpService } from "./http.service";
+import { secureHttpService } from "./http-service";
 
 export const getDeviceToken = async (accessToken: string, deviceId: string) => {
     const res = await secureHttpService(accessToken).get(`/devices/${deviceId}/token`);

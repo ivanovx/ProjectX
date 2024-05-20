@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { getAllDevices } from "@/modules/device.service";
+import { getAllDevices } from "@/modules/services/device-service";
 
 const Map = dynamic(() => import('@/components/Map').then(m => m), { ssr: false });
 
