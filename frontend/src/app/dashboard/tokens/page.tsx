@@ -14,17 +14,19 @@ import {
 
 import { getAccessToken } from "@/modules/auth/auth";
 import { getUserDevices } from "@/modules/services/device-service";
-import { getDeviceToken, createDeviceToken } from "@/modules/services/token-service";
+import { getDeviceToken } from "@/modules/services/token-service";
 import CreateToken from "@/components/Tokens/CreateToken";
 
 export default async function Page() {
     const token = await getAccessToken();
     const devices = await getUserDevices(token);
-    const deviceTokens = (
+    const tokens = (
         await Promise.all(
             devices.map(async(device) => await getDeviceToken(token, device.id) as any)
         )
     ).filter(token => token.value != null);
+
+    console.log(tokens)
 
     return (
         <Container>
@@ -38,7 +40,7 @@ export default async function Page() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {deviceTokens.map((token: any) => (
+                        {tokens.map((token: any) => (
                             <TableRow key={token.deviceId}>
                                 <TableCell>{token.deviceId}</TableCell>
                                 <TableCell>{token.value}</TableCell>

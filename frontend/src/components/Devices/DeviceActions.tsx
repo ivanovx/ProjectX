@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { useFormik, FormikProvider, FieldArray } from "formik";
 
 import {
+    Stack,
     Button,
-    TextField,
     Dialog,
+    TextField,
     DialogTitle,
     DialogActions,
-    DialogContent,
-    Stack
+    DialogContent
 } from '@mui/material';
 
 import { createDevice } from "@/modules/services/device-service";
@@ -20,7 +20,13 @@ import { CONTROLLERS } from "@/modules/mock";
 import Search from "../Search";
 import { SelectInput, TextInput } from "../Input";
 
-export default function CreateDevice({ token }: { token: string }) {
+type DeviceActionsProps = {
+    accessToken: string;
+    device?: any | null;
+    action: "create" | "update" | "clone";
+}
+
+export default function DeviceActions({ accessToken, device, action }: DeviceActionsProps) {
     const router = useRouter();
     const [open, setOpen] = React.useState(false);
 
@@ -54,7 +60,7 @@ export default function CreateDevice({ token }: { token: string }) {
             };
 
             try {
-                const res = await createDevice(device, token);
+                const res = await createDevice(device, accessToken);
 
                 console.log(res);
 

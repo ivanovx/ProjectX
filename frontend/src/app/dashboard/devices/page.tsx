@@ -8,9 +8,10 @@ import {
     TableHead,
     TableCell,
     TableBody,
+    Chip
 } from '@mui/material';
 
-import CreateDevice from "@/components/Devices/CreateDevice";
+import DeviceActions from "@/components/Devices/DeviceActions";
 
 import { getAccessToken } from "@/modules/auth/auth";
 import { getUserDevices } from "@/modules/services/device-service";
@@ -21,21 +22,28 @@ export default async function Page() {
 
     return (
         <Container>
-            <CreateDevice token={token} />
-            <CreateDevice token={token} />
+            <DeviceActions accessToken={token} action="create" />
             <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
                 <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell>#</TableCell>
-                            <TableCell align="right">Name</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Created</TableCell>
+                            <TableCell>Controller</TableCell>
+                            <TableCell>Sensors</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {devices.map(device => (
-                            <TableRow key={device.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row">{device.id}</TableCell>
-                                <TableCell align="right">{device.name}</TableCell>
+                            <TableRow key={device.id}>
+                                <TableCell>{device.id}</TableCell>
+                                <TableCell>{device.name}</TableCell>
+                                <TableCell>{new Date(device.timestamp).toLocaleString()}</TableCell>
+                                <TableCell>{device.controller}</TableCell>
+                                <TableCell>
+                                    {device.sensors.map(sensor => <Chip label={sensor} variant="outlined" sx={{ marginX: "0.25rem"}} />)}
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -2,23 +2,19 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useFormik, FormikProvider, FieldArray } from "formik";
+import { useFormik, FormikProvider } from "formik";
 
 import {
     Button,
-    TextField,
     Dialog,
     DialogTitle,
     DialogActions,
     DialogContent,
-    Stack
 } from '@mui/material';
 
 import { createDeviceToken } from "@/modules/services/token-service";
 
-import { CONTROLLERS } from "@/modules/mock";
-import Search from "../Search";
-import { SelectInput, TextInput } from "../Input";
+import { SelectInput } from "../Input";
 
 export default function CreateToken({ devices, token }: { devices: any[], token: string }) {
     const router = useRouter();

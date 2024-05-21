@@ -15,10 +15,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         <NavLink href="/dashboard/measurements">Measurements</NavLink>
                     </Box>
                 </Grid>
-                <Grid item xs={8}>{children}</Grid>
-                <Grid item xs={2}>
-                    Logs here
-                </Grid>
+                <Grid item xs={10}>{children}</Grid>
             </Grid>
         </Container>
     );
