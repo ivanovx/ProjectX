@@ -1,20 +1,13 @@
-* Views
-
 / -> Home
-/stats -> Stats for every city
-/about -> about page
-/privacy -> privacy page
+/stats -> Stats
+/stats/:deviceId -> Stats for device
+/stats/:cords -> Stats for send cords
 
-/user -> user page
-/dashboard -> /user
+/static/ -> [about, privacy, terms] -> static pages
 
-/dashboard/devices
-/create
-/update
-/activate
-/delete
+/dashboard
+-> devices
+-> tokens
+-> measurements
 
-/dashboard/measurements
-/logs
-
-
+/auth -> oauth integration
