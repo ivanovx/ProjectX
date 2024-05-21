@@ -16,6 +16,7 @@
     <groupId>org.sensornetwork</groupId>
     <artifactId>auth-service</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>21</java.version>

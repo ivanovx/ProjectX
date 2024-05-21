@@ -41,7 +41,6 @@ public class MeasurementHandler {
                 .flatMap(body -> {
                     String deviceId = request.pathVariable("id");
                     String apiKey = request.headers().firstHeader("X-API-KEY");
-                    // String apiSecret = request.headers().firstHeader("X-API-SECRET");
 
                     return tokenCircuitBreaker
                             .run(webClient.get().uri("/tokens/" + deviceId).retrieve().bodyToMono(TokenResponse.class))

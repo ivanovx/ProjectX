@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation'
+import { notFound } from "next/navigation";
+import { Container, Typography } from "@mui/material";
 
 import { getDeviceStats } from "@/modules/services/device-service";
-import { Container, Typography } from "@mui/material";
 
 export default async function Page({ params }: { params: { deviceId: string } }) {
     const device = await getDeviceStats(params.deviceId);
