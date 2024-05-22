@@ -1,8 +1,14 @@
 package org.sensornetwork.measurement.handler;
 
 import org.sensornetwork.common.request.MeasurementRequest;
+import org.sensornetwork.common.request.TokenVerifyRequest;
 import org.sensornetwork.measurement.domain.Measurement;
 import org.sensornetwork.measurement.domain.MeasurementRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.reactive.HandlerMapping;
+import org.springframework.web.reactive.function.BodyExtractors;
+import org.springframework.web.reactive.function.BodyInserter;
+import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
 
@@ -23,15 +29,17 @@ public class MeasurementHandler {
     private final MeasurementRepository measurementRepository;
 
     private final ReactiveCircuitBreaker tokenCircuitBreaker;
+    private final HandlerMapping resourceHandlerMapping;
 
     public MeasurementHandler(
             WebClient webClient,
             MeasurementRepository measurementRepository,
-            ReactiveCircuitBreakerFactory circuitBreakerFactory
-    ) {
+            ReactiveCircuitBreakerFactory circuitBreakerFactory,
+            @Qualifier("resourceHandlerMapping") HandlerMapping resourceHandlerMapping) {
         this.webClient = webClient;
         this.measurementRepository = measurementRepository;
         this.tokenCircuitBreaker = circuitBreakerFactory.create("token");
+        this.resourceHandlerMapping = resourceHandlerMapping;
     }
 
     public Mono<ServerResponse> getMeasurements(ServerRequest request) {
@@ -48,16 +56,22 @@ public class MeasurementHandler {
                     String deviceId = request.pathVariable("deviceId");
                     String apiKey = request.headers().firstHeader("X-API-KEY");
 
-                    // todo use verify url handler
-                    return tokenCircuitBreaker
-                            .run(webClient.get().uri("/tokens/" + deviceId).retrieve().bodyToMono(TokenResponse.class))
-                            .flatMap(tokenResponse -> {
-                                if(!tokenResponse.value().equals(apiKey)) {
-                                    return ServerResponse.status(401).build();
+                    TokenVerifyRequest verifyRequest = new TokenVerifyRequest(apiKey, deviceId);
+
+                    Mono<ServerResponse> response = webClient
+                            .post()
+                            .uri("/tokens")
+                            .body(BodyInserters.fromValue(verifyRequest))
+                            .exchangeToMono(ex -> ex.bodyToMono(String.class))
+                            .flatMap(res -> {
+                                if (res.equals("VALID")) {
+                                    return ServerResponse.status(201).bodyValue(res);//.body(Mono.just(res), String.class);
                                 }
 
-                                return ServerResponse.status(201).body(Mono.just(body), MeasurementRequest.class);
+                                return ServerResponse.status(401).bodyValue("Not Authorized");
                             });
+
+                    return tokenCircuitBreaker.run(response, throwable -> ServerResponse.badRequest().bodyValue(throwable.getMessage()));
                 });
     }
 }

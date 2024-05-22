@@ -19,9 +19,9 @@ public class RouteConfig {
     @Bean
     public RouterFunction<ServerResponse> route() {
         return RouterFunctions.route()
-                .POST("/tokens", tokenHandler::verifyToken)
                 .GET("/tokens/{deviceId}", tokenHandler::getToken)
                 .POST("/tokens/{deviceId}", tokenHandler::createToken)
+                .POST("/tokens", tokenHandler::verifyToken)
                 .build();
     }
 }
