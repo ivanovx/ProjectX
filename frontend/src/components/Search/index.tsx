@@ -1,5 +1,5 @@
 import React from "react";
-import { OpenStreetMapProvider } from "leaflet-geosearch";
+import { OpenStreetMapProvider, GoogleProvider } from "leaflet-geosearch";
 import { Button, MenuItem, TextField, Stack } from "@mui/material";
 
 import { TextInput } from "../Input";
