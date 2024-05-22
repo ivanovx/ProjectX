@@ -4,6 +4,7 @@ import org.sensornetwork.device.domain.Device;
 import org.sensornetwork.device.domain.DeviceRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,12 +31,14 @@ public class DeviceHandler {
         //return this.deviceRepository.findAll();
     }
 
-    /*
-    @GetMapping("/user")
-    @ResponseStatus(HttpStatus.OK)
-    public Flux<Device> getAllUserDevices(@AuthenticationPrincipal Jwt jwt) {
-        String userId = jwt.getClaimAsString("userId");
+    public Mono<ServerResponse> getAllDevicesByUser(ServerRequest request) {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(context -> (Jwt) context.getAuthentication().getPrincipal())
+                .map(jwt -> {
+                    String userId = jwt.getClaimAsString("userId");
 
-        return this.deviceRepository.findAllByUserId(userId);
-    }*/
+                    return deviceRepository.findAllByUserId(userId);
+                })
+                .flatMap(devices ->  ServerResponse.ok().body(devices, Device.class));
+    }
 }

@@ -18,19 +18,32 @@ import { getDeviceToken } from "@/modules/services/token-service";
 import CreateToken from "@/components/Tokens/CreateToken";
 
 export default async function Page() {
-    const token = await getAccessToken();
-    const devices = await getUserDevices(token);
-    const tokens = (
-        await Promise.all(
-            devices.map(async(device) => await getDeviceToken(token, device.id) as any)
-        )
-    ).filter(token => token.value != null);
+    const acccessToken = await getAccessToken();
+    const devices = await getUserDevices(acccessToken);
 
-    console.log(tokens)
+    //const tokens = (
+    //    await Promise.all(
+    //        devices.map(async device => await getDeviceToken(acccessToken, device.id) as any)
+    //    )
+    //).filter(token => token !== null);
+
+    let devicesWithoutToken: string[] = [];
+
+    const tokens = (await Promise.all(devices.map(async device => {
+        try {
+            const token = await getDeviceToken(acccessToken, device.id) as any;
+
+            return token;
+        } catch (error) {
+            devicesWithoutToken.push(device.id);
+            return null;
+        }
+        
+    }))).filter(token => token !== null);
 
     return (
         <Container>
-            <CreateToken token={token} devices={devices.map(device => device.id)} />
+            <CreateToken token={acccessToken} devices={devicesWithoutToken} />
             <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
                 <Table>
                     <TableHead>

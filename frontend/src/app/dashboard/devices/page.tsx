@@ -44,6 +44,9 @@ export default async function Page() {
                                 <TableCell>
                                     {device.sensors.map(sensor => <Chip label={sensor} variant="outlined" sx={{ marginX: "0.25rem"}} />)}
                                 </TableCell>
+                                <TableCell>
+                                    <DeviceActions accessToken={token} action="update" device={device} />
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

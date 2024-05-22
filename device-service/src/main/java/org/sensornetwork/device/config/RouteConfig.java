@@ -22,6 +22,7 @@ public class RouteConfig {
     public RouterFunction<ServerResponse> route() {
         return RouterFunctions.route()
                 .GET("/devices/all", deviceHandler::getAllDevices)
+                .GET("/devices/user", deviceHandler::getAllDevicesByUser)
                 .GET("/devices/{deviceId}/token", tokenHandler::getDeviceToken)
                 .POST("/devices/{deviceId}/token", tokenHandler::createDeviceToken)
                 .build();
