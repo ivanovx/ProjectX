@@ -27,9 +27,11 @@ public class TokenHandler {
                 .retrieve()
                 .bodyToMono(TokenResponse.class);
 
-        Mono<ServerResponse> response = ServerResponse.ok().body(getDeviceToken, TokenHandler.class);
-
-        return tokenCircuitBreaker.run(response, throwable -> ServerResponse.badRequest().bodyValue(throwable.getMessage()));
+       // return tokenCircuitBreaker.run(response); //, throwable -> ServerResponse.ok().bodyValue(null)); //.bodyValue(throwable.getMessage()));
+        return  tokenCircuitBreaker.run(
+                ServerResponse.ok().body(getDeviceToken, TokenHandler.class)
+        );
+                //throwable -> ServerResponse.ok().bodyValue(null));
     }
 
     public Mono<ServerResponse> createDeviceToken(ServerRequest request) {
@@ -40,9 +42,7 @@ public class TokenHandler {
                 .retrieve()
                 .bodyToMono(TokenResponse.class);
 
-        //return tokenCircuitBreaker.run(createDeviceToken, throwable -> Mono.just(new TokenResponse(null, null)));
-
-        Mono<ServerResponse> response = ServerResponse.ok().body(postDeviceToken, TokenHandler.class);
+        Mono<ServerResponse> response = ServerResponse.status(201).body(postDeviceToken, TokenHandler.class);
 
         return tokenCircuitBreaker.run(response, throwable -> ServerResponse.badRequest().bodyValue(throwable.getMessage()));
     }

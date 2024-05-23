@@ -25,7 +25,7 @@ public class TokenHandler {
         String deviceId = request.pathVariable("deviceId");
 
         return tokenRepository.findByDeviceId(deviceId)
-                .flatMap(token -> ServerResponse.ok().bodyValue(token))
+                .flatMap(token -> ServerResponse.ok().body(token, Token.class))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 
@@ -47,7 +47,7 @@ public class TokenHandler {
                             .expiredAt(LocalDateTime.now().plusYears(1))
                             .build();
 
-                    return tokenRepository.save(token).flatMap(t -> ServerResponse.status(201).bodyValue(t));
+                    return tokenRepository.save(token).flatMap(t -> ServerResponse.status(201).body(token, Token.class));
                 });
     }
 

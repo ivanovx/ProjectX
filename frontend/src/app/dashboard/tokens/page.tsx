@@ -27,38 +27,61 @@ export default async function Page() {
     //    )
     //).filter(token => token !== null);
 
-    let devicesWithoutToken: string[] = [];
+    //let devicesWithoutToken: string[] = [];
 
-    const tokens = (await Promise.all(devices.map(async device => {
-        try {
-            const token = await getDeviceToken(acccessToken, device.id) as any;
+    //const tokens = (await Promise.all(devices.map(async device => {
+    //    try {
+     //       const token = await getDeviceToken(acccessToken, device.id) as any;
 
-            return token;
-        } catch (error) {
-            devicesWithoutToken.push(device.id);
-            return null;
-        }
+     //       return token;
+    //  } catch (error) {
+      //      devicesWithoutToken.push(device.id);
+       //     return null;
+     //   }
         
-    }))).filter(token => token !== null);
+   // }))).filter(token => token !== null);
+
+   // const getToken = (deviceId: string) => {
+       //return Promise.all(async () => await getDeviceToken(acccessToken, deviceId));
+
+     //  return Promise.resolve(getDeviceToken(acccessToken, deviceId).then(token => token));
+   // };
+
+    const getToken = async (deviceId: string) => await getDeviceToken(acccessToken, deviceId);
+
+    //const tokens = (await Promise.all(devices.map(async device => {
+    //    try {
+     //       const token = await getDeviceToken(acccessToken, device.id) as any;
+
+     //       return token;
+    //  } catch (error) {
+      //      devicesWithoutToken.push(device.id);
+       //     return null;
+     //   }
 
     return (
         <Container>
-            <CreateToken token={acccessToken} devices={devicesWithoutToken} />
             <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Device</TableCell>
+                            <TableCell>#</TableCell>
+                            <TableCell>Name</TableCell>
                             <TableCell>Token</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {tokens.map((token: any) => (
-                            <TableRow key={token.deviceId}>
-                                <TableCell>{token.deviceId}</TableCell>
-                                <TableCell>{token.value}</TableCell>
-                            </TableRow>
-                        ))}
+                        {devices.map(async (device: any) => {
+                            const token = await getToken(device.id);
+                            
+                            return (
+                                <TableRow key={device.id}>
+                                    <TableCell>{device.id}</TableCell>
+                                    <TableCell>{device.name}</TableCell>
+                                    <TableCell>{token}</TableCell>
+                                </TableRow>
+                            );
+                        })}
                     </TableBody>
                 </Table>
             </TableContainer>

@@ -20,29 +20,21 @@ public class DeviceController {
     public DeviceController(DeviceRepository deviceRepository) {
         this.deviceRepository = deviceRepository;
     }
-
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
     public Flux<Device> getAllDevices() {
         return this.deviceRepository.findAll();
     }
 
-    @GetMapping("/user")
-    @ResponseStatus(HttpStatus.OK)
+
     public Flux<Device> getAllUserDevices(@AuthenticationPrincipal Jwt jwt) {
         String userId = jwt.getClaimAsString("userId");
 
         return this.deviceRepository.findAllByUserId(userId);
     }
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public Mono<Device> getDevice(@PathVariable String id) {
         return this.deviceRepository.findById(id);
     }
 
-    @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
     public Mono<Device> createDevice(@AuthenticationPrincipal Jwt jwt, @RequestBody DeviceRequest request) {
         String userId = jwt.getClaimAsString("userId");
 
@@ -59,8 +51,6 @@ public class DeviceController {
         return this.deviceRepository.save(device);
     }
 
-    @PutMapping("/update/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public Mono<Device> updateDevice(@PathVariable String id, @AuthenticationPrincipal Jwt jwt, @RequestBody DeviceRequest request) {
         String userId = jwt.getClaimAsString("userId");
 
@@ -75,8 +65,6 @@ public class DeviceController {
         }).flatMap(deviceRepository::save);
     }
 
-    @PostMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public Mono<Void> deleteDevice(@PathVariable String id, @AuthenticationPrincipal Jwt jwt) {
         Mono<Device> device = this.deviceRepository.findById(id);
 

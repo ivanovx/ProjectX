@@ -7,18 +7,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.sensornetwork</groupId>
-    <artifactId>sensornetwork</artifactId>
+    <artifactId>sensor-network</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>auth-service</module>
-        <module>stat-service</module>
-        <module>token-service</module>
-        <module>device-service</module>
-        <module>gateway-service</module>
-        <module>discovery-service</module>
-        <module>measurement-service</module>
         <module>common</module>
+        <module>services/auth-service</module>
+        <module>services/stat-service</module>
+        <module>services/token-service</module>
+        <module>services/device-service</module>
+        <module>services/gateway-service</module>
+        <module>services/discovery-service</module>
+        <module>services/measurement-service</module>
     </modules>
 </project>
