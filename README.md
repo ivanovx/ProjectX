@@ -32,3 +32,14 @@ Make open weather data from community sensors.
 ```
 node -e "console.log(crypto.randomBytes(32).toString('hex'))"
 ```
+
+## TODO
+
+* Device managements (create, update, delete)
+* Device details
+* Device stats (includes measurements)
+* Token manage (create, update, delete)
+* Meassurement managements (view, manage)
+* Backend fix and docker
+
+## Documentation and architecture
