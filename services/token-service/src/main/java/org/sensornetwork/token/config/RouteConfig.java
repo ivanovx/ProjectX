@@ -21,7 +21,7 @@ public class RouteConfig {
         return RouterFunctions.route()
                 .GET("/tokens/{deviceId}", tokenHandler::getToken)
                 .POST("/tokens/{deviceId}", tokenHandler::createToken)
-                .POST("/tokens", tokenHandler::verifyToken)
+                //.POST("/tokens", tokenHandler::verifyToken)
                 .build();
     }
 }

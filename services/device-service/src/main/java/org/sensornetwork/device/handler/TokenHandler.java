@@ -28,9 +28,7 @@ public class TokenHandler {
                 .bodyToMono(TokenResponse.class);
 
        // return tokenCircuitBreaker.run(response); //, throwable -> ServerResponse.ok().bodyValue(null)); //.bodyValue(throwable.getMessage()));
-        return  tokenCircuitBreaker.run(
-                ServerResponse.ok().body(getDeviceToken, TokenHandler.class)
-        );
+        return tokenCircuitBreaker.run(ServerResponse.ok().body(getDeviceToken, TokenResponse.class));
                 //throwable -> ServerResponse.ok().bodyValue(null));
     }
 
@@ -42,8 +40,7 @@ public class TokenHandler {
                 .retrieve()
                 .bodyToMono(TokenResponse.class);
 
-        Mono<ServerResponse> response = ServerResponse.status(201).body(postDeviceToken, TokenHandler.class);
-
-        return tokenCircuitBreaker.run(response, throwable -> ServerResponse.badRequest().bodyValue(throwable.getMessage()));
+        return tokenCircuitBreaker.run(ServerResponse.status(201).body(postDeviceToken, TokenResponse.class));
+        //throwable -> ServerResponse.badRequest().bodyValue(throwable.getMessage()));
     }
 }

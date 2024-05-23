@@ -19,45 +19,26 @@ import CreateToken from "@/components/Tokens/CreateToken";
 
 export default async function Page() {
     const acccessToken = await getAccessToken();
-    const devices = await getUserDevices(acccessToken);
+    const devices = await getUserDevices(acccessToken);    
 
-    //const tokens = (
-    //    await Promise.all(
-    //        devices.map(async device => await getDeviceToken(acccessToken, device.id) as any)
-    //    )
-    //).filter(token => token !== null);
+    const getToken = (deviceId: string) => {
+        /*try {
+            const token = await getDeviceToken(acccessToken, deviceId);
 
-    //let devicesWithoutToken: string[] = [];
+            console.log(token);
 
-    //const tokens = (await Promise.all(devices.map(async device => {
-    //    try {
-     //       const token = await getDeviceToken(acccessToken, device.id) as any;
+            return token;
+        } catch (error) {
+            console.log(error);
+            
+            return null;
+        }*/
 
-     //       return token;
-    //  } catch (error) {
-      //      devicesWithoutToken.push(device.id);
-       //     return null;
-     //   }
-        
-   // }))).filter(token => token !== null);
+        getDeviceToken(acccessToken, deviceId).then(res => {
+            console.log(res);
+        }).catch(err => console.log(err));
 
-   // const getToken = (deviceId: string) => {
-       //return Promise.all(async () => await getDeviceToken(acccessToken, deviceId));
-
-     //  return Promise.resolve(getDeviceToken(acccessToken, deviceId).then(token => token));
-   // };
-
-    const getToken = async (deviceId: string) => await getDeviceToken(acccessToken, deviceId);
-
-    //const tokens = (await Promise.all(devices.map(async device => {
-    //    try {
-     //       const token = await getDeviceToken(acccessToken, device.id) as any;
-
-     //       return token;
-    //  } catch (error) {
-      //      devicesWithoutToken.push(device.id);
-       //     return null;
-     //   }
+    }
 
     return (
         <Container>
@@ -68,17 +49,23 @@ export default async function Page() {
                             <TableCell>#</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Token</TableCell>
+                            <TableCell>-</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {devices.map(async (device: any) => {
                             const token = await getToken(device.id);
                             
+                            console.log(token);
+
                             return (
                                 <TableRow key={device.id}>
                                     <TableCell>{device.id}</TableCell>
                                     <TableCell>{device.name}</TableCell>
                                     <TableCell>{token}</TableCell>
+                                    <TableCell>
+                                        <CreateToken accessToken={acccessToken} deviceId={device.id} />
+                                    </TableCell>
                                 </TableRow>
                             );
                         })}

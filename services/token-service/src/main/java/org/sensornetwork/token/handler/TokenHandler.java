@@ -24,19 +24,21 @@ public class TokenHandler {
     public Mono<ServerResponse> getToken(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 
-        return tokenRepository.findByDeviceId(deviceId)
-                .flatMap(token -> ServerResponse.ok().body(token, Token.class))
-                .switchIfEmpty(ServerResponse.notFound().build());
+        return tokenRepository.findByDeviceId(deviceId).flatMap(token -> ServerResponse.ok().bodyValue(token))
+
+        //return tokenRepository.findByDeviceId(deviceId)
+         //       .flatMap(token -> ServerResponse.ok().bodyValue(token))
+        .switchIfEmpty(ServerResponse.notFound().build());
     }
 
     public Mono<ServerResponse> createToken(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 
-        return tokenRepository.existsTokenByDeviceId(deviceId)
-                .flatMap(exists -> {
-                    if (exists) {
-                        return ServerResponse.badRequest().bodyValue("Token for device %s already exist".formatted(deviceId));
-                    }
+        //return tokenRepository.existsTokenByDeviceId(deviceId)
+         //       .flatMap(exists -> {
+              //      if (exists) {
+                //        return ServerResponse.badRequest().bodyValue("Token for device %s already exist".formatted(deviceId));
+                  //  }
 
                     String tokenValue = TokenGenerator.createToken(deviceId);
 
@@ -47,8 +49,10 @@ public class TokenHandler {
                             .expiredAt(LocalDateTime.now().plusYears(1))
                             .build();
 
-                    return tokenRepository.save(token).flatMap(t -> ServerResponse.status(201).body(token, Token.class));
-                });
+                    return tokenRepository.save(token).flatMap(t -> ServerResponse.status(201).bodyValue(t));
+
+                    //return tokenRepository.save(token).flatMap(t -> ServerResponse.status(201).body(token, Token.class));
+                //});
     }
 
     public Mono<ServerResponse> verifyToken(ServerRequest request) {
