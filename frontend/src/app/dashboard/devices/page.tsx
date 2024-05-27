@@ -17,12 +17,12 @@ import { getAccessToken } from "@/modules/auth/auth";
 import { getUserDevices } from "@/modules/services/device-service";
 
 export default async function Page() {
-    const token = await getAccessToken();
-    const devices = await getUserDevices(token);
+    const accessToken = await getAccessToken();
+    const devices = await getUserDevices(accessToken);
 
     return (
         <Container>
-            <DeviceActions accessToken={token} action="create" />
+            <DeviceActions accessToken={accessToken} action="create" />
             <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
                 <Table>
                     <TableHead>
@@ -39,13 +39,13 @@ export default async function Page() {
                             <TableRow key={device.id}>
                                 <TableCell>{device.id}</TableCell>
                                 <TableCell>{device.name}</TableCell>
-                                <TableCell>{new Date(device.timestamp).toLocaleString()}</TableCell>
-                                <TableCell>{device.controller}</TableCell>
+                                <TableCell>{new Date(device.createdAt).toLocaleString()}</TableCell>
+                                <TableCell>{device.description.controller}</TableCell>
                                 <TableCell>
-                                    {device.sensors.map(sensor => <Chip label={sensor} variant="outlined" sx={{ marginX: "0.25rem"}} />)}
+                                    {device.description.sensors.map(sensor => <Chip label={sensor} variant="outlined" sx={{ marginX: "0.25rem"}} />)}
                                 </TableCell>
                                 <TableCell>
-                                    <DeviceActions accessToken={token} action="update" device={device} />
+                                    <DeviceActions accessToken={accessToken} action="update" device={device} />
                                 </TableCell>
                             </TableRow>
                         ))}

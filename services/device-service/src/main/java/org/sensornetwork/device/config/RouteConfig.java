@@ -28,9 +28,8 @@ public class RouteConfig {
                 .DELETE("/devices/{deviceId}", deviceHandler::deleteDevice)
                 .GET("/devices/{deviceId}/token", tokenHandler::getDeviceToken)
                 .POST("/devices/{deviceId}/token", tokenHandler::createDeviceToken)
-                .GET("/devices", deviceHandler::getAllDevices)
+                .GET("/devices", deviceHandler::getDevices)
                 .POST("/devices", deviceHandler::createDevice)
-                .GET("/devices/user", deviceHandler::getAllDevicesByUser)
                 .build();
     }
 }

@@ -5,25 +5,37 @@ type Device = {
 }
 
 export const getAllDevices = async () => {
-    const res = await httpService.get<Device[]>("/devices/all");
+    const res = await httpService.get<Device[]>("/devices");
 
     return res.data;
 }
 
 export const getUserDevices = async (accessToken: string) => {
-    const res = await secureHttpService(accessToken).get<Device[]>("/devices/user");
+    const res = await secureHttpService(accessToken).get<Device[]>("/devices");
 
     return res.data;
 }
 
-export const getDeviceStats = async (deviceId: string) => {
+export const getDevice = async (deviceId: string) => {
     const res = await httpService.get<Device>(`/devices/${deviceId}`);
 
     return res.data;
 }
 
-export const createDevice = async (deviceData: Device, accessToken: string) => {
-    const res = await secureHttpService(accessToken).post<Device>("/devices/create", deviceData);
+export const createDevice = async (accessToken: string, deviceData: Device) => {
+    const res = await secureHttpService(accessToken).post<Device>("/devices", deviceData);
+
+    return res.data;
+}
+
+export const updateDevice = async (accessToken: string, deviceData: Device) => {
+    const res = await secureHttpService(accessToken).put<Device>("/devices", deviceData);
+
+    return res.data;
+}
+
+export const deleteDevice = async (accessToken: string, deviceData: Device) => {
+    const res = await secureHttpService(accessToken).delete<Device>("/devices", deviceData);
 
     return res.data;
 }

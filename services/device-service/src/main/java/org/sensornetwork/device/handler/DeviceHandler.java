@@ -25,22 +25,17 @@ public class DeviceHandler {
         this.deviceRepository = deviceRepository;
     }
 
-    public Mono<ServerResponse> getAllDevices(ServerRequest request) {
-       return ServerResponse.ok().body(deviceRepository.findAll(), Device.class);
-    }
-
-    public Mono<ServerResponse> getAllDevicesByUser(ServerRequest request) {
-        //request.principal().map(principal -> (Jwt) principal);
-
+    public Mono<ServerResponse> getDevices(ServerRequest request) {
         return ReactiveSecurityContextHolder.getContext()
                 .map(context -> (Jwt) context.getAuthentication().getPrincipal())
-                .map(jwt -> {
+                .flatMap(jwt -> {
                     String userId = jwt.getClaimAsString("userId");
 
-                    return deviceRepository.findAllByUserId(userId);
+                    return ServerResponse.ok().body(deviceRepository.findAllByUserId(userId), Device.class);
                 })
-                .flatMap(devices ->  ServerResponse.ok().body(devices, Device.class));
+                .switchIfEmpty(ServerResponse.ok().body(deviceRepository.findAll(), Device.class));
     }
+
 
     public Mono<ServerResponse> getDevice(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
@@ -57,7 +52,7 @@ public class DeviceHandler {
                 .flatMap(jwt -> {
                     String userId = jwt.getClaimAsString("userId");
 
-                    return request.bodyToMono(DeviceRequest.class).flatMap(deviceRequest -> {
+                    return request.bodyToMono(DeviceRequest.class).map(deviceRequest -> {
                         Device device = Device.builder()
                                 .userId(userId)
                                 .name(deviceRequest.name())
@@ -67,8 +62,8 @@ public class DeviceHandler {
                                 .location(deviceRequest.location())
                                 .build();
 
-                        return deviceRepository.save(device).flatMap(d -> ServerResponse.status(201).body(d, Device.class));
-                    });
+                        return deviceRepository.save(device);
+                    }).flatMap(device -> ServerResponse.status(201).body(device, Device.class));
                 });
     }
 

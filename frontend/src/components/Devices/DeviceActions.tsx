@@ -23,7 +23,7 @@ import { SelectInput, TextInput } from "../Input";
 type DeviceActionsProps = {
     accessToken: string;
     device?: any | null;
-    action: "create" | "update" | "clone";
+    action: "create" | "update";
 }
 
 export default function DeviceActions({ accessToken, device, action }: DeviceActionsProps) {
@@ -45,22 +45,22 @@ export default function DeviceActions({ accessToken, device, action }: DeviceAct
     const formik = useFormik({
         initialValues: {
             name: '',
-            controller: '',
-            sensors: [],
             description: {
                 indoor: false,
-                trafficInArea: null,
-                industryInArea: null
+                trafficInArea: 0,
+                industryInArea: 0,
+                controller: null,
+                sensors: [],
             }
         },
         onSubmit: async (values) => {
-            const device = {
+            const deviceData = {
                 ...values,
                 location
             };
 
             try {
-                const res = await createDevice(device, accessToken);
+                const res = await createDevice(accessToken, deviceData);
 
                 console.log(res);
 
@@ -92,13 +92,13 @@ export default function DeviceActions({ accessToken, device, action }: DeviceAct
                                 helperText={formik.touched.name && formik.errors.name}
                             />
                             <SelectInput
-                                name="controller"
+                                name="description.controller"
                                 label="Controller"
-                                value={formik.values.controller}
+                                value={formik.values.description.controller}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.controller && Boolean(formik.errors.controller)}
-                                helperText={formik.touched.controller && formik.errors.controller} 
+                                error={formik.touched.description?.controller && Boolean(formik.errors.description?.controller)}
+                                helperText={formik.touched.description?.controller && formik.errors.description?.controller} 
                                 items={CONTROLLERS} 
                             />
                         </Stack>
@@ -121,15 +121,15 @@ export default function DeviceActions({ accessToken, device, action }: DeviceAct
                             />
                         </Stack>
                         <Search onSelectValue={onSelectLocation} />
-                        <FieldArray name="sensors">
+                        <FieldArray name="description.sensors">
                             {({ push, remove }) => (
                                 <Stack direction="row" spacing={2} mb={5}>
-                                    {formik.values.sensors.length > 0 && formik.values.sensors.map((sensor: string, index: number) => (
+                                    {formik.values.description.sensors.length > 0 && formik.values.description.sensors.map((sensor: string, index: number) => (
                                         <div key={index}>
                                             <TextField
                                                 fullWidth
                                                 label="Sensor"
-                                                name={`sensors.${index}`}
+                                                name={`description.sensors.${index}`}
                                                 value={sensor}
                                                 onChange={formik.handleChange}
                                             />
