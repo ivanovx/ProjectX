@@ -10,11 +10,11 @@ import java.util.List;
 public class DeviceDescription {
     private boolean indoor;
 
-    private String controller;
-
-    private List<String> sensors;
-
     private int trafficInArea;
 
     private int industryInArea;
+
+    private String controller;
+
+    private List<String> sensors;
 }

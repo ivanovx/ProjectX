@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class JwtConfig {
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
-        KeyPair keyPair = this.generateRsaKey();
+        KeyPair keyPair = generateRsaKey();
 
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();

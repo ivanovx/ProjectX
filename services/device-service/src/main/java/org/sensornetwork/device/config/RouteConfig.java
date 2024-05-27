@@ -23,12 +23,14 @@ public class RouteConfig {
     @Bean
     public RouterFunction<ServerResponse> route() {
         return RouterFunctions.route()
-                .GET("/devices/all", deviceHandler::getAllDevices)
-                .GET("/devices/user", deviceHandler::getAllDevicesByUser)
-                .POST("/devices/create", deviceHandler::createDevice)
-                //.GET("/devices/{deviceId}", deviceHandler::getDevice)
+                .GET("/devices/{deviceId}", deviceHandler::getDevice)
+                .PUT("/devices/{deviceId}", deviceHandler::updateDevice)
+                .DELETE("/devices/{deviceId}", deviceHandler::deleteDevice)
                 .GET("/devices/{deviceId}/token", tokenHandler::getDeviceToken)
                 .POST("/devices/{deviceId}/token", tokenHandler::createDeviceToken)
+                .GET("/devices", deviceHandler::getAllDevices)
+                .POST("/devices", deviceHandler::createDevice)
+                .GET("/devices/user", deviceHandler::getAllDevicesByUser)
                 .build();
     }
 }

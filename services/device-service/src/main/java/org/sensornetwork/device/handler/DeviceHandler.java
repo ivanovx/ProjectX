@@ -26,9 +26,7 @@ public class DeviceHandler {
     }
 
     public Mono<ServerResponse> getAllDevices(ServerRequest request) {
-        Flux<Device> devices = deviceRepository.findAll();
-
-        return ServerResponse.ok().body(devices, Device.class);
+       return ServerResponse.ok().body(deviceRepository.findAll(), Device.class);
     }
 
     public Mono<ServerResponse> getAllDevicesByUser(ServerRequest request) {
@@ -54,43 +52,55 @@ public class DeviceHandler {
     }
 
     public Mono<ServerResponse> createDevice(ServerRequest request) {
-        //Jwt jwt = request.principal().map(principal -> (Jwt) principal)
-        //@AuthenticationPrincipal Jwt jwt, @RequestBody DeviceRequest request) {
-
-        /*String userId = jwt.getClaimAsString("userId");
-
-        Device device = new Device();
-
-        device.setUserId(userId);
-        device.setName(request.name());
-        device.setSensors(request.sensors());
-        device.setTimestamp(LocalDateTime.now());
-        device.setController(request.controller());
-        device.setLocation(request.location());
-        device.setDescription(request.description());
-
-        return this.deviceRepository.save(device);*/
-
         return ReactiveSecurityContextHolder.getContext()
                 .map(context -> (Jwt) context.getAuthentication().getPrincipal())
                 .flatMap(jwt -> {
                     String userId = jwt.getClaimAsString("userId");
 
                     return request.bodyToMono(DeviceRequest.class).flatMap(deviceRequest -> {
-                        Device device = new Device();
+                        Device device = Device.builder()
+                                .userId(userId)
+                                .name(deviceRequest.name())
+                                .updatedAt(null)
+                                .createdAt(LocalDateTime.now())
+                                .description(deviceRequest.description())
+                                .location(deviceRequest.location())
+                                .build();
 
-                        device.setUserId(userId);
-                        device.setName(deviceRequest.name());
-                        device.setSensors(deviceRequest.sensors());
-                        device.setTimestamp(LocalDateTime.now());
-                        device.setController(deviceRequest.controller());
-                        device.setLocation(deviceRequest.location());
-                        device.setDescription(deviceRequest.description());
-
-                        //return device;
-                        return deviceRepository.save(device).flatMap(d -> ServerResponse.status(201).bodyValue(d));
+                        return deviceRepository.save(device).flatMap(d -> ServerResponse.status(201).body(d, Device.class));
                     });
                 });
     }
 
+    public Mono<ServerResponse> updateDevice(ServerRequest request) {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(context -> (Jwt) context.getAuthentication().getPrincipal())
+                .flatMap(jwt -> {
+                    String userId = jwt.getClaimAsString("userId");
+
+                    return request.bodyToMono(DeviceRequest.class).flatMap(deviceRequest -> {
+                        Device device = Device.builder()
+                                .userId(userId)
+                                .name(deviceRequest.name())
+                                .updatedAt(null)
+                                .createdAt(LocalDateTime.now())
+                                .description(deviceRequest.description())
+                                .location(deviceRequest.location())
+                                .build();
+
+                        return deviceRepository.save(device).flatMap(d -> ServerResponse.status(201).body(d, Device.class));
+                    });
+                });
+    }
+
+    public Mono<ServerResponse> deleteDevice(ServerRequest request) {
+        String deviceId = request.pathVariable("deviceId");
+
+        return deviceRepository.findById(deviceId)
+                .flatMap(device -> {
+                    deviceRepository.deleteById(device.getId());
+
+                    return ServerResponse.ok().body(device, Device.class);
+                });
+    }
 }

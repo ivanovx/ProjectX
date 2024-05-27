@@ -3,6 +3,7 @@ package org.sensornetwork.device.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -15,10 +16,12 @@ public class SecurityConfig {
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/devices/all", "/devices/{id}")
-                        .permitAll()
+                        .pathMatchers(HttpMethod.GET, "/devices")
+                            .permitAll()
+                        .pathMatchers(HttpMethod.GET, "/devices/{id}")
+                            .permitAll()
                         .anyExchange()
-                        .authenticated()
+                            .authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
