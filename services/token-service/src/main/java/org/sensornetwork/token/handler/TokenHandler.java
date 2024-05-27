@@ -24,23 +24,21 @@ public class TokenHandler {
     public Mono<ServerResponse> getDeviceToken(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 
-        return tokenRepository
-                .findTokenByDeviceId(deviceId)
-                .flatMap(token -> ServerResponse.ok().body(token, Token.class))
-                .switchIfEmpty(ServerResponse.ok().body("Token", String.class));
+        return tokenRepository.findByDeviceId(deviceId).flatMap(token -> ServerResponse.ok().bodyValue(token))
+                .switchIfEmpty(ServerResponse.notFound().build());
     }
 
     public Mono<ServerResponse> createDeviceToken(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 
-        Token token = Token.builder()
+        Token deviceToken = Token.builder()
                 .deviceId(deviceId)
                 .value(TokenGenerator.createToken(deviceId))
                 .createdAt(LocalDateTime.now())
                 .expiredAt(LocalDateTime.now().plusYears(1))
                 .build();
 
-        return tokenRepository.save(token).flatMap(t->  ServerResponse.status(201).body(t, Token.class));
+        return tokenRepository.save(deviceToken).flatMap(token -> ServerResponse.status(201).bodyValue(token));
     }
 
     /*public Mono<ServerResponse> verifyToken(ServerRequest request) {

@@ -1,4 +1,10 @@
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.9.29-management
+    ports:
+      - 15672:15672
+      - 5672:5672
   authDb:
     image: mongo:7.0.9
     container_name: authDb

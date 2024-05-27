@@ -1,6 +1,7 @@
 package org.sensornetwork.auth.config;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.time.Duration;
 
@@ -98,7 +99,7 @@ public class SecurityConfig {
     public RegisteredClientRepository clientRepository() {
         RegisteredClient client = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("sensor-network")
-                .clientSecret(this.passwordEncoder().encode("sensor-network-secret"))
+                .clientSecret(passwordEncoder().encode("sensor-network-secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
