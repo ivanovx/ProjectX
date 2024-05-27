@@ -1,5 +1,6 @@
 package org.sensornetwork.device.handler;
 
+import com.netflix.discovery.EurekaClient;
 import org.sensornetwork.common.response.TokenResponse;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
@@ -12,11 +13,19 @@ import reactor.core.publisher.Mono;
 @Component
 public class TokenHandler {
     private final WebClient webClient;
+    private final EurekaClient eurekaClient;
     private final ReactiveCircuitBreaker tokenCircuitBreaker;
 
-    public TokenHandler(WebClient webClient, ReactiveCircuitBreakerFactory circuitBreakerFactory) {
-        this.webClient = webClient;
+    public TokenHandler(EurekaClient eurekaClient, ReactiveCircuitBreakerFactory circuitBreakerFactory) {
+        this.eurekaClient = eurekaClient;
         this.tokenCircuitBreaker = circuitBreakerFactory.create("tokens");
+
+        String baseUrl = eurekaClient.getNextServerFromEureka("token-service", false).getHomePageUrl();
+
+        this.webClient = WebClient
+                .builder()
+                .baseUrl(baseUrl)
+                .build();
     }
 
     public Mono<ServerResponse> getDeviceToken(ServerRequest request) {

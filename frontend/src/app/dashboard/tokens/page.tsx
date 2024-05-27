@@ -21,8 +21,8 @@ export default async function Page() {
     const acccessToken = await getAccessToken();
     const devices = await getUserDevices(acccessToken);    
 
-    const getToken = (deviceId: string) => {
-        /*try {
+    const getToken = async (deviceId: string) => {
+        try {
             const token = await getDeviceToken(acccessToken, deviceId);
 
             console.log(token);
@@ -32,11 +32,11 @@ export default async function Page() {
             console.log(error);
             
             return null;
-        }*/
+        }
 
-        getDeviceToken(acccessToken, deviceId).then(res => {
-            console.log(res);
-        }).catch(err => console.log(err));
+       // getDeviceToken(acccessToken, deviceId).then(res => {
+        //    console.log(res);
+        //}).catch(err => console.log(err));
 
     }
 

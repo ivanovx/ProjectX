@@ -30,6 +30,7 @@ export default async function Page() {
                             <TableCell>#</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Created</TableCell>
+                            <TableCell>Updated</TableCell>
                             <TableCell>Controller</TableCell>
                             <TableCell>Sensors</TableCell>
                         </TableRow>
@@ -40,6 +41,7 @@ export default async function Page() {
                                 <TableCell>{device.id}</TableCell>
                                 <TableCell>{device.name}</TableCell>
                                 <TableCell>{new Date(device.createdAt).toLocaleString()}</TableCell>
+                                <TableCell>{device.updatedAt && new Date(device.updatedAt).toLocaleString()}</TableCell>
                                 <TableCell>{device.description.controller}</TableCell>
                                 <TableCell>
                                     {device.description.sensors.map(sensor => <Chip label={sensor} variant="outlined" sx={{ marginX: "0.25rem"}} />)}

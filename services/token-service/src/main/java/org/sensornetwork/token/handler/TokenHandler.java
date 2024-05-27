@@ -21,41 +21,29 @@ public class TokenHandler {
         this.tokenRepository = tokenRepository;
     }
 
-    public Mono<ServerResponse> getToken(ServerRequest request) {
+    public Mono<ServerResponse> getDeviceToken(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 
-        return tokenRepository.findByDeviceId(deviceId).flatMap(token -> ServerResponse.ok().bodyValue(token))
-
-        //return tokenRepository.findByDeviceId(deviceId)
-         //       .flatMap(token -> ServerResponse.ok().bodyValue(token))
-        .switchIfEmpty(ServerResponse.notFound().build());
+        return tokenRepository
+                .findTokenByDeviceId(deviceId)
+                .flatMap(token -> ServerResponse.ok().body(token, Token.class))
+                .switchIfEmpty(ServerResponse.ok().body("Token", String.class));
     }
 
-    public Mono<ServerResponse> createToken(ServerRequest request) {
+    public Mono<ServerResponse> createDeviceToken(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 
-        //return tokenRepository.existsTokenByDeviceId(deviceId)
-         //       .flatMap(exists -> {
-              //      if (exists) {
-                //        return ServerResponse.badRequest().bodyValue("Token for device %s already exist".formatted(deviceId));
-                  //  }
+        Token token = Token.builder()
+                .deviceId(deviceId)
+                .value(TokenGenerator.createToken(deviceId))
+                .createdAt(LocalDateTime.now())
+                .expiredAt(LocalDateTime.now().plusYears(1))
+                .build();
 
-                    String tokenValue = TokenGenerator.createToken(deviceId);
-
-                    Token token = Token.builder()
-                            .deviceId(deviceId)
-                            .value(tokenValue)
-                            .createdAt(LocalDateTime.now())
-                            .expiredAt(LocalDateTime.now().plusYears(1))
-                            .build();
-
-                    return tokenRepository.save(token).flatMap(t -> ServerResponse.status(201).bodyValue(t));
-
-                    //return tokenRepository.save(token).flatMap(t -> ServerResponse.status(201).body(token, Token.class));
-                //});
+        return tokenRepository.save(token).flatMap(t->  ServerResponse.status(201).body(t, Token.class));
     }
 
-    public Mono<ServerResponse> verifyToken(ServerRequest request) {
+    /*public Mono<ServerResponse> verifyToken(ServerRequest request) {
         return request.bodyToMono(TokenVerifyRequest.class)
                 .flatMap(body -> tokenRepository.findByDeviceId(body.deviceId()).flatMap(token -> {
                     if (LocalDateTime.now().isAfter(token.getExpiredAt())) {
@@ -68,5 +56,5 @@ public class TokenHandler {
 
                     return ServerResponse.ok().bodyValue("VALID");
                 }));
-    }
+    }*/
 }
