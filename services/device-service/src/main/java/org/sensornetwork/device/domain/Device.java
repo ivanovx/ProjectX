@@ -1,14 +1,15 @@
 package org.sensornetwork.device.domain;
 
 import lombok.Data;
+import lombok.Builder;
 
-import java.util.List;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
+@Builder
 @Document("devices")
 public class Device {
     @Id
@@ -18,11 +19,9 @@ public class Device {
 
     private String userId;
 
-    private String controller;
+    private LocalDateTime createdAt;
 
-    private List<String> sensors;
-
-    private LocalDateTime timestamp;
+    private LocalDateTime updatedAt;
 
     private DeviceLocation location;
 

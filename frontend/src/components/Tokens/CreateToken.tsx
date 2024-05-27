@@ -14,7 +14,7 @@ export default function CreateToken({ accessToken, deviceId }: { accessToken: st
 
         console.log(res);
 
-        router.push('/dashboard/tokens'); 
+        router.push('/dashboard/tokens');
     };
 
     return <Button onClick={onCreateToken}>Create</Button>;
