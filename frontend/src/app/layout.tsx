@@ -5,7 +5,7 @@ import GlobalLayout from "@/layouts/GlobalLayout";
 
 export const metadata: Metadata = {
     title: "Sensor Network",
-    description: "TODO",
+    description: "Make open weather data from community sensors.",
 };
 
 export default async function Layout({ children }: { children: React.ReactNode }) {

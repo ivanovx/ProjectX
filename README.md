@@ -21,19 +21,33 @@ Make open weather data from community sensors.
 * Next.js
 * Docker
 
-## Generate secure token for client openid
+## Generate key pair for openid auth server
+```
+Generate an RSA private key, of size 2048, and output it to a file named key.pem:
 
+openssl genrsa -out private-key.pem 2048
+
+Extract the public key from the key pair, which can be used in a certificate:
+
+openssl rsa -in key.pem -outform PEM -pubout -out public-key.pem
+```
+
+## Generate secure token for client openid
 ```
 node -e "console.log(crypto.randomBytes(32).toString('hex'))"
 ```
 
 ## TODO
 
-* Device managements (create, update, delete)
+* Device managements (delete)
 * Device details
 * Device stats (includes measurements)
-* Token manage (create, update, delete)
+* Token manage (update, delete)
 * Meassurement managements (view, manage)
 * Backend fix and docker
 
 ## Documentation and architecture
+
+## Used links
+
+* https://docs.spring.io/spring-authorization-server/reference/guides/how-to-pkce.html - for Auth Server configuration

@@ -2,10 +2,8 @@ package org.sensornetwork.auth.config;
 
 import java.util.UUID;
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPublicKey;
 import java.security.interfaces.RSAPrivateKey;
-import java.security.NoSuchAlgorithmException;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -13,15 +11,24 @@ import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 
+import org.springframework.context.annotation.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
 
 @Configuration
 public class JwtConfig {
-    @Bean
-    public JWKSource<SecurityContext> jwkSource() {
-        KeyPair keyPair = generateRsaKey();
 
+    @Value("${jwt.public.key}")
+    private RSAPublicKey publicKey;
+
+    @Value("${jwt.private.key}")
+    private RSAPrivateKey privateKey;
+
+    @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    public JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 
@@ -35,17 +42,9 @@ public class JwtConfig {
         return new ImmutableJWKSet<>(jwkSet);
     }
 
-    private KeyPair generateRsaKey() {
-        KeyPair keyPair;
-
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            keyPair = keyPairGenerator.generateKeyPair();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
-        return keyPair;
+    @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    public KeyPair loadKeyPair() {
+        return new KeyPair(publicKey, privateKey);
     }
 }

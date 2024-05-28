@@ -7,3 +7,6 @@ spring:
     mongodb:
       auto-index-creation: true
       uri: mongodb://localhost:27117/authDb
+jwt:
+  public.key: classpath:public-key.pem
+  private.key: classpath:private-key.pem
