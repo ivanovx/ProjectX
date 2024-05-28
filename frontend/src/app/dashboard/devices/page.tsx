@@ -20,9 +20,20 @@ export default async function Page() {
     const accessToken = await getAccessToken();
     const devices = await getUserDevices(accessToken);
 
+    const initialDevice = {
+        name: '',
+        description: {
+            indoor: false,
+            trafficInArea: 0,
+            industryInArea: 0,
+            controller: null,
+            sensors: [],
+        }
+    };
+
     return (
         <Container>
-            <DeviceActions accessToken={accessToken} action="create" />
+            <DeviceActions accessToken={accessToken} action="create" device={initialDevice} />
             <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
                 <Table>
                     <TableHead>
@@ -33,6 +44,7 @@ export default async function Page() {
                             <TableCell>Updated</TableCell>
                             <TableCell>Controller</TableCell>
                             <TableCell>Sensors</TableCell>
+                            <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

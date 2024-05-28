@@ -14,7 +14,7 @@ import {
     DialogContent
 } from '@mui/material';
 
-import { createDevice } from "@/modules/services/device-service";
+import { createDevice, updateDevice } from "@/modules/services/device-service";
 
 import { CONTROLLERS } from "@/modules/mock";
 import Search from "../Search";
@@ -22,7 +22,7 @@ import { SelectInput, TextInput } from "../Input";
 
 type DeviceActionsProps = {
     accessToken: string;
-    device?: any | null;
+    device: any;
     action: "create" | "update";
 }
 
@@ -43,42 +43,36 @@ export default function DeviceActions({ accessToken, device, action }: DeviceAct
     };
 
     const formik = useFormik({
-        initialValues: {
-            name: '',
-            description: {
-                indoor: false,
-                trafficInArea: 0,
-                industryInArea: 0,
-                controller: null,
-                sensors: [],
-            }
-        },
+        initialValues: device,
         onSubmit: async (values) => {
-            const deviceData = {
-                ...values,
-                location
-            };
+            if (action === "create") {
+                const deviceData = {
+                    ...values,
+                    location
+                };
 
-            try {
                 const res = await createDevice(accessToken, deviceData);
-
                 console.log(res);
+            } else if (action === "update") {
+                const deviceData = {
+                    ...values
+                };
 
-                formik.resetForm();
-
-                router.push('/dashboard/devices'); 
-                setOpen(false);
-            } catch (err) {
-                console.log(err);
+                const res = await updateDevice(accessToken, deviceData.id, deviceData);
+                console.log(res);
             }
+
+            formik.resetForm();
+            router.push('/dashboard/devices');
+            setOpen(false);
         },
     });
 
     return (
         <FormikProvider value={formik}>
-            <Button variant="outlined" onClick={() => setOpen(true)}>New device</Button>
+            <Button variant="outlined" onClick={() => setOpen(true)}>{action === "create" ? "New device" : "Update"}</Button>
             <Dialog open={open} fullWidth={true} maxWidth="lg">
-                <DialogTitle>New device</DialogTitle>
+                <DialogTitle>{action === "create" ? "New device" : "Update device"}</DialogTitle>
                 <DialogContent>
                     <form onSubmit={formik.handleSubmit}>
                         <Stack direction="row" spacing={2} mb={5}>
@@ -120,7 +114,7 @@ export default function DeviceActions({ accessToken, device, action }: DeviceAct
                                 onBlur={formik.handleBlur}
                             />
                         </Stack>
-                        <Search onSelectValue={onSelectLocation} />
+                        {action === "create" && <Search onSelectValue={onSelectLocation} />}
                         <FieldArray name="description.sensors">
                             {({ push, remove }) => (
                                 <Stack direction="row" spacing={2} mb={5}>
@@ -144,7 +138,7 @@ export default function DeviceActions({ accessToken, device, action }: DeviceAct
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
-                    <Button onClick={() => formik.submitForm()}>Create</Button>
+                    <Button onClick={() => formik.submitForm()}>{action === "create" ? "New device" : "Update device"}</Button>
                 </DialogActions>
             </Dialog>
         </FormikProvider>

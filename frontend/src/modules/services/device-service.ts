@@ -28,14 +28,14 @@ export const createDevice = async (accessToken: string, deviceData: Device) => {
     return res.data;
 }
 
-export const updateDevice = async (accessToken: string, deviceData: Device) => {
-    const res = await secureHttpService(accessToken).put<Device>("/devices", deviceData);
+export const updateDevice = async (accessToken: string, deviceId: string, deviceData: Device) => {
+    const res = await secureHttpService(accessToken).put<Device>(`/devices/${deviceId}`, deviceData);
 
     return res.data;
 }
 
-export const deleteDevice = async (accessToken: string, deviceData: Device) => {
-    const res = await secureHttpService(accessToken).delete<Device>("/devices", deviceData);
+export const deleteDevice = async (accessToken: string, deviceId: string) => {
+    const res = await secureHttpService(accessToken).delete<Device>(`/devices/${deviceId}`);
 
     return res.data;
 }

@@ -68,22 +68,23 @@ public class DeviceHandler {
     }
 
     public Mono<ServerResponse> updateDevice(ServerRequest request) {
+        String deviceId = request.pathVariable("deviceId");
+
+        Mono<Device> device = deviceRepository.findById(deviceId);
+
         return ReactiveSecurityContextHolder.getContext()
                 .map(context -> (Jwt) context.getAuthentication().getPrincipal())
                 .flatMap(jwt -> {
                     String userId = jwt.getClaimAsString("userId");
 
                     return request.bodyToMono(DeviceRequest.class).flatMap(deviceRequest -> {
-                        Device device = Device.builder()
-                                .userId(userId)
-                                .name(deviceRequest.name())
-                                .updatedAt(null)
-                                .createdAt(LocalDateTime.now())
-                                .description(deviceRequest.description())
-                                .location(deviceRequest.location())
-                                .build();
+                        return device.flatMap(d -> {
+                            d.setName(deviceRequest.name());
+                            d.setUpdatedAt(LocalDateTime.now());
+                            d.setDescription(deviceRequest.description());
 
-                        return deviceRepository.save(device).flatMap(d -> ServerResponse.status(201).body(d, Device.class));
+                            return deviceRepository.save(d).flatMap(updatedDevice -> ServerResponse.ok().bodyValue(updatedDevice));
+                        });
                     });
                 });
     }
