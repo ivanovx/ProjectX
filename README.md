@@ -4,17 +4,15 @@ Make open weather data from community sensors.
 
 ## Services Map
 
------------------------------
-|Service            |   Port|
------------------------------
-|auth-service       |   9000|
-|gateway-service    |   8000|
-|discovery-service  |   8001|
-|device-service     |   8002|
-|token-service      |   8003|
-|measurement-service|   8004|
-|stat-service       |   8005|
------------------------------
+| Service             |  Port|
+------------------------------
+| auth-service        |  9000|
+| gateway-service     |  8000|
+| discovery-service   |  8001|
+| device-service      |  8002|
+| token-service       |  8003|
+| measurement-service |  8004|
+| stat-service        |  8005|
 
 ## Used technologies
 
@@ -39,9 +37,9 @@ Extract the public key from the key pair, which can be used in a certificate:
 openssl rsa -in key.pem -outform PEM -pubout -out public-key.pem
 ```
 
-## Generate secure token for client openid
+## Generate secure token for Next.js auth
 ```
-node -e "console.log(crypto.randomBytes(32).toString('hex'))"
+openssl rand -base64 32
 ```
 
 ## TODO
