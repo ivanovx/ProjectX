@@ -4,17 +4,24 @@ Make open weather data from community sensors.
 
 ## Services Map
 
-* auth-service
-* device-service
-* measurement-service
-* token-service
-* stat-service
-* gateway-service
-* discovery-service
+-----------------------------
+|Service            |   Port|
+-----------------------------
+|auth-service       |   9000|
+|gateway-service    |   8000|
+|discovery-service  |   8001|
+|device-service     |   8002|
+|token-service      |   8003|
+|measurement-service|   8004|
+|stat-service       |   8005|
+-----------------------------
 
 ## Used technologies
 
 * Spring
+  * WebFlux
+  * Cloud
+  * Eureka
 * MongoDb
 * Redis
 * React.js
