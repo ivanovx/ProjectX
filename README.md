@@ -5,7 +5,7 @@ Make open weather data from community sensors.
 ## Services Map
 
 | Service             |  Port|
-------------------------------
+|---------------------|------|
 | auth-service        |  9000|
 | gateway-service     |  8000|
 | discovery-service   |  8001|
