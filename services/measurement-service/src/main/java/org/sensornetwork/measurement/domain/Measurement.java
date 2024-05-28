@@ -1,14 +1,15 @@
 package org.sensornetwork.measurement.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.Map;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
+@Builder
 @Document("measurements")
 public class Measurement {
     @Id
@@ -16,7 +17,7 @@ public class Measurement {
 
     private String deviceId;
 
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private LocalDateTime timestamp;
 
-    public Map<String, Object> body;
+    public MeasurementValue values;
 }

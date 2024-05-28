@@ -23,6 +23,7 @@ public class RouteConfig {
         return RouterFunctions.route()
                 .GET("/measurements/{deviceId}", measurementHandler::getMeasurements)
                 .POST("/measurements/{deviceId}", measurementHandler::putMeasurement)
+                .PUT("/measurements/{deviceId}", measurementHandler::putMeasurement)
                 .build();
     }
 }

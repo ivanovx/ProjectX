@@ -28,6 +28,7 @@ public class RouteConfig {
                 .DELETE("/devices/{deviceId}", deviceHandler::deleteDevice)
                 .GET("/devices/{deviceId}/token", tokenHandler::getDeviceToken)
                 .POST("/devices/{deviceId}/token", tokenHandler::createDeviceToken)
+                .DELETE("/devices/{deviceId}/token", tokenHandler::createDeviceToken)
                 .GET("/devices", deviceHandler::getDevices)
                 .POST("/devices", deviceHandler::createDevice)
                 .build();

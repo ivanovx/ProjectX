@@ -1,13 +1,14 @@
-// TODO
-// Make sensors list
 export const SENSORS = [
     'BME280',
     'BME680',
-    'SDS011'
+    'BME688',
+    'SDS011',
+    'Sharp GP2Y',
+    'SGP30',
+    'SI1145',
+    'LTR390',
 ];
 
-// TODO
-// Make controllers list
 export const CONTROLLERS = [
     'Arduino',
     'Raspberry Pi',

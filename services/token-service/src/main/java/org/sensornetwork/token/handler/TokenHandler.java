@@ -31,16 +31,57 @@ public class TokenHandler {
     public Mono<ServerResponse> createDeviceToken(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 
-        Token deviceToken = Token.builder()
-                .deviceId(deviceId)
-                .value(TokenGenerator.createToken(deviceId))
-                .createdAt(LocalDateTime.now())
-                .expiredAt(LocalDateTime.now().plusYears(1))
-                .build();
+        return tokenRepository.existsByDeviceId(deviceId).flatMap(exists -> {
+            if (exists) {
+                return ServerResponse.badRequest().bodyValue("Token already exists");
+            }
 
-        return tokenRepository.save(deviceToken).flatMap(token -> ServerResponse.status(201).bodyValue(token));
+            Token deviceToken = Token.builder()
+                    .deviceId(deviceId)
+                    .value(TokenGenerator.createToken(deviceId))
+                    .createdAt(LocalDateTime.now())
+                    .expiredAt(LocalDateTime.now().plusYears(1))
+                    .build();
+
+            return tokenRepository.save(deviceToken).flatMap(token -> ServerResponse.status(201).bodyValue(token));
+        });
+
+        /**/
+
+        //return tokenRepository.existsByDeviceId(deviceId)(exists -> {
+        //    if (exists) {
+         //       return tokenRepository.deleteByDeviceId(deviceId).flatMap(res -> {
+         //           return tokenRepository.save(deviceToken).flatMap(token -> ServerResponse.status(201).bodyValue(token));
+             //   });
+          //  }
+
+          //  return tokenRepository.save(deviceToken).flatMap(token -> ServerResponse.status(201).bodyValue(token));
+       // });
+
+      //  return tokenRepository.existsByDeviceId(deviceId).map(exists -> {
+        //    if (exists) {
+          //      return tokenRepository.deleteByDeviceId(deviceId).flatMap(r -> Mono.just(deviceToken));
+          //  }
+
+         //   return Mono.just(deviceToken);
+        //}).flatMap(t -> {
+          //  return tokenRepository.save(deviceToken).flatMap(token -> ServerResponse.status(201).bodyValue(token));
+        //});
     }
 
+    public Mono<ServerResponse> deleteDeviceToken(ServerRequest request) {
+        String deviceId = request.pathVariable("deviceId");
+
+        return tokenRepository.existsByDeviceId(deviceId).flatMap(exists -> {
+            if (exists) {
+                return tokenRepository.deleteByDeviceId(deviceId).then(Mono.defer(() -> ServerResponse.ok().build()));
+            }
+
+            return ServerResponse.notFound().build();
+        });
+    }
+
+    // Here use rabbitmq
     /*public Mono<ServerResponse> verifyToken(ServerRequest request) {
         return request.bodyToMono(TokenVerifyRequest.class)
                 .flatMap(body -> tokenRepository.findByDeviceId(body.deviceId()).flatMap(token -> {

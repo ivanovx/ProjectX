@@ -62,7 +62,7 @@ export default async function Page() {
                                 <TableRow key={device.id}>
                                     <TableCell>{device.id}</TableCell>
                                     <TableCell>{device.name}</TableCell>
-                                    <TableCell>{token.value}</TableCell>
+                                    <TableCell>{token?.value}</TableCell>
                                     <TableCell>
                                         <CreateToken accessToken={acccessToken} deviceId={device.id} />
                                     </TableCell>
