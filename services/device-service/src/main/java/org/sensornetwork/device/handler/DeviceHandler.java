@@ -31,7 +31,7 @@ public class DeviceHandler {
                 .flatMap(jwt -> {
                     String userId = jwt.getClaimAsString("userId");
 
-                    return ServerResponse.ok().body(deviceRepository.findAllByUserId(userId), Device.class);
+                    return ServerResponse.ok().body(deviceRepository.findAllByUserIdOrderByCreatedAtDesc(userId), Device.class);
                 })
                 .switchIfEmpty(ServerResponse.ok().body(deviceRepository.findAll(), Device.class));
     }
@@ -42,7 +42,7 @@ public class DeviceHandler {
 
         return deviceRepository
                 .findById(deviceId)
-                .flatMap(device -> ServerResponse.ok().body(device, Device.class))
+                .flatMap(device -> ServerResponse.ok().bodyValue(device))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 
@@ -79,6 +79,10 @@ public class DeviceHandler {
 
                     return request.bodyToMono(DeviceRequest.class).flatMap(deviceRequest -> {
                         return device.flatMap(d -> {
+                            if (d.getUserId().compareTo(userId) != 0){
+                                return ServerResponse.badRequest().build();
+                            }
+
                             d.setName(deviceRequest.name());
                             d.setUpdatedAt(LocalDateTime.now());
                             d.setDescription(deviceRequest.description());

@@ -1,5 +1,6 @@
 package org.sensornetwork.measurement.handler;
 
+import com.netflix.discovery.EurekaClient;
 import org.sensornetwork.common.request.MeasurementRequest;
 import org.sensornetwork.common.request.TokenVerifyRequest;
 import org.sensornetwork.measurement.domain.Measurement;
@@ -26,28 +27,33 @@ import java.time.LocalDateTime;
 
 @Component
 public class MeasurementHandler {
-
     private final WebClient webClient;
+
+    private final EurekaClient eurekaClient;
 
     private final MeasurementRepository measurementRepository;
 
     private final ReactiveCircuitBreaker tokenCircuitBreaker;
-    private final HandlerMapping resourceHandlerMapping;
 
     public MeasurementHandler(
-            WebClient webClient,
+            EurekaClient eurekaClient,
             MeasurementRepository measurementRepository,
-            ReactiveCircuitBreakerFactory circuitBreakerFactory,
-            @Qualifier("resourceHandlerMapping") HandlerMapping resourceHandlerMapping) {
-        this.webClient = webClient;
+            ReactiveCircuitBreakerFactory circuitBreakerFactory
+    ) {
+        this.eurekaClient = eurekaClient;
         this.measurementRepository = measurementRepository;
         this.tokenCircuitBreaker = circuitBreakerFactory.create("token");
-        this.resourceHandlerMapping = resourceHandlerMapping;
+
+        String baseUrl = eurekaClient.getNextServerFromEureka("token-service", false).getHomePageUrl();
+
+        this.webClient = WebClient.builder()
+                .baseUrl(baseUrl)
+                .build();
     }
 
     public Mono<ServerResponse> getMeasurements(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
-        Flux<Measurement> measurements = measurementRepository.findByDeviceId(deviceId);
+        Flux<Measurement> measurements = measurementRepository.findByDeviceIdOrderByTimestampDesc(deviceId);
 
         return ServerResponse.ok().body(measurements, Measurement.class);
     }
@@ -63,6 +69,7 @@ public class MeasurementHandler {
                             .temperature(measurementRequest.temperature())
                             .airQualityIndex(measurementRequest.airQualityIndex())
                             .vocIndex(measurementRequest.vocIndex())
+                            .uvIndex(measurementRequest.uvIndex())
                             .build();
 
                     Measurement measurement = Measurement.builder()

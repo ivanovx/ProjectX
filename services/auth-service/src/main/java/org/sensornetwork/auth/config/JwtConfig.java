@@ -27,7 +27,7 @@ public class JwtConfig {
     private RSAPrivateKey privateKey;
 
     @Bean
-    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    //@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
@@ -43,8 +43,8 @@ public class JwtConfig {
     }
 
     @Bean
-    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public KeyPair loadKeyPair() {
+    //@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    public KeyPair keyPair() {
         return new KeyPair(publicKey, privateKey);
     }
 }

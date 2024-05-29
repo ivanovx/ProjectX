@@ -32,7 +32,7 @@ const footers = [
     },
 ];
 
-export default function Layout({ session, children }: { session: Session | null, children: React.ReactNode }) {
+export default function GlobalLayout({ session, children }: { session: Session | null, children: React.ReactNode }) {
     const defaultTheme = createTheme();
 
     return (

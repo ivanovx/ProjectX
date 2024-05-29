@@ -1,4 +1,4 @@
-package org.sensornetwork.statservice;
+package org.sensornetwork.stat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
