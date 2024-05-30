@@ -7,7 +7,7 @@ export const getSession = async () => getServerSession(authOptions);
 export const getAccessToken = async () => {
     const session = await getSession();
 
-    if (session === null) {
+    if (session == null) {
         throw "Session are null!";
     }
 

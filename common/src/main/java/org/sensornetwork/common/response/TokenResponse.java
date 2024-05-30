@@ -1,3 +1,14 @@
 package org.sensornetwork.common.response;
 
-public record TokenResponse(String value, String deviceId) { }
+import java.time.LocalDateTime;
+
+public record TokenResponse(
+        String value,
+        String deviceId,
+
+        String id,
+
+        LocalDateTime createdAt,
+
+        LocalDateTime expiredAt
+) { }

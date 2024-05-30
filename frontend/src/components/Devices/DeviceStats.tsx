@@ -1,39 +1,19 @@
 "use client";
 
-import { LineChart, lineElementClasses } from '@mui/x-charts/LineChart';
+import { LineChart } from '@mui/x-charts/LineChart';
 
-/*
+export default function DeviceStats({ temperatureValues }: any) {
+    const temperature = {
+        xData: temperatureValues.map(d => new Date(d.timestamp).toUTCString()),
+        yData: temperatureValues.map(d => d.temperature),
+    };
 
-        
+    return (
         <LineChart
-            xAxis={[{ data: tempValues.map(temp => Date.parse(temp.timestamp)) }]}
-            series={[
-                {
-                    scaleType: 'point',
-                    data: tempValues.map(temp => temp.temperature)
-                },
-            ]}
             width={500}
             height={300}
+            series={[{ data: temperature.yData, label: 'temperature', area: true, showMark: false }]}
+            xAxis={[{ scaleType: 'point', data: temperature.xData }]}
         />
-
-
-*/
-
-export default function DeviceStats({ tempValues }: any) {
-    return (
-
-
-<LineChart
-      width={500}
-      height={300}
-      series={[{ data: tempValues.map(temp => temp.temperature), label: 'uv', area: true, showMark: false }]}
-      xAxis={[{ scaleType: 'point', data: tempValues.map(temp => Date.parse(temp.timestamp)) }]}
-      sx={{
-        [`& .${lineElementClasses.root}`]: {
-          display: 'none',
-        },
-      }}
-    />
     );
 }
