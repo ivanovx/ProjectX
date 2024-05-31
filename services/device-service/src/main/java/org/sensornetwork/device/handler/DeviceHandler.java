@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component
 public class DeviceHandler {
@@ -33,7 +34,7 @@ public class DeviceHandler {
 
                     return ServerResponse.ok().body(deviceRepository.findAllByUserIdOrderByCreatedAtDesc(userId), Device.class);
                 })
-                .switchIfEmpty(ServerResponse.ok().body(deviceRepository.findAll(), Device.class));
+                .switchIfEmpty(getAllDevices(request));
     }
 
 
@@ -93,14 +94,31 @@ public class DeviceHandler {
                 });
     }
 
+    // TODO add user
     public Mono<ServerResponse> deleteDevice(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 
         return deviceRepository.findById(deviceId)
                 .flatMap(device -> {
+
                     deviceRepository.deleteById(device.getId());
 
-                    return ServerResponse.ok().body(device, Device.class);
+                    return ServerResponse.ok().bodyValue(device);
                 });
+    }
+
+    private Mono<ServerResponse> getAllDevices(ServerRequest request) {
+        Optional<Double> lat = request.queryParam("lat").isPresent() ? Optional.of(Double.parseDouble(request.queryParam("lat").get())) : Optional.empty();
+        Optional<Double> lon = request.queryParam("lon").isPresent() ? Optional.of(Double.parseDouble(request.queryParam("lon").get())) : Optional.empty();
+
+        return ServerResponse.ok().body(getAllDevices(lat, lon), Device.class);
+    }
+
+    private Flux<Device> getAllDevices(Optional<Double> lat, Optional<Double> lon) {
+        if (lat.isPresent() && lon.isPresent()) {
+            return deviceRepository.findAllByLocation_LatitudeAndLocation_Longitude(lat.get(), lon.get());
+        }
+
+        return deviceRepository.findAll();
     }
 }

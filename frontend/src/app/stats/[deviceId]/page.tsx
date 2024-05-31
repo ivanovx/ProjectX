@@ -14,6 +14,8 @@ export default async function Page({ params }: { params: { deviceId: string } })
         return notFound();
     }
 
+    console.log(device);
+
     const temperatureValues = device.measurements.map(m => {
         return {
             timestamp: m.timestamp,

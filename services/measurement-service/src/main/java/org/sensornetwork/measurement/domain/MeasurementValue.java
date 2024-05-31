@@ -14,9 +14,9 @@ public class MeasurementValue {
 
     private double airQualityIndex;
 
-    private double windSpeed;
+    //private double windSpeed;
 
-    private double windDirection;
+    //private double windDirection;
 
-    private double noise;
+    //private double noise;
 }

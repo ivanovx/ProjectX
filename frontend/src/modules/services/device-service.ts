@@ -10,6 +10,12 @@ export const getAllDevices = async () => {
     return res.data;
 }
 
+export const getAllDevicesInArea = async (lat: string, lon: string) => {
+    const res = await httpService.get<Device[]>(`/devices?lat=${lat}&lon=${lon}`);
+
+    return res.data;
+}
+
 export const getUserDevices = async (accessToken: string) => {
     const res = await secureHttpService(accessToken).get<Device[]>("/devices");
 
