@@ -94,7 +94,7 @@ public class DeviceHandler {
                 });
     }
 
-    // TODO add user
+    // TODO check user
     public Mono<ServerResponse> deleteDevice(ServerRequest request) {
         String deviceId = request.pathVariable("deviceId");
 

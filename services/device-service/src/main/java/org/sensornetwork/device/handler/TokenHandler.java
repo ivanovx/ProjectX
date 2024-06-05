@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class TokenHandler {
     private final WebClient webClient;
+
     private final EurekaClient eurekaClient;
     private final ReactiveCircuitBreaker tokenCircuitBreaker;
 

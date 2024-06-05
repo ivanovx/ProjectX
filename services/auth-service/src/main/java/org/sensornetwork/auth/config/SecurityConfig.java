@@ -1,7 +1,6 @@
 package org.sensornetwork.auth.config;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.time.Duration;
 
@@ -55,19 +54,21 @@ public class SecurityConfig {
                                 new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                         )
                 )
-                .oauth2ResourceServer(resourceServer -> resourceServer.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(resourceServer -> resourceServer.jwt(Customizer.withDefaults()))
+                .cors(Customizer.withDefaults());
 
-        return http.cors(Customizer.withDefaults()).build();
+        return http.build();
     }
 
     @Bean
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/user/**").permitAll().anyRequest().authenticated())
-                .formLogin(login -> login.loginPage("/user/signin").permitAll());
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/user/**", "/css/**", "/js/**").permitAll().anyRequest().authenticated())
+                .formLogin(login -> login.loginPage("/user/signin").permitAll())
+                .cors(Customizer.withDefaults());
 
-        return http.cors(Customizer.withDefaults()).build();
+        return http.build();
     }
 
     @Bean
@@ -96,10 +97,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public RegisteredClientRepository clientRepository() {
+    public RegisteredClientRepository clientRepository(PasswordEncoder passwordEncoder) {
         RegisteredClient client = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("sensor-network")
-                .clientSecret(passwordEncoder().encode("sensor-network-secret"))
+                .clientSecret(passwordEncoder.encode("sensor-network-secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)

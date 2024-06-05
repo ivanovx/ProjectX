@@ -34,7 +34,7 @@ public class User implements UserDetails {
 
     private boolean verified = true;
 
-    private List<String> roles = List.of("USER", "ADMIN");
+    private List<String> roles = List.of("USER");
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

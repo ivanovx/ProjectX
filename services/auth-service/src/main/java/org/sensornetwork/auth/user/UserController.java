@@ -4,6 +4,8 @@ import org.sensornetwork.auth.request.SignInRequest;
 import org.sensornetwork.auth.request.SignUpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,18 +39,27 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute("user") SignUpRequest request) {
+    public String signUp(@ModelAttribute("user") SignUpRequest request, Errors errors) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            errors.rejectValue("email", "email.exists");
+
+            return "signup";
+        }
+
+        if (userRepository.existsByUsername(request.getUsername())) {
+            errors.rejectValue("username", "username.exists");
+
+            return "signup";
+        }
+
         User user = new User();
 
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
         user.setCreated(LocalDateTime.now());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        String password = this.passwordEncoder.encode(request.getPassword());
-
-        user.setPassword(password);
-
-        this.userRepository.save(user);
+        userRepository.save(user);
 
         return "redirect:/signin";
     }
