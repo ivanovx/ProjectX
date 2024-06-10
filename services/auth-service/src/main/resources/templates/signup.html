@@ -14,11 +14,8 @@
 <main class="form-signin w-100 m-auto">
     <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
-    <div th:if="${param.error}">
-        <div class="alert alert-danger">Invalid Email and Password.</div>
-    </div>
-    <div th:if="${param.logout}">
-        <div class="alert alert-success">You have been logged out.</div>
+    <div th:if="${error}">
+        <div class="alert alert-danger" th:text="${error}"></div>
     </div>
 
     <form th:action="@{/user/signup}" th:object="${user}" th:method="POST">

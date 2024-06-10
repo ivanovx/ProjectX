@@ -1,5 +1,6 @@
 package org.sensornetwork.auth.user;
 
+import jakarta.validation.Valid;
 import org.sensornetwork.auth.request.SignInRequest;
 import org.sensornetwork.auth.request.SignUpRequest;
 import org.springframework.stereotype.Controller;
@@ -39,15 +40,17 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute("user") SignUpRequest request, Errors errors) {
+    public String signUp(@Valid @ModelAttribute("user") SignUpRequest request, Model model) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            errors.rejectValue("email", "email.exists");
+            //errors.rejectValue("email", "email.exists");
+
+            model.addAttribute("error", "This email address is already in use.");
 
             return "signup";
         }
 
         if (userRepository.existsByUsername(request.getUsername())) {
-            errors.rejectValue("username", "username.exists");
+            model.addAttribute("error", "This username is already in use.");
 
             return "signup";
         }
@@ -61,6 +64,6 @@ public class UserController {
 
         userRepository.save(user);
 
-        return "redirect:/signin";
+        return "redirect:/";
     }
 }

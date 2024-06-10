@@ -38,7 +38,7 @@ public class TokenHandler {
 
             Token deviceToken = Token.builder()
                     .deviceId(deviceId)
-                    .value(TokenGenerator.createToken(deviceId))
+                    .value(TokenGenerator.generateApiKey())
                     .createdAt(LocalDateTime.now())
                     .expiredAt(LocalDateTime.now().plusYears(1))
                     .build();

@@ -56,3 +56,4 @@ openssl rand -base64 32
 ## Used links
 
 * https://docs.spring.io/spring-authorization-server/reference/guides/how-to-pkce.html - for Auth Server configuration
+* https://www.baeldung.com/registration-verify-user-by-email - for user create process
