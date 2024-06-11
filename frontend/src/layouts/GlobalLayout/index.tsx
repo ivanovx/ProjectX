@@ -34,7 +34,7 @@ const footers = [
 
 export default function GlobalLayout({ session, children }: { session: Session | null, children: React.ReactNode }) {
     const defaultTheme = createTheme();
-
+    
     return (
         <SessionProvider session={session}>
             <ThemeProvider theme={defaultTheme}>
@@ -52,7 +52,7 @@ export default function GlobalLayout({ session, children }: { session: Session |
                                     <Button onClick={() => signOut()} variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign out</Button>
                                 </>
                             )}
-                            {!session && <Button onClick={() => signIn()} variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign in</Button>}
+                            {!session && <Button onClick={() => signIn("default")} variant="outlined" sx={{ my: 1, mx: 1.5 }}>Sign in</Button>}
                         </Typography>
                     </Toolbar>
                 </AppBar>
