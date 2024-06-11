@@ -7,7 +7,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8001
+          issuer-uri: http://localhost:9000
   data:
     mongodb:
       auto-index-creation: true
