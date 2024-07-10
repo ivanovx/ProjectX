@@ -6,7 +6,7 @@ spring:
   data:
     mongodb:
       auto-index-creation: true
-      uri: mongodb://localhost:27417/measurementDb
+      uri: mongodb://localhost:27017/measurements
 eureka:
   client:
     registerWithEureka: true

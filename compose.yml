@@ -1,27 +1,12 @@
 services:
   rabbitmq:
+    image: rabbitmq:management
     container_name: rabbitmq
-    image: rabbitmq:3.9.29-management
     ports:
       - 15672:15672
       - 5672:5672
-  authDb:
-    image: mongo:7.0.9
-    container_name: authDb
+  mongo:
+    image: mongo:latest
+    container_name: mongo
     ports:
-      - 27117:27017
-  deviceDb:
-    image: mongo:7.0.9
-    container_name: deviceDb
-    ports:
-      - 27217:27017
-  tokenDb:
-    image: mongo:7.0.9
-    container_name: tokenDb
-    ports:
-      - 27317:27017
-  measurementDb:
-    image: mongo:7.0.9
-    container_name: measurementDb
-    ports:
-      - 27417:27017
+      - 27017:27017

@@ -6,7 +6,7 @@ spring:
   data:
     mongodb:
       auto-index-creation: true
-      uri: mongodb://localhost:27317/tokenDb
+      uri: mongodb://localhost:27017/tokens
 eureka:
   client:
     registerWithEureka: true

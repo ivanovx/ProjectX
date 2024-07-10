@@ -13,8 +13,8 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 
 import org.springframework.context.annotation.Role;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.config.BeanDefinition;
 
 @Configuration
