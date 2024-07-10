@@ -1,0 +1,12 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: auth-service
+  data:
+    mongodb:
+      auto-index-creation: true
+      uri: mongodb://localhost:27017/users
+jwt:
+  public.key: classpath:public-key.pem
+  private.key: classpath:private-key.pem
