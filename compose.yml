@@ -1,12 +1,15 @@
 services:
-  rabbitmq:
-    image: rabbitmq:management
-    container_name: rabbitmq
-    ports:
-      - 15672:15672
-      - 5672:5672
-  mongo:
+  mongodb:
     image: mongo:latest
-    container_name: mongo
+    container_name: mongodb
     ports:
       - 27017:27017
+  auth-service:
+    build: ./services/auth-service
+    container_name: auth-service
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/users
+    depends_on:
+      - mongodb
+    ports:
+      - 9000:9000
