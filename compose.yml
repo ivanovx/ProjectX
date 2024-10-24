@@ -13,3 +13,69 @@ services:
       - mongodb
     ports:
       - 9000:9000
+  discovery-service:
+    build: ./services/discovery-service
+    container_name: discovery-service
+    ports:
+      - 8761:8761
+  token-service:
+    build: ./services/token-service
+    container_name: token-service
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/tokens
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+      - mongodb
+    ports:
+      - 8003:8003
+  device-service:
+    build: ./services/device-service
+    container_name: device-service
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/devices
+      - AUTH_SERVICE_URL=http://auth-service:9000
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+      - auth-service
+      - token-service
+      - mongodb
+    ports:
+      - 8004:8004
+  measurement-service:
+    build: ./services/measurement-service
+    container_name: measurement-service
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/measurements
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+      - device-service
+      - token-service
+      - mongodb
+    ports:
+      - 8005:8005
+  stat-service:
+    build: ./services/stat-service
+    container_name: stat-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+      - device-service
+      - measurement-service
+    ports:
+      - 8006:8006
+  gateway-service:
+    build: ./services/gateway-service
+    container_name: gateway-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+      - device-service
+      - measurement-service
+      - stat-service
+    ports:
+      - 8000:8000

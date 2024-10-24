@@ -1,5 +1,23 @@
 # Sensor Network
 
+
+  discovery-service:
+    build: ./services/discovery-service
+    container_name: discovery-service
+    ports:
+      - 8761:8761
+  token-service:
+    build: ./services/token-service
+    container_name: token-service
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/tokens
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+      - mongodb
+    ports:
+      - 8003:8003
+
 Make open weather data from community sensors.
 
 ## Services Map
